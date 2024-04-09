@@ -1,0 +1,8 @@
+#!/bin/sh
+# Script to toggle unclutter on/off.
+if pgrep -x "unclutter" > /dev/null
+then
+    pkill unclutter && notify-send "Unclutter deactivated"
+else
+    unclutter --timeout 3 -jitter 50 --ignore-scrolling && notify-send "Unclutter enabled"
+fi

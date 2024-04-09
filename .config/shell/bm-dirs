@@ -1,0 +1,14 @@
+a   $HOME/.cache
+c   $HOME/.config
+s   $HOME/.local/share
+d   $HOME/.local/downloads
+w   $HOME/.local/work
+b   $HOME/.local/bin
+u   $HOME/.config/mnt
+t   $HOME/.local/screenshot
+n   $HOME/.config/nvim/lua/plugins
+m   /mnt
+f   /media/data
+p   /media/data/walls
+x   /media/data/vids
+h   $HOME

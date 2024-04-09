@@ -1,0 +1,9 @@
+[user]
+	email = twoeightdev@gmail.com
+	name = twoeightdev
+[pager]
+	branch = false
+[credential]
+	helper = cache --timeout=86400
+[init]
+	defaultBranch = main

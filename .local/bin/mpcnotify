@@ -1,0 +1,12 @@
+#!/bin/sh
+# Script to be used with ncmpcpp.
+# Shows current played song.
+
+msgId="280307"
+
+msong=$(mpc current)
+
+dunstify -a "mpcnotify" \
+    -u low \
+    -r "$msgId" \
+    "Now Playing $msong"

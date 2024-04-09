@@ -1,0 +1,9 @@
+#!/bin/sh
+# Transmission-daemon toggle
+
+if pgrep -x transmission-da > /dev/null
+then
+    pkill -3 transmission-da && notify-send "Transmission deactivated"
+else
+    transmission-daemon && notify-send "Transmission enabled"
+fi

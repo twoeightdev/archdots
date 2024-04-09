@@ -1,0 +1,9 @@
+#!/bin/sh
+# This script gives audio notification in dunst,
+# except for the following:
+
+[ $1 = "audiobar" ] && exit 0
+[ $1 = "mpcnotify" ] && exit 0
+[ $1 = "Signal" ] && exit 0
+
+paplay ~/.local/share/audio/beep.wav
