@@ -21,8 +21,8 @@ alias \
     ll="ls -lA -h --group-directories-first --color=auto" \
     la="ls -A -S1qX" \
     lh="ls -A" \
-    grep="grep --color=auto" \
-    diff="diff --color=auto"
+    # grep="grep --color=auto" \
+    # diff="diff --color=auto"
 
 # These common commands are just too long! abbreviate them
 alias \
