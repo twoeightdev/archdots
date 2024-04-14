@@ -1,193 +1,195 @@
 return {
-    'nvim-telescope/telescope.nvim',
+    "nvim-telescope/telescope.nvim",
     dependencies = {
-        'nvim-lua/plenary.nvim',
+        "nvim-lua/plenary.nvim",
         {
-            'nvim-telescope/telescope-fzf-native.nvim',
-            build = 'make',
-            config = function()
-                require('telescope').load_extension('fzf')
-            end,
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
         },
     },
-    branch = '0.1.x',
-    cmd = 'Telescope',
+    branch = "0.1.x",
+    cmd = "Telescope",
     keys = {
         {
-            '<leader>ff',
+            "<leader>ff",
             function()
-                return require('telescope.builtin').find_files()
+                return require("telescope.builtin").find_files()
             end,
-            desc = 'Files',
+            desc = "Files",
         },
         {
-            '<leader>fw',
+            "<leader>fw",
             function()
-                return require('telescope.builtin').live_grep()
+                return require("telescope.builtin").live_grep()
             end,
-            desc = 'Words',
+            desc = "Words",
         },
         {
-            '<leader>fb',
+            "<leader>fb",
             function()
-                return require('telescope.builtin').buffers()
+                return require("telescope.builtin").buffers()
             end,
-            desc = 'Buffers',
+            desc = "Buffers",
         },
         {
-            '<leader>fh',
+            "<leader>fh",
             function()
-                return require('telescope.builtin').help_tags()
+                return require("telescope.builtin").help_tags()
             end,
-            desc = 'Help',
+            desc = "Help",
         },
         {
-            '<leader>fm',
+            "<leader>fm",
             function()
-                return require('telescope.builtin').man_pages()
+                return require("telescope.builtin").man_pages()
             end,
-            desc = 'Man Pages',
+            desc = "Man Pages",
         },
         {
-            '<leader>fr',
+            "<leader>fr",
             function()
-                return require('telescope.builtin').oldfiles()
+                return require("telescope.builtin").oldfiles()
             end,
-            desc = 'Recently opened',
+            desc = "Recently opened",
         },
         {
-            '<leader>fR',
+            "<leader>fR",
             function()
-                return require('telescope.builtin').registers()
+                return require("telescope.builtin").registers()
             end,
-            desc = 'Registers',
+            desc = "Registers",
         },
         {
-            '<leader>fk',
+            "<leader>fk",
             function()
-                return require('telescope.builtin').keymaps()
+                return require("telescope.builtin").keymaps()
             end,
-            desc = 'Keymaps',
+            desc = "Keymaps",
         },
         {
-            '<leader>fc',
+            "<leader>fc",
             function()
-                return require('telescope.builtin').commands()
+                return require("telescope.builtin").commands()
             end,
-            desc = 'Commands',
+            desc = "Commands",
         },
         {
-            '<leader>fC',
+            "<leader>fC",
             function()
-                return require('telescope.builtin').command_history()
+                return require("telescope.builtin").command_history()
             end,
-            desc = 'Command history',
+            desc = "Command history",
         },
         {
-            '<leader>fl',
+            "<leader>fl",
             function()
-                return require('telescope.builtin').resume()
+                return require("telescope.builtin").resume()
             end,
-            desc = 'Resume',
+            desc = "Resume",
         },
         {
-            '<leader>fd',
+            "<leader>fd",
             function()
-                return require('telescope.builtin').diagnostics({ bufnr = 0 })
+                return require("telescope.builtin").diagnostics({ bufnr = 0 })
             end,
-            desc = 'Document diagnostics',
+            desc = "Document diagnostics",
         },
         {
-            '<leader>fD',
+            "<leader>fD",
             function()
-                return require('telescope.builtin').diagnostics()
+                return require("telescope.builtin").diagnostics()
             end,
-            desc = 'Workspace diagnostics',
+            desc = "Workspace diagnostics",
         },
         {
-            '<leader>fs',
+            "<leader>fs",
             function()
-                return require('telescope.builtin').lsp_document_symbols()
+                return require("telescope.builtin").lsp_document_symbols()
             end,
-            desc = 'Docment symbols',
+            desc = "Docment symbols",
         },
         {
-            '<leader>fg',
+            "<leader>fg",
             function()
-                return require('telescope.builtin').git_files()
+                return require("telescope.builtin").git_files()
             end,
-            desc = 'Git files',
+            desc = "Git files",
         },
         {
-            '<leader>ft',
-            '<cmd>TodoTelescope<cr>',
-            desc = 'Todo',
+            "<leader>ft",
+            "<cmd>TodoTelescope<cr>",
+            desc = "Todo",
         },
         {
-            '<leader>fT',
-            '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>',
-            desc = 'Todo/Fix/Fixme',
+            "<leader>fT",
+            "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
+            desc = "Todo/Fix/Fixme",
         },
         {
-            '<leader>gc',
+            "<leader>gc",
             function()
-                return require('telescope.builtin').git_status()
+                return require("telescope.builtin").git_status()
             end,
-            desc = 'Search through changed files',
+            desc = "Search through changed files",
         },
         {
-            '<leader>gb',
+            "<leader>gb",
             function()
-                return require('telescope.builtin').git_branches()
+                return require("telescope.builtin").git_branches()
             end,
-            desc = 'Search through git branches',
+            desc = "Search through git branches",
         },
         {
-            '<leader>gC',
+            "<leader>gC",
             function()
-                return require('telescope.builtin').git_commits()
+                return require("telescope.builtin").git_commits()
             end,
-            desc = 'Search and checkout git commits',
+            desc = "Search and checkout git commits",
         },
     },
     opts = function()
         -- File and text search in hidden files and dir
-        local telescopeConfig = require('telescope.config')
+        local telescopeConfig = require("telescope.config")
         -- Clone the default Telescope configuration
         local vimgrep_arguments = {
             unpack(telescopeConfig.values.vimgrep_arguments),
         }
-        local actions = require('telescope.actions')
+        local actions = require("telescope.actions")
         -- Search in hidden/dot files
-        table.insert(vimgrep_arguments, '--hidden')
+        table.insert(vimgrep_arguments, "--hidden")
         -- Dont search in .git directory
-        table.insert(vimgrep_arguments, '--glob')
-        table.insert(vimgrep_arguments, '!**/.git/*')
+        table.insert(vimgrep_arguments, "--glob")
+        table.insert(vimgrep_arguments, "!**/.git/*")
 
         return {
             defaults = {
-                prompt_prefix = ' ',
-                selection_caret = ' ',
-                mappings = { n = { ['q'] = actions.close } },
+                prompt_prefix = " ",
+                selection_caret = " ",
+                mappings = { n = { ["q"] = actions.close } },
                 vimgrep_arguments = vimgrep_arguments,
-                theme = 'gruvbox',
-                path_display = { 'smart' },
-                file_ignore_patterns = { '.git/' },
-                layout_strategy = 'horizontal',
-                layout_config = { prompt_position = 'top' },
-                sorting_strategy = 'ascending',
+                theme = "gruvbox",
+                path_display = { "smart" },
+                file_ignore_patterns = { ".git/" },
+                layout_strategy = "horizontal",
+                layout_config = { prompt_position = "top" },
+                sorting_strategy = "ascending",
             },
             pickers = {
                 find_files = {
                     find_command = {
-                        'rg',
-                        '--files',
-                        '--hidden',
-                        '--glob',
-                        '!**/.git/*',
+                        "rg",
+                        "--files",
+                        "--hidden",
+                        "--glob",
+                        "!**/.git/*",
                     },
                 },
             },
         }
+    end,
+    config = function(_, opts)
+        local telescope = require("telescope")
+        telescope.setup(opts)
+        telescope.load_extension("fzf")
     end,
 }

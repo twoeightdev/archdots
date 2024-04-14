@@ -1,31 +1,34 @@
 return {
     {
         -- nvim-treesitter
-        'nvim-treesitter/nvim-treesitter',
-        build = ':TSUpdate',
-        event = { 'BufReadPost', 'BufNewFile' },
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        event = { "BufReadPost", "BufNewFile" },
         opts = {
             ensure_installed = {
-                'lua',
-                'luadoc',
-                'luap',
-                'cpp',
-                'markdown',
-                'markdown_inline',
-                'python',
-                'git_config',
-                'git_rebase',
-                'gitcommit',
-                'gitignore',
-                'diff',
-                'vim',
-                'vimdoc',
-                'bash',
-                'toml',
-                'ssh_config',
-                'zathurarc',
-                'json',
-                'printf',
+                "lua",
+                "luadoc",
+                "luap",
+                "markdown",
+                "markdown_inline",
+                "python",
+                "vim",
+                "vimdoc",
+                "bash",
+                "toml",
+                "zathurarc",
+                "json",
+                "javascript",
+                "typescript",
+                "tsx",
+                "yaml",
+                "html",
+                "css",
+                "svelte",
+                "graphql",
+                "gitignore",
+                "query",
+                "c",
             },
             highlight = { enable = true },
             indent = { enable = true },
@@ -38,16 +41,16 @@ return {
             },
         },
         config = function(_, opts)
-            require('nvim-treesitter.configs').setup(opts)
-            -- Use the bash ts parser for zsh
-            vim.treesitter.language.register('bash', 'zsh')
+            require("nvim-treesitter.configs").setup(opts)
+            -- use bash ts parser for zsh
+            vim.treesitter.language.register("bash", "zsh")
         end,
     },
     {
         -- nvim-treesitter-context
-        'nvim-treesitter/nvim-treesitter-context',
-        dependencies = 'nvim-treesitter/nvim-treesitter',
-        event = { 'BufReadPost', 'BufNewFile' },
+        "nvim-treesitter/nvim-treesitter-context",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        event = { "BufReadPost", "BufNewFile" },
         opts = { max_lines = 3 },
     },
 }

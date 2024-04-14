@@ -1,27 +1,27 @@
 return {
-    'NeogitOrg/neogit',
+    "NeogitOrg/neogit",
     dependencies = {
-        'nvim-lua/plenary.nvim',
-        'nvim-telescope/telescope.nvim',
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
     },
-    cmd = 'Neogit',
+    cmd = "Neogit",
     keys = {
         {
-            '<leader>gg',
+            "<leader>gg",
             function()
-                return require('neogit').open()
+                return require("neogit").open()
             end,
-            desc = 'Open neogit',
+            desc = "Open neogit",
         },
     },
     opts = {
-        disable_insert_on_commit = 'auto',
-        kind = 'replace',
+        disable_insert_on_commit = "auto",
+        kind = "replace",
         status = { recent_commit_count = 25 },
         integrations = { telescope = true },
         auto_show_console = false,
         telescope_sorter = function()
-            return require('telescope').extensions.fzf.native_fzf_sorter()
+            return require("telescope").extensions.fzf.native_fzf_sorter()
         end,
     },
 }

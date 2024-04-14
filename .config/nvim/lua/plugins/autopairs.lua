@@ -1,9 +1,9 @@
 return {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
     opts = {
-        disable_filetype = { 'TelescopePrompt', 'text' },
-        disable_in_macro = false,
+        disable_filetype = { "TelescopePrompt", "text" },
+        -- enable treesitter
         check_ts = true,
     },
 }

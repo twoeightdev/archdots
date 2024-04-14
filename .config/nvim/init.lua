@@ -10,11 +10,10 @@ local function load_module(module)
     if success then
         return loaded
     end
-    vim.notify('Error loading ' .. module, vim.log.levels.ERROR)
 end
 
 -- Load modules
-load_module('core.options')
-load_module('core.keymaps')
-load_module('core.autocommands')
-load_module('core.bootstrap')
+load_module('options')
+load_module('keymaps')
+load_module('autocommands')
+load_module('bootstrap')
