@@ -33,7 +33,7 @@ class Spotify(base.ThreadPoolText):
     A widget to interact with spotify via dbus.
     """
     defaults = [
-        ("play_icon", '', "icon to display when playing music"),
+        ("play_icon", ' ', "icon to display when playing music"),
         ("pause_icon", '', "icon to display when music paused"),
         ("update_interval", 0.5, "polling rate in seconds"),
         ("format", "{artist} {icon} {track}",
