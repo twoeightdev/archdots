@@ -1,5 +1,6 @@
 .dotfiles
 .Xauthority
+.java/
 .steam/
 .steampath
 .steampid
