@@ -13,14 +13,14 @@ alias \
     yt="yt-dlp --add-metadata -i" \
     yta="yt -x -f bestaudio/best" \
     ffmpeg="ffmpeg -hide_banner" \
-    mbsync="mbsync -c $HOME/.config/mbsync/mbsyncrc"
+    mbsync="mbsync -c $HOME/.config/mbsync/mbsyncrc" \
+    va="source $HOME/.venv/pymain/bin/activate" \
+    vd="deactivate"
 
 # Colorize commands when possible
 alias \
-    ls="lsd -AhN --group-directories-first" \
-    ll="lsd -lA -h --group-directories-first" \
-    la="lsd -A -S1X" \
-    lh="lsd -A" \
+    ls="ls -AhN --color=auto --group-directories-first" \
+    ll="ls -lch --color=auto" \
     grep="grep --color=auto" \
     diff="diff --color=auto" \
     ccat="highlight --out-format=ansi"
@@ -30,6 +30,11 @@ alias \
     pk="pkill -9" \
     o="$FILE" \
     v="$EDITOR" \
+    yu="yay -Syu" \
+    yi="yay -S" \
+    yr="yay -Rns" \
+    ys="yay -Ss" \
+    yq="yay -Qsq" \
     ec="emacsclient -c -n -a 'emacs'" \
     z="zathura"
 
@@ -40,7 +45,6 @@ alias \
 
 # Miscellaneous
 alias \
-    weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
     getpath="find -type f | fzf | sed 's/^..//' | tr -d '\n' | xclip -selection c" \
     fxp="chmod -R a=r,u+w,a+X" \
     checkpath="echo $PATH | sed 's/:/\n/g' | sort | uniq -c" \
