@@ -31,7 +31,12 @@ return {
         local defaults = require("cmp.config.default")()
         local function has_words_before()
             local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            return col ~= 0
+                and vim.api
+                        .nvim_buf_get_lines(0, line - 1, line, true)[1]
+                        :sub(col, col)
+                        :match("%s")
+                    == nil
         end
         return {
             completion = { completeopt = "menu,menuone" },
@@ -43,7 +48,9 @@ return {
             mapping = cmp.mapping.preset.insert({
                 ["<Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+                        cmp.select_next_item({
+                            behavior = cmp.SelectBehavior.Insert,
+                        })
                     elseif luasnip.expand_or_locally_jumpable() then
                         luasnip.expand_or_jump()
                     elseif has_words_before() then
@@ -54,7 +61,9 @@ return {
                 end, { "i", "s" }),
                 ["<S-Tab>"] = cmp.mapping(function(fallback)
                     if cmp.visible() then
-                        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+                        cmp.select_prev_item({
+                            behavior = cmp.SelectBehavior.Insert,
+                        })
                     elseif luasnip.jumpable(-1) then
                         luasnip.jump(-1)
                     else
@@ -132,10 +141,14 @@ return {
             experimental = { ghost_text = { hl_group = "CmpGhostText" } },
             sorting = defaults.sorting,
             window = {
-                completion = cmp.config.window.bordered(),
-                documentation = cmp.config.window.bordered(),
+                completion = { scrollbar = false },
             },
-            view = { entries = { name = "custom", selection_order = "near_cursor" } },
+            view = {
+                entries = {
+                    name = "custom",
+                    selection_order = "near_cursor",
+                },
+            },
         }
     end,
     config = function(_, opts)
@@ -150,7 +163,10 @@ return {
         ---@diagnostic disable-next-line: missing-fields
         cmp.setup.cmdline(":", {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = cmp.config.sources({ { name = "path" }, { name = "cmdline" } }),
+            sources = cmp.config.sources({
+                { name = "path" },
+                { name = "cmdline" },
+            }),
         })
         -- nvim-autopairs integration
         cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())

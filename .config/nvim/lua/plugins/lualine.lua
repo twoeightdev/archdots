@@ -4,9 +4,11 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     opts = {
         options = {
-            theme = "auto",
-            component_separators = { left = "", right = "" },
-            section_separators = { left = "", right = "" },
+            theme = "gruvbox",
+            component_separators = "|",
+            section_separators = { left = "", right = "" },
+            -- component_separators = { left = "", right = "" },
+            -- section_separators = { left = "", right = "" },
             disabled_filetypes = {
                 "dashboard",
                 "NeogitStatus",
@@ -29,9 +31,12 @@ return {
                         return require("nvim-navic").get_location()
                     end,
                     cond = function()
-                        return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+                        return package.loaded["nvim-navic"]
+                            and require("nvim-navic").is_available()
                     end,
                     color_correction = "static",
+                    -- NOTE: padding right set to '0' to avoid navic color glitch
+                    padding = { left = 1, right = 0 },
                 },
             },
             lualine_x = {

@@ -32,7 +32,7 @@ return {
                 {
                     desc = " Neogit",
                     group = "Git",
-                    action = "Neogit",
+                    action = "NeoGit",
                     key = "g",
                 },
                 {

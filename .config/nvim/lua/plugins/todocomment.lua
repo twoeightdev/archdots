@@ -5,14 +5,14 @@ return {
     config = true,
     keys = {
         {
-            "]t",
+            "<leader>t]",
             function()
                 return require("todo-comments").jump_next()
             end,
             desc = "Jump to next todo comment",
         },
         {
-            "[t",
+            "<leader>t[",
             function()
                 return require("todo-comments").jump_prev()
             end,

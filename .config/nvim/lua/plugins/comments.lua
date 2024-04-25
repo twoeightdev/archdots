@@ -1,13 +1,7 @@
 return {
     "numToStr/Comment.nvim",
-    config = function()
-        require("Comment").setup({
-            toggler = {
-                line = "<c-'>",
-            },
-            opleader = {
-                line = "<c-'>",
-            },
-        })
-    end,
+    opts = {
+        toggler = { line = "<c-'>" },
+        opleader = { line = "<c-'>" },
+    },
 }

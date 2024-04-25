@@ -18,11 +18,25 @@ return {
             desc = "Files",
         },
         {
+            "<leader>fr",
+            function()
+                return require("telescope.builtin").oldfiles()
+            end,
+            desc = "Recent files",
+        },
+        {
+            "<leader>fg",
+            function()
+                return require("telescope.builtin").git_files()
+            end,
+            desc = "Git files",
+        },
+        {
             "<leader>fw",
             function()
                 return require("telescope.builtin").live_grep()
             end,
-            desc = "Words",
+            desc = "Word grep",
         },
         {
             "<leader>fb",
@@ -32,32 +46,11 @@ return {
             desc = "Buffers",
         },
         {
-            "<leader>fh",
+            "<leader>fl",
             function()
-                return require("telescope.builtin").help_tags()
+                return require("telescope.builtin").resume()
             end,
-            desc = "Help",
-        },
-        {
-            "<leader>fm",
-            function()
-                return require("telescope.builtin").man_pages()
-            end,
-            desc = "Man Pages",
-        },
-        {
-            "<leader>fr",
-            function()
-                return require("telescope.builtin").oldfiles()
-            end,
-            desc = "Recently opened",
-        },
-        {
-            "<leader>fR",
-            function()
-                return require("telescope.builtin").registers()
-            end,
-            desc = "Registers",
+            desc = "Resume",
         },
         {
             "<leader>fk",
@@ -65,6 +58,13 @@ return {
                 return require("telescope.builtin").keymaps()
             end,
             desc = "Keymaps",
+        },
+        {
+            "<leader>fh",
+            function()
+                return require("telescope.builtin").help_tags()
+            end,
+            desc = "Help",
         },
         {
             "<leader>fc",
@@ -81,11 +81,25 @@ return {
             desc = "Command history",
         },
         {
-            "<leader>fl",
+            "<leader>fR",
             function()
-                return require("telescope.builtin").resume()
+                return require("telescope.builtin").registers()
             end,
-            desc = "Resume",
+            desc = "Registers",
+        },
+        {
+            "<leader>fm",
+            function()
+                return require("telescope.builtin").man_pages()
+            end,
+            desc = "Man pages",
+        },
+        {
+            "<leader>fs",
+            function()
+                return require("telescope.builtin").lsp_document_symbols()
+            end,
+            desc = "Symbol lsp document",
         },
         {
             "<leader>fd",
@@ -102,49 +116,35 @@ return {
             desc = "Workspace diagnostics",
         },
         {
-            "<leader>fs",
-            function()
-                return require("telescope.builtin").lsp_document_symbols()
-            end,
-            desc = "Docment symbols",
-        },
-        {
-            "<leader>fg",
-            function()
-                return require("telescope.builtin").git_files()
-            end,
-            desc = "Git files",
-        },
-        {
-            "<leader>ft",
-            "<cmd>TodoTelescope<cr>",
-            desc = "Todo",
-        },
-        {
-            "<leader>fT",
-            "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
-            desc = "Todo/Fix/Fixme",
-        },
-        {
             "<leader>gc",
             function()
                 return require("telescope.builtin").git_status()
             end,
-            desc = "Search through changed files",
+            desc = "Check git status",
         },
         {
             "<leader>gb",
             function()
                 return require("telescope.builtin").git_branches()
             end,
-            desc = "Search through git branches",
+            desc = "Search git branches",
         },
         {
             "<leader>gC",
             function()
                 return require("telescope.builtin").git_commits()
             end,
-            desc = "Search and checkout git commits",
+            desc = "Check git commits",
+        },
+        {
+            "<leader>ft",
+            ":TodoTelescope<cr>",
+            desc = "Search all Todo",
+        },
+        {
+            "<leader>fT",
+            ":TodoTelescope keywords=TODO,FIX,FIXME<cr>",
+            desc = "Search all Fix, Fixme",
         },
     },
     opts = function()
@@ -163,9 +163,18 @@ return {
 
         return {
             defaults = {
-                prompt_prefix = " ",
+                prompt_prefix = "   ",
                 selection_caret = " ",
-                mappings = { n = { ["q"] = actions.close } },
+                mappings = {
+                    n = { ["q"] = actions.close },
+                    i = {
+                        ["<C-u>"] = false,
+                        ["<C-d>"] = false,
+                        ["<esc>"] = actions.close,
+                        ["<C-k>"] = actions.move_selection_previous,
+                        ["<C-j>"] = actions.move_selection_next,
+                    },
+                },
                 vimgrep_arguments = vimgrep_arguments,
                 theme = "gruvbox",
                 path_display = { "smart" },

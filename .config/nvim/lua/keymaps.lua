@@ -15,6 +15,9 @@ map("", "q", "<Nop>")
 -- General keymaps
 map("n", "<leader>w", vim.cmd.w, { desc = "Save current file" })
 map("n", "<leader>q", vim.cmd.qa, { desc = "Quit without saving" })
+map("n", "<leader>ab", ":bdelete<cr>", { desc = "Buffer delete" })
+map("n", "<leader>ah", ":new<cr>", { desc = "Horizontal split" })
+map("n", "<leader>av", ":vnew<cr>", { desc = "Vertical split" })
 -- map('n', '<leader>c', ':noh<cr>', { desc = 'Clear hlsearch' })
 
 -- Open lazy.nvim
@@ -25,12 +28,12 @@ map("v", "<", "<gv")
 map("v", ">", ">gv")
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next search result" })
-map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Previous search result" })
-map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Previous search result" })
-map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Previous search result" })
+map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next search" })
+map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search" })
+map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search" })
+map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Previous search" })
+map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Previous search" })
+map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Previous search" })
 
 -- Window navigation
 map("n", "<C-h>", "<C-w>h", { desc = "Navigate to left" })

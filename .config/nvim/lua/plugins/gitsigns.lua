@@ -4,7 +4,9 @@ return {
         vim.api.nvim_create_autocmd({ "BufRead" }, {
             group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
             callback = function()
-                vim.fn.system("git -C " .. '"' .. vim.fn.expand("%:p:h") .. '"' .. " rev-parse")
+                vim.fn.system(
+                    "git -C " .. '"' .. vim.fn.expand("%:p:h") .. '"' .. " rev-parse"
+                )
                 if vim.v.shell_error == 0 then
                     vim.api.nvim_del_augroup_by_name("GitSignsLazyLoad")
                     vim.schedule(function()
@@ -30,7 +32,7 @@ return {
             function()
                 return require("gitsigns").preview_hunk_inline()
             end,
-            desc = "Preview the hunk",
+            desc = "Preview hunk",
         },
         {
             "<leader>gr",
@@ -38,14 +40,14 @@ return {
                 return require("gitsigns").reset_hunk()
             end,
             mode = { "n", "v" },
-            desc = "Reset the hunk",
+            desc = "Reset hunk",
         },
         {
             "<leader>gR",
             function()
                 return require("gitsigns").reset_buffer()
             end,
-            desc = "Reset the buffer",
+            desc = "Reset buffer",
         },
         {
             "<leader>gs",
@@ -53,28 +55,28 @@ return {
                 return require("gitsigns").stage_hunk()
             end,
             mode = { "n", "v" },
-            desc = "Stage the hunk",
+            desc = "Stage hunk",
         },
         {
             "<leader>gS",
             function()
                 return require("gitsigns").stage_buffer()
             end,
-            desc = "Stage the buffer",
+            desc = "Stage buffer",
         },
         {
             "<leader>gu",
             function()
                 return require("gitsigns").undo_stage_hunk()
             end,
-            desc = "Unstage the hunk",
+            desc = "Unstage hunk",
         },
         {
             "<leader>gd",
             function()
                 return require("gitsigns").diffthis()
             end,
-            desc = "Open a diff",
+            desc = "Open diff",
         },
         {
             "<leader>gq",
@@ -98,14 +100,14 @@ return {
             desc = "Toggle line blame",
         },
         {
-            "]g",
+            "<leader>g]",
             function()
                 return require("gitsigns").next_hunk()
             end,
             desc = "Next hunk",
         },
         {
-            "[g",
+            "<leader>g[",
             function()
                 return require("gitsigns").prev_hunk()
             end,

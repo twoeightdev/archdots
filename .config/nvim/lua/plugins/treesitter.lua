@@ -24,8 +24,6 @@ return {
                 "yaml",
                 "html",
                 "css",
-                "svelte",
-                "graphql",
                 "gitignore",
                 "query",
                 "c",
