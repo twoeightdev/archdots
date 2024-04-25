@@ -1,404 +1,423 @@
 from libqtile import bar, layout, qtile, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import (
+    DropDown,
+    EzClick,
+    EzDrag,
+    EzKey,
+    Group,
+    Match,
+    Rule,
+    ScratchPad,
+    Screen,
+)
 from libqtile.lazy import lazy
 
 from spotify import Spotify
 
+# General
 mod = "mod4"
 terminal = "alacritty"
+dmenu = "dmenu_run"
+powerprompt = "power"
+browser = "firefox"
+emacs = "emacs"
+filemanager = "alacritty -e lf"
+mutevol = "wpctl set-mute 58 toggle"
+volup = "pactl set-sink-volume 0 +5%"
+voldown = "pactl set-sink-volume 0 -5%"
+brightup = "brightnessctl s 10%+"
+brightdown = "brightnessctl s 10%-"
+
+# Set 1 to enable and 0 to disable
+volume_widget = 1
+systray_widget = 1
+battery_widget = 1
+clock_widget = 1
+memory_widget = 1
+spotify_widget = 1
+bluetooth_widget = 1
+
+# Widget settings
+widget_fontsize = 16
+widget_group_fontsize = 22
+
+# Scratchpad settings
+term_opacity = 0.95
+scratch_opacity = 1.00
+scratch_height = 0.50
+scratch_width = 0.50
+scratch_x = 0.25
+scratch_y = 0.1
+
+# Keybinds
+keys = [
+    # Navigation
+    EzKey("M-h", lazy.layout.left(), desc="Move focus to left"),
+    EzKey("M-l", lazy.layout.right(), desc="Move focus to right"),
+    EzKey("M-j", lazy.layout.down(), desc="Move focus down"),
+    EzKey("M-k", lazy.layout.up(), desc="Move focus up"),
+    EzKey("M-<Space>", lazy.layout.next(), desc="Move window focus to other window"),
+    EzKey("M-<Tab>", lazy.screen.toggle_group(), desc="Switch to last viewed group"),
+    # Shuffle window
+    EzKey("M-C-h", lazy.layout.shuffle_left(), desc="Move window to the left"),
+    EzKey("M-C-l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    EzKey("M-C-j", lazy.layout.shuffle_down(), desc="Move window down"),
+    EzKey("M-C-k", lazy.layout.shuffle_up(), desc="Move window up"),
+    # Adjust window
+    EzKey("M-S-h", lazy.layout.grow_left(), desc="Grow window to the left"),
+    EzKey("M-S-l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    EzKey("M-S-j", lazy.layout.grow_down(), desc="Grow window down"),
+    EzKey("M-S-k", lazy.layout.grow_up(), desc="Grow window up"),
+    EzKey("M-n", lazy.layout.normalize(), desc="Reset all window sizes"),
+    EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Fullscreen"),
+    EzKey("M-S-<Return>", lazy.layout.toggle_split(), desc="Toggle split stack"),
+    # Media keys
+    EzKey("<XF86AudioMute>", lazy.spawn(mutevol), desc="Mute volume"),
+    EzKey("<XF86AudioRaiseVolume>", lazy.spawn(volup), desc="Volume up"),
+    EzKey("<XF86AudioLowerVolume>", lazy.spawn(voldown), desc="Volume down"),
+    EzKey("<XF86MonBrightnessUp>", lazy.spawn(brightup), desc="Brightness up"),
+    EzKey("<XF86MonBrightnessDown>", lazy.spawn(brightdown), desc="Brightness down"),
+    EzKey("<XF86MonBrightnessDown>", lazy.spawn(brightdown), desc="Brightness down"),
+    EzKey("<XF86TouchpadToggle>", lazy.spawn("padtoggle"), desc="Toggle touchpad"),
+    # System
+    EzKey("M-q", lazy.window.kill(), desc="Kill focused window"),
+    EzKey("M-C-r", lazy.reload_config(), desc="Reload configuration"),
+    EzKey("M-<Escape>", lazy.spawn(powerprompt), desc="Powermenu"),
+    EzKey("M-i", lazy.next_layout(), desc="Toggle layouts"),
+    EzKey("M-C-x", lazy.shutdown(), desc="Shutdown qtile"),
+    # Programs
+    EzKey("M-<Return>", lazy.spawn(terminal)(), desc="Launch terminal"),
+    EzKey("M-d", lazy.spawn(dmenu), desc="Dmenu prompt"),
+    EzKey("M-o", lazy.spawn(filemanager), desc="File manager lf"),
+    EzKey("M-b", lazy.spawn(browser), desc="Web browser"),
+    EzKey("M-e", lazy.spawn(emacs), desc="Emacs"),
+    EzKey("M-w", lazy.spawn("searchweb"), desc="Web search"),
+]
+
+# Mouse
+mouse = [
+    EzDrag(
+        "M-1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    EzDrag(
+        "M-S-1",
+        lazy.window.set_size_floating(),
+        start=lazy.window.get_size(),
+    ),
+    EzClick("M-2", lazy.window.bring_to_front()),
+]
+
+# Groups
+groups = [Group(f"{i+1}", label="●") for i in range(8)]
+# groups = [Group(i) for i in "12345678"]
+
+for i in groups:
+    keys.extend(
+        [
+            EzKey(
+                "M-" + i.name,
+                lazy.group[i.name].toscreen(),
+                desc="Switch to group {}".format(i.name),
+            ),
+            EzKey(
+                "M-S-" + i.name,
+                lazy.window.togroup(i.name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(i.name),
+            ),
+            EzKey(
+                "M-C-" + i.name,
+                lazy.window.togroup(i.name),
+                desc="move focused window to group {}".format(i.name),
+            ),
+        ]
+    )
+
+# ScratchPad
+groups.append(
+    ScratchPad(
+        "scratchpad",
+        [
+            DropDown(
+                "term",
+                "alacritty",
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=term_opacity,
+                height=scratch_height,
+                width=scratch_width,
+                x=scratch_x,
+                y=scratch_y,
+            ),
+            DropDown(
+                "spotify",
+                "qtile run-cmd -g scratchpad spotify",
+                match=Match(wm_class="Spotify"),
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=scratch_opacity,
+                height=scratch_height,
+                width=scratch_width,
+                x=scratch_x,
+                y=scratch_y,
+            ),
+            DropDown(
+                "btop",
+                "alacritty --class sysmon -e btop",
+                match=Match(wm_class="sysmon"),
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=term_opacity,
+                height=scratch_height,
+                width=scratch_width,
+                x=scratch_x,
+                y=scratch_y,
+            ),
+            DropDown(
+                "htop",
+                "alacritty --class sysmon -e htop",
+                match=Match(wm_class="sysmon"),
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=term_opacity,
+                height=scratch_height,
+                width=scratch_width,
+                x=scratch_x,
+                y=scratch_y,
+            ),
+            DropDown(
+                "nvtop",
+                "alacritty --class sysmon -e nvtop",
+                match=Match(wm_class="sysmon"),
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=term_opacity,
+                height=scratch_height,
+                width=scratch_width,
+                x=scratch_x,
+                y=scratch_y,
+            ),
+        ],
+    )
+)
+
+keys.extend(
+    [
+        EzKey(
+            "M-S-<Return>",
+            lazy.group["scratchpad"].dropdown_toggle("term"),
+            desc="Terminal scratchpad",
+        ),
+        EzKey(
+            "A-S-s",
+            lazy.group["scratchpad"].dropdown_toggle("spotify"),
+            desc="Spotify scratchpad",
+        ),
+        EzKey(
+            "A-C-m",
+            lazy.group["scratchpad"].dropdown_toggle("btop"),
+            desc="Btop system monitor",
+        ),
+        EzKey(
+            "A-C-h",
+            lazy.group["scratchpad"].dropdown_toggle("htop"),
+            desc="Htop system monitor",
+        ),
+        EzKey(
+            "A-C-n",
+            lazy.group["scratchpad"].dropdown_toggle("nvtop"),
+            desc="Nvtop gpu monitor",
+        ),
+    ]
+)
+
+# Gruvbox colors
+color = [
+    ["#1d2021", "#1d2021"],  # 0
+    ["#cc241d", "#cc241d"],  # 1
+    ["#98971a", "#98971a"],  # 2
+    ["#d79921", "#d79921"],  # 3
+    ["#458588", "#458588"],  # 4
+    ["#b16286", "#b16286"],  # 5
+    ["#689d6a", "#689d6a"],  # 6
+    ["#a89984", "#a89984"],  # 7
+    ["#928374", "#928374"],  # 8
+    ["#fb4934", "#fb4934"],  # 9
+    ["#b8bb26", "#b8bb26"],  # 10
+    ["#fabd2f", "#fabd2f"],  # 11
+    ["#83a598", "#83a598"],  # 12
+    ["#d3869b", "#d3869b"],  # 13
+    ["#8ec07c", "#8ec07c"],  # 14
+    ["#ebdbb2", "#ebdbb2"],  # 15
+    ["#3c3836", "#3c3836"],  # 16
+]
+
+# Layout theme
+layout_theme = {
+    "border_width": 2,
+    "border_focus": color[1],
+    "border_normal": color[0],
+}
+floating_theme = layout_theme.copy()
+
+# Widget theme
+widget_defaults = dict(
+    font="monospace bold",
+    fontsize=widget_fontsize,
+    background=color[0],
+    padding=5,
+)
+
+widget_groupbox = dict(
+    font="monospace bold",
+    fontsize=widget_group_fontsize,
+    background=color[0],
+    active=color[1],
+    inactive=color[16],
+    this_current_screen_border=color[0],
+    block_highlight_text_color=color[2],
+    margin_y=3,
+    margin_x=0,
+    padding_x=3,
+)
+sep_size = 60
+extension_defaults = widget_defaults.copy()
+
+layouts = [
+    layout.Columns(**layout_theme, shift_windows=True, margin=8, border_on_single=True),
+    # layout.Tile(**layout_theme),
+    # layout.Bsp(**layout_theme),
+    layout.Max(**layout_theme),
+    layout.Floating(**layout_theme),
+]
 
 
-# Defs
-def search():
-    qtile.cmd_spawn("dmenu_run")
+def init_widgets_list():
+    return [
+        widget.GroupBox(**widget_groupbox),
+        widget.CurrentLayout(**widget_defaults, fmt=" {}", foreground=color[3]),
+        widget.WindowName(**widget_defaults, max_chars=51, foreground=color[4]),
+    ]
 
 
 def power():
     qtile.cmd_spawn("power")
 
 
-# Keybinds
-keys = [
-    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
-    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
-    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
-    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    Key(
-        [mod, "control"],
-        "h",
-        lazy.layout.shuffle_left(),
-        desc="Move window to the left",
-    ),
-    Key(
-        [mod, "control"],
-        "l",
-        lazy.layout.shuffle_right(),
-        desc="Move window to the right",
-    ),
-    Key([mod, "control"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([mod, "control"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    Key([mod, "shift"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
-    Key([mod, "shift"], "j", lazy.layout.grow_down(), desc="Grow window down"),
-    Key([mod, "shift"], "k", lazy.layout.grow_up(), desc="Grow window up"),
-    Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    Key([mod], "f", lazy.window.toggle_fullscreen()),
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
-    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
-    Key([mod, "control"], "x", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "d", lazy.spawn("dmenu_run"), desc="Dmenu prompt"),
-    Key([mod], "Escape", lazy.spawn("power"), desc="powermenu"),
-    # https://github.com/qtile/qtile/blob/master/libqtile/backend/x11/xkeysyms.py
-    Key(
-        [],
-        "XF86AudioRaiseVolume",
-        lazy.spawn("wpctl set-volume 58 5%+"),
-        desc="Volume Up",
-    ),
-    Key(
-        [],
-        "XF86AudioLowerVolume",
-        lazy.spawn("wpctl set-volume 58 5%-"),
-        desc="volume down",
-    ),
-    Key(
-        [], "XF86AudioMute", lazy.spawn("wpctl set-mute 58 toggle"), desc="Volume Mute"
-    ),
-    Key(
-        [],
-        "XF86MonBrightnessUp",
-        lazy.spawn("brightnessctl s 10%+"),
-        desc="brightness UP",
-    ),
-    Key(
-        [],
-        "XF86MonBrightnessDown",
-        lazy.spawn("brightnessctl s 10%-"),
-        desc="brightness Down",
-    ),
-    Key([], "XF86TouchpadToggle", lazy.spawn("padtoggle"), desc="Toggle touchpad"),
-    Key([mod], "e", lazy.spawn("alacritty -e lf"), desc="file manager"),
-    Key([mod], "b", lazy.spawn("firefox"), desc="Web browser"),
-]
+# Define an array so that each screen gets a SHARED instantiation of these widgets
+shared_widgets = []
 
-# Groups
-groups = [Group(f"{i+1}", label="●") for i in range(8)]
+# Widgets
+if spotify_widget == 1:
+    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
+    shared_widgets += [
+        Spotify(
+            **widget_defaults,
+            format="{artist} {icon}  {track}",
+            # max_chars=44,
+            foreground=color[5],
+        )
+    ]
 
-for i in groups:
-    keys.extend(
-        [
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
-            ),
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
-            ),
-        ]
-    )
+if bluetooth_widget == 1:
+    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
+    shared_widgets += [
+        widget.Bluetooth(
+            **widget_defaults,
+            hci0="10:68:38:F1:06:95",
+            default_show_battery=True,
+        )
+    ]
 
-color_layouts = {
-    "border_width": 2,
-    "margin": 8,
-    "border_focus": "#cc241d",
-    "border_normal": "#1d2021",
-}
+if memory_widget == 1:
+    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
+    shared_widgets += [
+        widget.Memory(
+            **widget_defaults,
+            format="Mem:{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
+            foreground=color[14],
+        )
+    ]
 
-# Layouts
-layouts = [
-    layout.Columns(**color_layouts),
-    layout.Tile(shift_windows=True, **color_layouts),
-    layout.Bsp(**color_layouts),
-    layout.Max(**color_layouts),
-    layout.Floating(**color_layouts),
-]
+if volume_widget == 1:
+    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
+    shared_widgets += [
+        widget.Volume(
+            **widget_defaults,
+            fmt="  {}",
+            foreground=color[12],
+        )
+    ]
 
-# Gruvbox colors
-colors = [
-    ["#1d2021", "#1d2021"],  # 0
-    ["#32302f", "#32302f"],  # 1
-    ["#ebdbb2", "#ebdbb2"],  # 2
-    ["#cc241d", "#cc241d"],  # 3
-    ["#98971a", "#98971a"],  # 4
-    ["#d79921", "#d79921"],  # 5
-    ["#b16286", "#b16286"],  # 6
-    ["#83a598", "#83a598"],  # 7
-    ["#3c3836", "#3c3836"],  # 8
-    ["#00000000", "#00000000"],  # 9
-]
+if clock_widget == 1:
+    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
+    shared_widgets += [
+        widget.Clock(
+            **widget_defaults,
+            format=" %Y-%m-%d %a %I:%M %p",
+            foreground=color[3],
+        )
+    ]
 
+if battery_widget == 1:
+    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
+    shared_widgets += [
+        widget.Battery(
+            **widget_defaults,
+            format="{char} {percent:2.0%} {hour:d}:{min:02d}",
+            charge_char="  ",
+            full_char=" ",
+            discharge_char=" ",
+            update_interval=5,
+            mouse_callbacks={"Button1": power},
+            foreground=color[2],
+        )
+    ]
 
-widget_defaults = dict(font="monospace", fontsize=12, padding=3, background=colors[2])
-extension_defaults = extension_defaults = widget_defaults.copy()
+systray_widgets = []
+if systray_widget == 1:
+    systray_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
+    systray_widgets += [widget.Systray(**widget_defaults, icon_size=18)]
 
-# Bar
 screens = [
     Screen(
         top=bar.Bar(
-            [
-                widget.Sep(
-                    linewidth=0, padding=10, foreground=colors[2], background=colors[4]
-                ),
-                widget.TextBox(
-                    text="⎋",
-                    font="monospace bold",
-                    mouse_callbacks={"Button1": search},
-                    background=colors[4],
-                    foreground=colors[0],
-                    padding=4,
-                    fontsize=34,
-                ),
-                # widget.TextBox(
-                #     text = '',
-                #     font = 'monospace',
-                #     background = colors[0],
-                #     foreground = colors[4],
-                #     padding = 0,
-                #     fontsize = 30,
-                # ),
-                widget.Sep(
-                    linewidth=0,
-                    padding=8,
-                    foreground=colors[2],
-                    background=colors[0],
-                ),
-                widget.GroupBox(
-                    font="monospace bold",
-                    fontsize=22,
-                    margin_y=3,
-                    margin_x=0,
-                    padding_y=5,
-                    padding_x=3,
-                    border_width=1,
-                    active=colors[3],
-                    inactive=colors[8],
-                    rounded=True,
-                    highlight_color=colors[0],
-                    highlight_method="line",
-                    block_highlight_text_color=colors[4],
-                    this_current_screen_border=colors[0],
-                    this_screen_border=[4],
-                    other_current_screen_border=colors[2],
-                    other_screen_border=colors[4],
-                    foreground=colors[2],
-                    background=colors[0],
-                ),
-                # widget.TextBox(
-                #     text = '',
-                #     font = 'monospace',
-                #     background = colors[7],
-                #     foreground = colors[0],
-                #     padding = 0,
-                #     fontsize = 30,
-                # ),
-                widget.CurrentLayout(
-                    font="monospace bold",
-                    fontsize=18,
-                    fmt=" {} |",
-                    foreground=colors[5],
-                    background=colors[0],
-                    padding=2,
-                ),
-                # widget.TextBox(
-                #     text = '',
-                #     font = 'monospace',
-                #     background = colors[0],
-                #     foreground = colors[7],
-                #     padding = 0,
-                #     fontsize = 30
-                # ),
-                widget.WindowName(
-                    font="monospace bold",
-                    fontsize=18,
-                    foreground=colors[4],
-                    background=colors[0],
-                    padding=8,
-                    max_chars=51,
-                    width=700,
-                ),
-                widget.Sep(
-                    linewidth=0, padding=0, foreground=colors[0], background=colors[0]
-                ),
-                widget.Spacer(background=colors[0]),
-                widget.Sep(
-                    linewidth=0, padding=6, foreground=colors[0], background=colors[0]
-                ),
-                Spotify(
-                    font="monospace bold",
-                    fontsize=18,
-                    background=colors[0],
-                    foreground=colors[6],
-                    padding=15,
-                ),
-                # widget.Wlan(
-                #     interface = 'wlp6s0',
-                #     format = '{essid}',
-                #     background = colors[0],
-                #     fontsize = 18
-                # ),
-                widget.Systray(background=colors[0], padding=2),
-                # widget.TextBox(
-                #     text = '',
-                #     font = 'monospace',
-                #     background = colors[0],
-                #     foreground = colors[2],
-                #     padding = 0,
-                #     fontsize = 37
-                # ),
-                widget.Memory(
-                    font="monospace bold",
-                    fontsize=18,
-                    foreground=colors[2],
-                    background=colors[0],
-                    fmt="Mem:{} |",
-                    format="{MemUsed: .0f}{mm}",
-                    measure_mem="G",
-                    padding=10,
-                ),
-                # widget.TextBox(
-                #     text = '',
-                #     font = 'monospace',
-                #     background = colors[2],
-                #     foreground = colors[7],
-                #     padding = 0,
-                #     fontsize = 30
-                # ),
-                widget.PulseVolume(
-                    font="monospace bold",
-                    fontsize=18,
-                    foreground=colors[7],
-                    background=colors[0],
-                    fmt="Vol:{} |",
-                    padding=10,
-                ),
-                # widget.TextBox(
-                #     text = '',
-                #     font = 'monospace',
-                #     background = colors[7],
-                #     foreground = colors[0],
-                #     padding = 0,
-                #     fontsize = 30
-                # ),
-                widget.Clock(
-                    font="monospace bold",
-                    fontsize=18,
-                    foreground=colors[5],
-                    background=colors[0],
-                    format="%a %d %b %I:%M %p |",
-                    padding=5,
-                ),
-                # widget.TextBox(
-                #     text = '',
-                #     font = 'monospace bold',
-                #     background = colors[0],
-                #     foreground = colors[4],
-                #     padding = 0,
-                #     fontsize = 30
-                # ),
-                widget.Battery(
-                    font="monospace bold",
-                    fontsize=18,
-                    foreground=colors[4],
-                    background=colors[0],
-                    low_background=colors[0],
-                    low_foreground=colors[3],
-                    low_percentage=0.27,
-                    format="Batt:{percent:2.0%}",
-                    mouse_callbacks={"Button1": power},
-                    padding=5,
-                ),
-                # widget.Sep(
-                #     linewidth = 0,
-                #     padding = 3,
-                #     foreground=colors[2],
-                #     background=colors[4]
-                # ),
-            ],
-            24,
-        ),
+            widgets=init_widgets_list() + shared_widgets + systray_widgets, size=24
+        )
     ),
-]
-
-# Drag floating layouts.
-mouse = [
-    Drag(
-        [mod],
-        "Button1",
-        lazy.window.set_position_floating(),
-        start=lazy.window.get_position(),
-    ),
-    Drag(
-        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
-    ),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
+    Screen(top=bar.Bar(widgets=init_widgets_list() + shared_widgets, size=24)),
 ]
 
 dgroups_key_binder = None
-dgroups_app_rules = []  # type: list
+
+# Define group rules for specific programs
+dgroups_app_rules = [
+    Rule(Match(wm_class=["firefox"]), group="1"),
+    Rule(Match(wm_class=["Steam", "steam"]), group="7"),
+    Rule(Match(title=["Steam setup", "Steam", "steam"]), group="7"),
+]
+
+floating_layout = layout.Floating(
+    float_rules=[
+        *layout.Floating.default_float_rules,
+        Match(wm_class="confirmreset"),
+        Match(wm_class="makebranch"),
+        Match(wm_class="maketag"),
+        Match(wm_class="ssh-askpass"),
+        Match(title="branchdialog"),
+        Match(title="pinentry"),
+        Match(wm_class="Steam setup"),
+        Match(title="Steam Settings"),
+    ],
+    **floating_theme,
+)
+
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(
-    border_focus="#1F1D2E",
-    border_normal="#1F1D2E",
-    border_width=0,
-    float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
-        *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
-        Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
-    ],
-)
-
-# from libqtile import hook
-# # some other imports
-# import os
-# import subprocess
-# # stuff
-# @hook.subscribe.startup_once
-# def autostart_once():
-#     subprocess.run('~/.config/qtile/autostart_once.sh')# path to my script, under my user directory
-#     subprocess.call([home])
-
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
-
-# If things like steam games want to auto-minimize themselves when losing
-# focus, should we respect this or not?
 auto_minimize = True
-
-# When using the Wayland backend, this can be used to configure input devices.
-wl_input_rules = None
-
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, GitHub issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
 wmname = "qtile"
-
-# E O F
-#
-#
