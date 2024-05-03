@@ -1,10 +1,12 @@
+import re
+
 from libqtile import bar, layout, qtile, widget
 from libqtile.config import (
+    Click,
+    Drag,
     DropDown,
-    EzClick,
-    EzDrag,
-    EzKey,
     Group,
+    Key,
     Match,
     Rule,
     ScratchPad,
@@ -14,141 +16,125 @@ from libqtile.lazy import lazy
 
 from spotify import Spotify
 
-# General
 mod = "mod4"
+altmod = "mod1"
 terminal = "alacritty"
-dmenu = "dmenu_run"
-powerprompt = "power"
-browser = "firefox"
-emacs = "emacs"
-filemanager = "alacritty -e lf"
-mutevol = "wpctl set-mute 58 toggle"
-volup = "pactl set-sink-volume 0 +5%"
-voldown = "pactl set-sink-volume 0 -5%"
+mvol = "pulsemixer --toggle-mute"
+upvol = "pactl set-sink-volume 0 +5%"
+downvol = "pactl set-sink-volume 0 -5%"
 brightup = "brightnessctl s 10%+"
 brightdown = "brightnessctl s 10%-"
+powermenu = "power"
+dmenu = "dmenu_run"
+filemanager = "alacritty -e lf"
+browser = "firefox"
+emacs = "emacs"
+mpctoggle = "mpc toggle"
+mpcprev = "mpc prev"
+mpcnext = "mpc next"
+camkill = "camtoggle kill"
 
-# Set 1 to enable and 0 to disable
-volume_widget = 1
-systray_widget = 1
-battery_widget = 1
-clock_widget = 1
-memory_widget = 1
-spotify_widget = 1
-bluetooth_widget = 1
-
-# Widget settings
-widget_fontsize = 16
-widget_group_fontsize = 22
-
-# Scratchpad settings
-term_opacity = 0.95
-scratch_opacity = 1.00
-scratch_height = 0.50
-scratch_width = 0.50
-scratch_x = 0.25
-scratch_y = 0.1
-
-# Keybinds
 keys = [
     # Navigation
-    EzKey("M-h", lazy.layout.left(), desc="Move focus to left"),
-    EzKey("M-l", lazy.layout.right(), desc="Move focus to right"),
-    EzKey("M-j", lazy.layout.down(), desc="Move focus down"),
-    EzKey("M-k", lazy.layout.up(), desc="Move focus up"),
-    EzKey("M-<Space>", lazy.layout.next(), desc="Move window focus to other window"),
-    EzKey("M-<Tab>", lazy.screen.toggle_group(), desc="Switch to last viewed group"),
+    Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
+    Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
+    Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
+    Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
+    Key([mod], "Tab", lazy.screen.toggle_group(), desc="Switch last view group"),
     # Shuffle window
-    EzKey("M-C-h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    EzKey("M-C-l", lazy.layout.shuffle_right(), desc="Move window to the right"),
-    EzKey("M-C-j", lazy.layout.shuffle_down(), desc="Move window down"),
-    EzKey("M-C-k", lazy.layout.shuffle_up(), desc="Move window up"),
+    Key([mod, "control"], "h", lazy.layout.shuffle_left(), desc="Suffle to left"),
+    Key([mod, "control"], "l", lazy.layout.shuffle_right(), desc="Shuffle to right"),
+    Key([mod, "control"], "j", lazy.layout.shuffle_down(), desc="Shuffle down"),
+    Key([mod, "control"], "k", lazy.layout.shuffle_up(), desc="Shuffle up"),
     # Adjust window
-    EzKey("M-S-h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    EzKey("M-S-l", lazy.layout.grow_right(), desc="Grow window to the right"),
-    EzKey("M-S-j", lazy.layout.grow_down(), desc="Grow window down"),
-    EzKey("M-S-k", lazy.layout.grow_up(), desc="Grow window up"),
-    EzKey("M-n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    EzKey("M-f", lazy.window.toggle_fullscreen(), desc="Fullscreen"),
-    EzKey("M-S-<Return>", lazy.layout.toggle_split(), desc="Toggle split stack"),
+    Key([mod, "shift"], "h", lazy.layout.grow_left(), desc="Grow to left"),
+    Key([mod, "shift"], "l", lazy.layout.grow_right(), desc="Grow to right"),
+    Key([mod, "shift"], "j", lazy.layout.grow_down(), desc="Grow down"),
+    Key([mod, "shift"], "k", lazy.layout.grow_up(), desc="Grow up"),
+    Key([mod, "control"], "space", lazy.layout.normalize(), desc="Reset all window"),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Fullscreen toggle"),
     # Media keys
-    EzKey("<XF86AudioMute>", lazy.spawn(mutevol), desc="Mute volume"),
-    EzKey("<XF86AudioRaiseVolume>", lazy.spawn(volup), desc="Volume up"),
-    EzKey("<XF86AudioLowerVolume>", lazy.spawn(voldown), desc="Volume down"),
-    EzKey("<XF86MonBrightnessUp>", lazy.spawn(brightup), desc="Brightness up"),
-    EzKey("<XF86MonBrightnessDown>", lazy.spawn(brightdown), desc="Brightness down"),
-    EzKey("<XF86MonBrightnessDown>", lazy.spawn(brightdown), desc="Brightness down"),
-    EzKey("<XF86TouchpadToggle>", lazy.spawn("padtoggle"), desc="Toggle touchpad"),
+    Key([], "XF86AudioMute", lazy.spawn(mvol), desc="Mute volume"),
+    # Key([], "XF86AudioRaiseVolume", lazy.spawn(upvol), desc="Volume Up"),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn("audiobar 0 +5"), desc="Volume Up"),
+    # Key([], "XF86AudioLowerVolume", lazy.spawn(downvol), desc="volume down"),
+    Key([], "XF86AudioLowerVolume", lazy.spawn("audiobar 0 -5"), desc="volume down"),
+    Key([], "XF86MonBrightnessUp", lazy.spawn(brightup), desc="Brightness up"),
+    Key([], "XF86MonBrightnessDown", lazy.spawn(brightdown), desc="Brightness up"),
+    Key([], "XF86TouchpadToggle", lazy.spawn("padtoggle"), desc="Toggle touchpad"),
     # System
-    EzKey("M-q", lazy.window.kill(), desc="Kill focused window"),
-    EzKey("M-C-r", lazy.reload_config(), desc="Reload configuration"),
-    EzKey("M-<Escape>", lazy.spawn(powerprompt), desc="Powermenu"),
-    EzKey("M-i", lazy.next_layout(), desc="Toggle layouts"),
-    EzKey("M-C-x", lazy.shutdown(), desc="Shutdown qtile"),
+    Key([mod], "q", lazy.window.kill(), desc="Kill focus window"),
+    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload configuration"),
+    Key([mod], "escape", lazy.spawn(powermenu), desc="Power menu"),
+    Key([mod], "i", lazy.next_layout(), desc="Toggle layouts"),
+    Key([mod, "control"], "x", lazy.shutdown(), desc="Shutdown qtile"),
     # Programs
-    EzKey("M-<Return>", lazy.spawn(terminal)(), desc="Launch terminal"),
-    EzKey("M-d", lazy.spawn(dmenu), desc="Dmenu prompt"),
-    EzKey("M-o", lazy.spawn(filemanager), desc="File manager lf"),
-    EzKey("M-b", lazy.spawn(browser), desc="Web browser"),
-    EzKey("M-e", lazy.spawn(emacs), desc="Emacs"),
-    EzKey("M-w", lazy.spawn("searchweb"), desc="Web search"),
-]
-
-# Mouse
-mouse = [
-    EzDrag(
-        "M-1",
-        lazy.window.set_position_floating(),
-        start=lazy.window.get_position(),
-    ),
-    EzDrag(
-        "M-S-1",
-        lazy.window.set_size_floating(),
-        start=lazy.window.get_size(),
-    ),
-    EzClick("M-2", lazy.window.bring_to_front()),
+    Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    Key([mod], "d", lazy.spawn(dmenu), desc="Dmenu"),
+    Key([mod], "o", lazy.spawn(filemanager), desc="File manager lf"),
+    Key([mod], "b", lazy.spawn(browser), desc="Web browser"),
+    Key([mod], "e", lazy.spawn(emacs), desc="Emacs"),
+    Key([mod], "grave", lazy.spawn("emojis"), desc="Emojis"),
+    Key([mod, "shift"], "s", lazy.spawn("dmenu-playlist"), desc="Search ncmpcpp song"),
+    Key([mod], "p", lazy.spawn(mpctoggle), desc="Play toggle for ncmpcpp"),
+    Key([mod], "comma", lazy.spawn(mpcprev), desc="Previous song in ncmpcpp"),
+    Key([mod], "period", lazy.spawn(mpcnext), desc="Next song in ncmpcpp"),
+    Key([mod], "w", lazy.spawn("dmenu-favlink"), desc="Web search via dmenu"),
+    Key([mod], "s", lazy.spawn("dmenu-google"), desc="Web search via dmenu"),
+    Key([mod], "F12", lazy.spawn("torrtoggle"), desc="Torrent daemon toggle"),
+    Key([mod, "shift"], "F12", lazy.spawn("torrclear"), desc="Remove finished torrent"),
+    Key([mod], "c", lazy.spawn("camtoggle"), desc="Webcam"),
+    Key([mod, "shift"], "c", lazy.spawn(camkill), desc="Webcam"),
 ]
 
 # Groups
-groups = [Group(f"{i+1}", label="●") for i in range(8)]
-# groups = [Group(i) for i in "12345678"]
+# groups = [Group(f"{i+1}", label="●") for i in range(8)]
+# groups = [
+#     Group("1", label="1"),
+#     Group("2", label="2"),
+#     Group("3", label="3"),
+# ]
+groups = [Group(i) for i in "12345"]
 
 for i in groups:
     keys.extend(
         [
-            EzKey(
-                "M-" + i.name,
+            Key(
+                [mod],
+                i.name,
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
-            EzKey(
-                "M-S-" + i.name,
+            Key(
+                [mod, "shift"],
+                i.name,
                 lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                desc="Switch & move focused window to group {}".format(i.name),
             ),
-            EzKey(
-                "M-C-" + i.name,
+            Key(
+                [mod, "control"],
+                i.name,
                 lazy.window.togroup(i.name),
                 desc="move focused window to group {}".format(i.name),
             ),
         ]
     )
 
-# ScratchPad
+# Scratchpad
 groups.append(
     ScratchPad(
         "scratchpad",
         [
             DropDown(
                 "term",
-                "alacritty",
+                terminal,
                 on_focus_lost_hide=False,
                 warp_pointer=False,
-                opacity=term_opacity,
-                height=scratch_height,
-                width=scratch_width,
-                x=scratch_x,
-                y=scratch_y,
+                opacity=0.95,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
             ),
             DropDown(
                 "spotify",
@@ -156,11 +142,11 @@ groups.append(
                 match=Match(wm_class="Spotify"),
                 on_focus_lost_hide=False,
                 warp_pointer=False,
-                opacity=scratch_opacity,
-                height=scratch_height,
-                width=scratch_width,
-                x=scratch_x,
-                y=scratch_y,
+                opacity=1.00,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
             ),
             DropDown(
                 "btop",
@@ -168,11 +154,11 @@ groups.append(
                 match=Match(wm_class="sysmon"),
                 on_focus_lost_hide=False,
                 warp_pointer=False,
-                opacity=term_opacity,
-                height=scratch_height,
-                width=scratch_width,
-                x=scratch_x,
-                y=scratch_y,
+                opacity=0.95,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
             ),
             DropDown(
                 "htop",
@@ -180,11 +166,11 @@ groups.append(
                 match=Match(wm_class="sysmon"),
                 on_focus_lost_hide=False,
                 warp_pointer=False,
-                opacity=term_opacity,
-                height=scratch_height,
-                width=scratch_width,
-                x=scratch_x,
-                y=scratch_y,
+                opacity=0.95,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
             ),
             DropDown(
                 "nvtop",
@@ -192,11 +178,45 @@ groups.append(
                 match=Match(wm_class="sysmon"),
                 on_focus_lost_hide=False,
                 warp_pointer=False,
-                opacity=term_opacity,
-                height=scratch_height,
-                width=scratch_width,
-                x=scratch_x,
-                y=scratch_y,
+                opacity=0.95,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
+            ),
+            DropDown(
+                "pulsemixer",
+                "alacritty --class sysmon -e pulsemixer",
+                match=Match(wm_class="sysmon"),
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=0.95,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
+            ),
+            DropDown(
+                "ncmpcpp",
+                terminal + " -e ncmpcpp",
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=0.95,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
+            ),
+            DropDown(
+                "tremc",
+                terminal + " -e tremc",
+                on_focus_lost_hide=False,
+                warp_pointer=False,
+                opacity=0.95,
+                height=0.50,
+                width=0.50,
+                x=0.25,
+                y=0.1,
             ),
         ],
     )
@@ -204,33 +224,73 @@ groups.append(
 
 keys.extend(
     [
-        EzKey(
-            "M-S-<Return>",
+        Key(
+            [mod, "shift"],
+            "Return",
             lazy.group["scratchpad"].dropdown_toggle("term"),
             desc="Terminal scratchpad",
         ),
-        EzKey(
-            "A-S-s",
+        Key(
+            [altmod, "shift"],
+            "s",
             lazy.group["scratchpad"].dropdown_toggle("spotify"),
             desc="Spotify scratchpad",
         ),
-        EzKey(
-            "A-C-m",
+        Key(
+            [altmod, "shift"],
+            "b",
             lazy.group["scratchpad"].dropdown_toggle("btop"),
             desc="Btop system monitor",
         ),
-        EzKey(
-            "A-C-h",
+        Key(
+            [altmod, "shift"],
+            "h",
             lazy.group["scratchpad"].dropdown_toggle("htop"),
             desc="Htop system monitor",
         ),
-        EzKey(
-            "A-C-n",
+        Key(
+            [altmod, "shift"],
+            "n",
             lazy.group["scratchpad"].dropdown_toggle("nvtop"),
             desc="Nvtop gpu monitor",
         ),
+        Key(
+            [altmod, "shift"],
+            "p",
+            lazy.group["scratchpad"].dropdown_toggle("pulsemixer"),
+            desc="Audio mixer",
+        ),
+        Key(
+            [altmod, "shift"],
+            "m",
+            lazy.group["scratchpad"].dropdown_toggle("ncmpcpp"),
+            desc="Ncmpcpp music player",
+        ),
+        Key(
+            [altmod],
+            "t",
+            lazy.group["scratchpad"].dropdown_toggle("tremc"),
+            desc="Torrent tremc",
+        ),
     ]
 )
+
+# Mouse
+mouse = [
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod, "shift"],
+        "Button1",
+        lazy.window.set_size_floating(),
+        start=lazy.window.get_size(),
+    ),
+    Click([mod], "Button2", lazy.window.bring_to_front()),
+]
 
 # Gruvbox colors
 color = [
@@ -253,7 +313,7 @@ color = [
     ["#3c3836", "#3c3836"],  # 16
 ]
 
-# Layout theme
+# Layouts
 layout_theme = {
     "border_width": 2,
     "border_focus": color[1],
@@ -261,141 +321,12 @@ layout_theme = {
 }
 floating_theme = layout_theme.copy()
 
-# Widget theme
-widget_defaults = dict(
-    font="monospace bold",
-    fontsize=widget_fontsize,
-    background=color[0],
-    padding=5,
-)
-
-widget_groupbox = dict(
-    font="monospace bold",
-    fontsize=widget_group_fontsize,
-    background=color[0],
-    active=color[1],
-    inactive=color[16],
-    this_current_screen_border=color[0],
-    block_highlight_text_color=color[2],
-    margin_y=3,
-    margin_x=0,
-    padding_x=3,
-)
-sep_size = 60
-extension_defaults = widget_defaults.copy()
-
 layouts = [
     layout.Columns(**layout_theme, shift_windows=True, margin=8, border_on_single=True),
+    layout.Floating(**layout_theme),
+    # layout.Max(**layout_theme),
     # layout.Tile(**layout_theme),
     # layout.Bsp(**layout_theme),
-    layout.Max(**layout_theme),
-    layout.Floating(**layout_theme),
-]
-
-
-def init_widgets_list():
-    return [
-        widget.GroupBox(**widget_groupbox),
-        widget.CurrentLayout(**widget_defaults, fmt=" {}", foreground=color[3]),
-        widget.WindowName(**widget_defaults, max_chars=51, foreground=color[4]),
-    ]
-
-
-def power():
-    qtile.cmd_spawn("power")
-
-
-# Define an array so that each screen gets a SHARED instantiation of these widgets
-shared_widgets = []
-
-# Widgets
-if spotify_widget == 1:
-    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
-    shared_widgets += [
-        Spotify(
-            **widget_defaults,
-            format="{artist} {icon}  {track}",
-            # max_chars=44,
-            foreground=color[5],
-        )
-    ]
-
-if bluetooth_widget == 1:
-    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
-    shared_widgets += [
-        widget.Bluetooth(
-            **widget_defaults,
-            hci0="10:68:38:F1:06:95",
-            default_show_battery=True,
-        )
-    ]
-
-if memory_widget == 1:
-    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
-    shared_widgets += [
-        widget.Memory(
-            **widget_defaults,
-            format="Mem:{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
-            foreground=color[14],
-        )
-    ]
-
-if volume_widget == 1:
-    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
-    shared_widgets += [
-        widget.Volume(
-            **widget_defaults,
-            fmt="  {}",
-            foreground=color[12],
-        )
-    ]
-
-if clock_widget == 1:
-    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
-    shared_widgets += [
-        widget.Clock(
-            **widget_defaults,
-            format=" %Y-%m-%d %a %I:%M %p",
-            foreground=color[3],
-        )
-    ]
-
-if battery_widget == 1:
-    shared_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
-    shared_widgets += [
-        widget.Battery(
-            **widget_defaults,
-            format="{char} {percent:2.0%} {hour:d}:{min:02d}",
-            charge_char="  ",
-            full_char=" ",
-            discharge_char=" ",
-            update_interval=5,
-            mouse_callbacks={"Button1": power},
-            foreground=color[2],
-        )
-    ]
-
-systray_widgets = []
-if systray_widget == 1:
-    systray_widgets += [widget.Sep(**widget_defaults, size_percent=sep_size)]
-    systray_widgets += [widget.Systray(**widget_defaults, icon_size=18)]
-
-screens = [
-    Screen(
-        top=bar.Bar(
-            widgets=init_widgets_list() + shared_widgets + systray_widgets, size=24
-        )
-    ),
-    Screen(top=bar.Bar(widgets=init_widgets_list() + shared_widgets, size=24)),
-]
-
-dgroups_key_binder = None
-
-# Define group rules for specific programs
-dgroups_app_rules = [
-    Rule(Match(wm_class=["firefox"]), group="1"),
-    Rule(Match(wm_class=["Steam", "steam"]), group="7"),
-    Rule(Match(title=["Steam setup", "Steam", "steam"]), group="7"),
 ]
 
 floating_layout = layout.Floating(
@@ -413,6 +344,78 @@ floating_layout = layout.Floating(
     **floating_theme,
 )
 
+# Widgets
+widget_defaults = dict(
+    font="monospace bold",
+    fontsize=16,
+    background=color[0],
+    padding=5,
+)
+extension_defaults = widget_defaults.copy()
+
+
+def power():
+    qtile.cmd_spawn("power")
+
+
+def core_widget():
+    return [
+        widget.Image(
+            filename="~/.config/qtile/assets/python.png",
+            # margin=3,
+            # background=color[1],
+        ),
+        widget.GroupBox(
+            # fontsize=16,
+            active=color[1],
+            inactive=color[16],
+            this_current_screen_border=color[0],
+            block_highlight_text_color=color[2],
+        ),
+        widget.CurrentLayout(**widget_defaults, foreground=color[3]),
+        widget.WindowName(**widget_defaults, max_chars=51, foreground=color[4]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        Spotify(format="{artist} {icon}  {track}", foreground=color[5]),
+        # BUG: Causes crash if enabled at the same time with `widget.Systray`.
+        # widget.Sep(**widget_defaults, size_percent=60),
+        # widget.Bluetooth(default_show_battery=True, foreground=color[4]),
+        # TODO: Make a script only show icons when ncmpcpp is in paused state.
+        # widget.Sep(**widget_defaults, size_percent=60),
+        # widget.Mpd2(status_format="{play_status} {title}"),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Memory(
+            format="Mem:{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
+            foreground=color[14],
+        ),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Wlan(
+            format="󰖩  {essid}",
+            disconnected_message="󰖪 ",
+            interface="wlp6s0",
+            foreground=color[9],
+        ),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Volume(fmt="  {}", foreground=color[12]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Clock(format=" %Y-%m-%d %a %I:%M %p", foreground=color[3]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Battery(
+            format="{char} {percent:2.0%}",
+            charge_char=" ",
+            # BUG: Not working `full_char`
+            # full_char=" ",
+            discharge_char=" ",
+            update_interval=5,
+            mouse_callbacks={"Button1": power},
+            foreground=color[13],
+        ),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Systray(icon_size=18),
+    ]
+
+
+screens = [Screen(top=bar.Bar(widgets=core_widget(), size=24))]
+
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
@@ -420,4 +423,12 @@ auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
 auto_minimize = True
+wl_input_rules = None
 wmname = "qtile"
+dgroups_key_binder = None
+
+dgroups_app_rules = [
+    Rule(Match(wm_class=re.compile(r"^(firefox)$")), group="1"),
+    Rule(Match(wm_class=re.compile(r"^(Steam|steam)$")), group="4"),
+    Rule(Match(title=re.compile(r"^(Steam\ setup|Steam|steam)$")), group="4"),
+]
