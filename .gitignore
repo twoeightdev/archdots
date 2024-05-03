@@ -64,5 +64,7 @@
 .local/share/vulkan/
 .local/share/xorg/
 .local/share/recently-used.xbel
+.local/share/zathura/
 .local/state/
+.local/torrent/
 .local/work/
