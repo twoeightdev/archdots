@@ -34,7 +34,7 @@ alias \
     yi="yay -S" \
     yr="yay -Rns" \
     ys="yay -Ss" \
-    yq="yay -Qsq" \
+    yq="yay -Qi" \
     ec="emacsclient -c -n -a 'emacs'" \
     z="zathura"
 
