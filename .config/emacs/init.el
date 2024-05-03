@@ -1,6 +1,6 @@
 ;;; init.el --- Init File -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022-2023 twoeightdev
+;; Copyright (C) 2022-2024 twoeightdev
 
 ;; Author: artjeremie <twoeightdev@gmail.com>
 ;; URL: https://github.com/twoeightdev
@@ -16,11 +16,11 @@
       (gc-cons-threshold most-positive-fixnum)
       (read-process-output-max (* 1024 1024)))
 
-  ;;(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+  (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
   ;;(load "_mode-line" nil t)
-  ;;(load "_prog-mode" nil t)
-  ;;(load "_packages" nil t)
+  (load "_prog-mode" nil t)
+  (load "_packages" nil t)
 
   (let ((user-settings "~/.emacs.d/_config.el"))
     (when (file-exists-p user-settings)
