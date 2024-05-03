@@ -11,6 +11,8 @@
 .dotfiles
 cef_user_data
 dconf
+elpa
+transient
 fzf
 htop
 ibus
