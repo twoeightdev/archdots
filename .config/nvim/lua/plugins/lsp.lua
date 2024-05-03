@@ -133,7 +133,7 @@ return {
                     },
                 },
             })
-            lspconfig.bashls.setup({ filetypes = { "sh", "zsh", "bash" } })
+            -- lspconfig.bashls.setup({ filetypes = { "sh", "zsh", "bash" } })
             lspconfig.marksman.setup({})
             lspconfig.taplo.setup({})
         end,
