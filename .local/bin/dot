@@ -1,12 +1,12 @@
 #!/bin/sh
 # Wrapper for dotfiles
 dots() { git --git-dir=$HOME/.config/.dotfiles --work-tree=$HOME "$@"; }
-if [ $1 = 'up' ]; then
+if [ $1 = 'out' ]; then
     dots pull &&
-    dots update-index --assume-unchanged ~/LICENSE ~/README.md &&
-    rm -rf ~/LICENSE ~/README.md
-elif [ $1 = 'res' ]; then
-    dots update-index --no-assume-unchanged ~/LICENSE ~/README.md &&
+    dots update-index --assume-unchanged ~/LICENSE ~/README.org &&
+    rm -rf ~/LICENSE ~/README.org
+elif [ $1 = 'in' ]; then
+    dots update-index --no-assume-unchanged ~/LICENSE ~/README.org &&
     dots checkout -f
 else
     dots $*
