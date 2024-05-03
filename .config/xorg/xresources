@@ -10,6 +10,7 @@
 !Xft*lcdfilter: lcddefault
 !ssh-askpass*background: #000000
 Xcursor*theme: Adwaita
+Xcursor.size: 32
 
 ! XTerm
 !XTerm*termName: xterm-256color
