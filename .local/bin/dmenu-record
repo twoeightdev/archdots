@@ -1,0 +1,47 @@
+#!/bin/sh
+
+getdim() { xrandr | grep -oP '(?<=current ).*(?=,)' | tr -d ' ' ;}
+
+killrecording() {
+    recpid="$(cat /tmp/recordingpid)"
+    kill -15 "$recpid"
+    rm -f /tmp/recordingpid
+}
+
+video() {
+    ffmpeg \
+        -f x11grab \
+        -framerate 30 \
+        -s "$(getdim)" \
+        -i "$DISPLAY" \
+        -c:v libx264 -qp 0 -r 30 \
+        "$HOME/video-$(date '+%y%m%d-%H%M-%S').mkv" &
+    echo $! > /tmp/recordingpid
+}
+
+audio() {
+    ffmpeg \
+        -f alsa -i default \
+        -c:a flac \
+        "$HOME/audio-$(date '+%y%m%d-%H%M-%S').flac" &
+    echo $! > /tmp/recordingpid
+}
+
+askrecording() {
+    choice=$(printf "video\\naudio" | dmenu -i -p "Select recording style:")
+    case "$1choice" in
+        video) video;;
+        audio) audio;;
+    esac
+}
+
+asktoend() {
+    response=$(printf "No\\nYes" | dmenu -i -p "Recording still active. End recording?") &&
+        [ "$response" = "Yes" ] &&  killrecording
+}
+
+case "$1" in
+    video) video;;
+    kill) killrecording;;
+    *) ([ -f /tmp/recordingpid ] && asktoend && exit) || askrecording;;
+esac
