@@ -9,5 +9,5 @@ fe() {
 set -- $(lsblk -rno 'name,mountpoint' | grep ' /' | fe | dmenu -i -p 'Umount')
 [ "$1" ]
 sudo umount "$2"
-[ -d "$HOME/.config/mnt/$1" ] && rmdir "$HOME/.config/mnt/$1"
+[ -d "$HOME/.local/mnt/$1" ] && rmdir "$HOME/.local/mnt/$1"
 notify-send "Unmounted $1" "$2"
