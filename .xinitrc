@@ -3,7 +3,7 @@
 remaps &
 setbg &
 
-autostart="picom dunst pipewire"
+autostart="picom dunst pipewire mpd"
 
 for program in $autostart; do
     pidof -s "$program" || setsid -f "$program"
