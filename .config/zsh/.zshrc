@@ -1,33 +1,93 @@
-# Colors
-setopt extended_history         # Record timestamp of command in HISTFILE
-setopt hist_expire_dups_first   # Delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_all_dups     # Ignore all duplicates in history
-setopt share_history            # Shares all history
-stty stop undef                 # Disable ctrl-s to freeze terminal
+# Elapsed time set in `RPROMPT`
+zmodload zsh/datetime
+autoload -U add-zsh-hook
 
-# Automaticly escape urls special characters
+_preexec() {
+    preexec_time=${EPOCHREALTIME}
+}
+
+_precmd() {
+    if (( preexec_time )); then
+        local -rF elapsed_time=$(( EPOCHREALTIME - preexec_time ))
+        local -rF s=$(( elapsed_time%60 ))
+        local -ri elapsed_s=${elapsed_time}
+        local -ri m=$(( (elapsed_s/60)%60 ))
+        local -ri h=$(( elapsed_s/3600 ))
+
+        if (( h > 0 )); then
+            printf -v prompt_time '%ih%im' ${h} ${m}
+        elif (( m > 0 )); then
+            printf -v prompt_time '%im%is' ${m} ${s}
+        elif (( s >= 10 )); then
+            printf -v prompt_time '%.2fs' ${s}
+        elif (( s >= 1 )); then
+            printf -v prompt_time '%.2fs' ${s}
+        else
+            printf -v prompt_time '%ims' $(( s*1000 ))
+        fi
+        tprompt="%F{167}[$prompt_time]%f"
+        unset preexec_time
+    else
+        unset prompt_time
+    fi
+}
+add-zsh-hook preexec _preexec
+add-zsh-hook precmd _precmd
+
+# Prompt with git and branch name
+autoload -U colors && colors
+autoload -Uz vcs_info
+setopt nopromptbang prompt{cr,percent,sp,subst}
+setopt prompt_subst
+
+_promptvcs() {
+    vcs_info
+    zstyle ':vcs_info:git*' formats "%B%F{142}on %F{66}  %F{124}%b "
+
+    echo -e -n "\x1b[\x33 q"
+    PROMPT="%B%F{124}[%f%F{214}%n%f%F{142}@%f%F{66}%M %f%F{132}%~ %f${vcs_info_msg_0_}%F{124}]%f$%b "
+    RPROMPT="${tprompt}"
+}
+add-zsh-hook precmd _promptvcs
+
+set -k
+stty stop undef
+
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_verify
+setopt share_history
+setopt complete_aliases
+setopt auto_menu
+setopt always_to_end
+setopt complete_in_word
+setopt glob_dots
+setopt autocd
+setopt extended_glob
+setopt interactive_comments
+
+# automatically escape urls special characters
 autoload -Uz url-quote-magic bracketed-paste-magic
 zle -N self-insert url-quote-magic
 zle -N bracketed-paste bracketed-paste-magic
 
-# Git prompt with branch name
-function precmd {
-    if [[ "$NEW_LINE" = true ]] then
-        print ""
-    else
-        NEW_LINE=true
-    fi
-    vcs_info
+# Basic tab completion
+autoload -U compinit && compinit -u
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' ignored-patterns '.'
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
+zmodload zsh/complist
+
+# Command not found
+function command_not_found_handler() {
+    print -P "command not found: %F{red}$0%f" >&2
+    return 127
 }
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:git:*' formats 'on %F{blue}◆%f %F{red}%b'
-
-setopt PROMPT_SUBST
-PROMPT='%B%F{red}[%f%F{cyan}%n%f%F{red}]%f%F{blue}@%f%F{magenta}%~%f%b%F{yellow} →%f '
-RPROMPT='%B%F{green}${vcs_info_msg_0_}%f%b '
-
-# Exclude garbage in history
+# exclude garbage in history
 function hist() {
     [[ "$#1" -lt 7 \
         || "$1" = "run-help "* \
@@ -36,134 +96,110 @@ function hist() {
         || "$1" = "h "* \
         || "$1" = "~ "* ]]
             return $(( 1 - $? ))
-        }
+}
 
-        #setopt correct_all      # Autocorrect commands
-        setopt completealiases
-        setopt auto_menu         # Automatically use menu completion
-        setopt always_to_end     # Move cursor to end if word had one match
-        setopt complete_in_word  # Completion from both ends
-        autoload -Uz compinit && compinit -u
-        zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-        zstyle ':completion:*' menu select
-        zstyle ':completion:*' special-dirs true
-        zstyle ':completion:*' ignored-patterns '.'
-        zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
-        _comp_options+=(globdots) # Include hidden files
+# vi mode
+bindkey -v
+export KEYTIMEOUT=1
 
-        # Vi mode
-        bindkey -v
-        export KEYTIMEOUT=1
-        local cursor_insert="\e[4 q"
-        local cursor_normal="\e[2 q"
+# Vim keys in tab completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
 
-        # Change cursor shape for different vi modes
-        function zle-keymap-select() {
-            if [[ $KEYMAP == vicmd || $1 == 'block' ]]; then
-                print -n $cursor_normal
-            elif [[ $KEYMAP == main || $KEYMAP == viins || -z $KEYMAP || $1 == 'beam' ]]; then
-                print -n $cursor_insert
-            fi
-        }
+# Change cursor shape for different vi modes
+function zle-keymap-select() {
+case $KEYMAP in
+    # block
+    vicmd) echo -ne '\e[1 q';;
+    # beam
+    viins|main) echo -ne '\e[5 q';;
+esac
+}
+zle -N zle-keymap-select
 
-        function zle-line-init() {
-            zle -K viins # Initiate `vi insert` as keymap (can be removed if `bindkey -v` has been set elsewhere)
-            print -n $cursor_insert
-        }
+# initiate `vi insert` as keymap
+# can be removed if `bindkey -V` has been set elsewhere
+zle-line-init() { zle -K viins && echo -ne "\e[5 q" }
+zle -N zle-line-init
 
-        zle -N zle-keymap-select
-        zle -N zle-line-init
+# use beam cursor on startup
+echo -ne '\e[5 q'
 
-        print -n $cursor_insert # Use beam shape cursor on startup
-        function preexec() { print -n $cursor_insert; } # Use beam shape cursor for each new prompt
+# use beam cursor for each new prompt
+preexec() { echo -ne '\e[5 q' ;}
 
-        # Use lf to switch directories and bind it to ctrl-o
-        lfcd () {
-            tmp="$(mktemp)"
-            lf -last-dir-path="$tmp" "$@"
-            if [ -f "$tmp" ]; then
-                dir="$(cat "$tmp")"
-                rm -f "$tmp" >/dev/null
-                [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" && ls -hNA --color=auto --group-directories-first
-            fi
-        }
+# Use lf to jump in directories with ctrl-o
+lfcd() {
+    tmp="$(mktemp -uq)"
+    trap 'rm -f $tmp >/dev/null 2>&1 &&
+        trap - HUP INT QUIT TERM PWR EXIT' HUP INT QUIT TERM PWR EXIT
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+        ls -AhN --color=auto --group-directories-first
+    fi
+}
+bindkey -s "^o" "^ulfcd\n"
 
-        # Ctrl-o to open lf file manager
-        bindkey -s '^o' 'lfcd\n'
+# Edit line in vim with ctrl-e
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+bindkey -M vicmd '^e' edit-command-line
 
-        # Use vim keys in tab complete menu:
-        zmodload zsh/complist
-        bindkey -M menuselect 'h' vi-backward-char
-        bindkey -M menuselect 'k' vi-up-line-or-history
-        bindkey -M menuselect 'l' vi-forward-char
-        bindkey -M menuselect 'j' vi-down-line-or-history
+# Load aliases and shortcuts if it exist
+[ -f "$XDG_CONFIG_HOME/shell/shrc" ] && source "$XDG_CONFIG_HOME/shell/shrc"
+[ -f "$XDG_CONFIG_HOME/shell/aliasrc" ] && source "$XDG_CONFIG_HOME/shell/aliasrc"
+[ -f "$XDG_CONFIG_HOME/shell/zshdirrc" ] && source "$XDG_CONFIG_HOME/shell/zshdirrc"
 
-        # Misc
-        set -k               # Allows comments in interactive shell
-        setopt autocd       # Type directory name to cd
-        setopt extendedglob  # Additional syntax for filename generation
+# fzf
+if [ ! -d ~/.config/fzf ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf ~/.config/fzf
+    ~/.config/fzf/install --no-bash --no-fish --xdg --all
+fi
 
-        # Load aliases and shortcuts if existent
-        [ -f "$XDG_CONFIG_HOME/shell/shrc" ] && source "$XDG_CONFIG_HOME/shell/shrc"
-        [ -f "$XDG_CONFIG_HOME/shell/aliasrc" ] && source "$XDG_CONFIG_HOME/shell/aliasrc"
-        [ -f "$XDG_CONFIG_HOME/shell/zshdirrc" ] && source "$XDG_CONFIG_HOME/shell/zshdirrc"
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ]]; then
+    source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+fi
 
-        function command_not_found_handler() {
-            print -P "not found: %F{red}$0%f" >&2
-            return 127
-        }
+# Search for file in $HOME directory with fzf and open with $EDITOR
+e() { rg $HOME --files | sort -u | fzf -m | xargs -r $EDITOR; }
 
-        # Fzf
-        if [ ! -d ~/.config/fzf ]; then
-            git clone --depth 1 https://github.com/junegunn/fzf ~/.config/fzf
-            ~/.config/fzf/install --no-bash --no-fish --xdg --all
-        fi
+# Search directory in $HOME and cd to that directory with fzf
+j() { cd "$(rg $HOME -0 --files | xargs -0 dirname | sort -u | fzf)" && ls -A }
 
-        [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+# zsh-syntax-highlighting
+if [ ! -d $ZPLUG/zsh-syntax-highlighting ]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting $ZPLUG/zsh-syntax-highlighting
+fi
 
-        # Rebind fzf alt+c to alt+x
-        bindkey '\ex' fzf-cd-widget
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[assign]='none'
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[command]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='none'
+ZSH_HIGHLIGHT_STYLES[default]='none'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=green'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[function]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=green'
+ZSH_HIGHLIGHT_STYLES[links]='none'
+ZSH_HIGHLIGHT_STYLES[path]='none'
+ZSH_HIGHLIGHT_STYLES[path_approx]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=green'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
 
-        # Rebind fzf ctrl+t to alt+z
-        bindkey '\ez' fzf-file-widget
-
-        # Editor + fzf
-        e() { fzf | xargs -r $EDITOR ;}
-
-        # cd to any directory in $HOME
-        j() {cd "$(fd . $HOME --ignore-file ~/.config/fd/ignore --hidden --type d | fzf)" && ls -A}
-
-        # cd to any directory in /media
-        #qm() { cd "$(find "/media/" -type d 2>/dev/null | fzf)" && ls -A ;}
-
-        # Syntax highlighting
-        if [ ! -d ~/.config/zsh/zplug/zsh-syntax-highlighting ]; then
-            git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.config/zsh/zplug/zsh-syntax-highlighting
-        fi
-        source ~/.config/zsh/zplug/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-
-        typeset -A ZSH_HIGHLIGHT_STYLES
-        ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
-        ZSH_HIGHLIGHT_STYLES[assign]='none'
-        ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
-        ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
-        ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'
-        ZSH_HIGHLIGHT_STYLES[command]='fg=blue'
-        ZSH_HIGHLIGHT_STYLES[commandseparator]='none'
-        ZSH_HIGHLIGHT_STYLES[default]='none'
-        ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
-        ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=green'
-        ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=cyan'
-        ZSH_HIGHLIGHT_STYLES[function]='fg=blue'
-        ZSH_HIGHLIGHT_STYLES[globbing]='fg=magenta'
-        ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=blue'
-        ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=green'
-        ZSH_HIGHLIGHT_STYLES[links]='none'
-        ZSH_HIGHLIGHT_STYLES[path]='none'
-        ZSH_HIGHLIGHT_STYLES[path_approx]='fg=yellow'
-        ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
-        ZSH_HIGHLIGHT_STYLES[precommand]='fg=blue'
-        ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=blue'
-        ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=green'
-        ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=cyan'
-        ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
+source $ZPLUG/zsh-syntax-highlighting//zsh-syntax-highlighting.plugin.zsh
