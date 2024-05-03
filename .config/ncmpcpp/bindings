@@ -1,3 +1,4 @@
+# Ncmpcpp keybindings
 def_key "+"
     show_clock
 def_key "="
