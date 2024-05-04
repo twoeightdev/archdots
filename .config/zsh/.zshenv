@@ -59,7 +59,7 @@ export SAVEHIST=1000
 export HISTFILE="$ZDOTDIR/.history"
 export LESSHISTFILE="-"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenu-pass"
-export SUDO_PROMPT=$'\e[31m'[$'\e[0m'sudo$'\e[31m']$'\e[0m'' password for '$'\e[1;31m''%p'$'\e[0m'': '
+export SUDO_PROMPT=$'\e[1;31m'[$'\e[0m'sudo$'\e[1;31m']$'\e[0m'' password for '$'\e[1;31m''%p'$'\e[0m'': '
 export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [nyae]: "
 
 # Fzf
