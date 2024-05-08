@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if pgrep -x "emacs" > /dev/null
+then
+    pkill emacs && notify-send "Emacs daemon disabled."
+else
+    emacs --daemon && notify-send "Emacs daemon started."
+fi
