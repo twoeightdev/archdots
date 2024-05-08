@@ -1,21 +1,13 @@
 #!/bin/bash
 
-options=$(echo -e "  Poweroff\n  Restart\n  Suspend\n  Logout")
+opts=$(echo -e "⏻ Poweroff\n⭘ Restart\n⚡ Suspend\n⏼ Logout")
 
-selected_option=$(echo -e "$options" | dmenu -p "Bye "$USER"!")
+sel_opts=$(echo -e "$opts" | dmenu -p "Bye "$USER"!")
 
-# Handle the selected option
-case $selected_option in
-    "  Poweroff")
-        systemctl poweroff
-        ;;
-    "  Restart")
-        systemctl reboot
-        ;;
-    "  Suspend")
-        systemctl suspend
-        ;;
-    "  Logout")
-        pkill -KILL -u "$USER"
-        ;;
+case $sel_opts in
+    "⏻ Poweroff") shutdown now;;
+    # "━ Lock") slock & mpc pause;;
+    "⭘ Restart") reboot;;
+    "⚡ Suspend") systemctl suspend;;
+    "⏼ Logout") pkill -KILL -u "$USER";;
 esac
