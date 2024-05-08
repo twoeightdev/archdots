@@ -16,9 +16,12 @@
 .pulse-cookie
 .config/cef_user_data/
 .config/dconf/
+.config/emacs/auto-saves/
+.config/emacs/backups/
+.config/emacs/custom.el
 .config/emacs/elpa/
+.config/emacs/.org-id-locations
 .config/emacs/places
-.config/emacs/transient/
 .config/fzf/
 .config/GIMP/
 .config/htop/
@@ -46,6 +49,7 @@
 .config/zsh/.history
 .config/zsh/.zcompdump
 .local/downloads/
+.local/orgdata/
 .local/screenshot/
 .local/share/cargo/
 .local/share/gnupg/crls.d/
