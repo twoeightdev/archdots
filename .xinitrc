@@ -2,6 +2,8 @@
 
 remaps &
 setbg &
+# /usr/bin/emacs --daemon &
+# emacs --daemon &
 
 autostart="picom dunst pipewire mpd"
 
