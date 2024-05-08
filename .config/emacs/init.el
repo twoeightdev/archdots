@@ -1,8 +1,8 @@
-;;; init.el --- Init File -*- lexical-binding: t -*-
+;;; Auto-generated --- DO NOT EDIT -*- lexical-binding: t -*-
 
-;; Copyright (C) 2022-2024 twoeightdev
+;; Copyright (C) 2024 twoeightdev
 
-;; Author: artjeremie <twoeightdev@gmail.com>
+;; Author: twoeightdev <twoeightdev@gmail.com>
 ;; URL: https://github.com/twoeightdev
 
 ;;; Commentary:
@@ -11,31 +11,247 @@
 
 ;;; Code:
 
-(let ((file-name-handler-alist nil)
-      (gc-cons-percentage .6)
-      (gc-cons-threshold most-positive-fixnum)
-      (read-process-output-max (* 1024 1024)))
+(setq-default gc-cons-threshold (* 8 1024 1024))
+(setq-default read-process-output-max (* 1024 1024))
+(setq-default ad-redefinition-action 'accept)
+(setq-default initial-scratch-message "")
+(setq-default initial-major-mode 'org-mode)
+(setq-default server-client-instructions nil)
+(setq-default ring-bell-function 'ignore)
+(setq-default help-window-select t)
+(setq-default window-combination-resize t)
+(setq-default comment-multi-line t)
+(setq-default sentence-end-double-space nil)
+(setq-default electric-pair-preserve-balance nil)
+(setq-default auto-revert-verbose nil)
+(setq-default column-number-mode t)
+(setq-default display-line-numbers-width 3)
+(setq-default fill-column 80)
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode nil)
+(setq-default cursor-in-non-selected-windows nil)
+(setq-default cursor-type '(bar . 3))
+(setq-default mouse-yank-at-point t)
+(setq-default scroll-margin 1)
+(setq-default scroll-step 1)
+(setq-default scroll-conservatively 101)
+(setq-default scroll-preserve-screen-position 1)
 
-  (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(blink-cursor-mode 0)
+(electric-pair-mode 1)
+(save-place-mode 1)
+(global-auto-revert-mode)
+(mouse-avoidance-mode 'exile)
+(set-default-coding-systems 'utf-8)
 
-  ;;(load "_mode-line" nil t)
-  (load "_prog-mode" nil t)
-  (load "_packages" nil t)
+(setq-default package-native-compile t)
+(setq-default use-package-always-defer t)
+(setq-default use-package-always-ensure t)
 
-  (let ((user-settings "~/.emacs.d/_config.el"))
-    (when (file-exists-p user-settings)
-      (load user-settings nil t)))
+(require 'package)
+(require 'use-package)
 
-  (garbage-collect)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") 'append)
 
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (message
-               "Loaded in %s with %d garbage-collected."
-               (format
-                "%.2f seconds"
-                (float-time
-                 (time-subtract after-init-time before-init-time)))
-               gcs-done))))
+(use-package org-auto-tangle
+  :hook
+  (org-mode . org-auto-tangle-mode))
+
+(use-package no-littering)
+
+(make-directory (expand-file-name "auto-saves/" user-emacs-directory) t)
+(setq auto-save-list-file-prefix
+      (expand-file-name "auto-saves/sessions/" user-emacs-directory)
+      auto-save-file-name-transforms
+      `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+(setq backup-directory-alist '(("." . "~/.config/emacs/backups")))
+(setq version-control t)
+(setq backup-by-copying t)
+(setq delete-old-versions t)
+(setq kept-new-versions 2)
+(setq kept-old-versions 2)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+(setq auto-save-list-file-prefix nil)
+(setq mode-require-final-newline nil)
+(setq large-file-warning-threshold nil)
+
+(add-function :after after-focus-change-function
+              (defun _garbage-collect-maybe ()
+                (unless (frame-focus-state)
+                  (garbage-collect))))
+
+(global-unset-key (kbd "C-x C-z"))
+(global-unset-key (kbd "C-z"))
+
+(windmove-default-keybindings 'ctrl)
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(global-set-key (kbd "C-h K") 'describe-keymap)
+
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-0") 'text-scale-set)
+
+(defconst org-path
+  (locate-user-emacs-file "twoeightdev.org")
+  "Path to my `org' configuration file.")
+
+(defun org-config ()
+  "Open my `org' configuraiton file."
+  (interactive)
+  (find-file org-path))
+
+(global-set-key (kbd "C-c o") 'org-config)
+
+(set-face-font 'default "Inconsolata Nerd Font")
+(set-face-font 'variable-pitch "Iosevka Aile")
+(copy-face 'default 'fixed-pitch)
+
+(use-package gruvbox-theme
+  :init
+  (load-theme 'gruvbox-dark-hard t))
+
+(use-package org
+  :ensure nil
+  :custom
+  (org-directory "~/.local/orgdata/org")
+  (org-default-notes-file "~/.local/orgdata/notes")
+  (org-startup-indented nil)
+  (org-edit-src-content-indentation 0)
+  (org-src-window-setup 'current-window)
+  (org-tags-column -92)
+  (org-return-follows-link t)
+  (org-image-actual-width nil)
+  (org-link-descriptive t)
+  (org-hide-emphasis-markers t)
+  (org-hide-leading-stars t)
+  (org-special-ctrl-a/e t)
+  (org-catch-invisible-edits 'show-and-error)
+  (org-time-stamp-custom-formats
+   '("<%b-%d-%y %a>" . "<%b-%d-%y %a %I:%M %p>"))
+  (org-agenda-files (list "gtd.org" "purge.org"))
+  (org-agenda-start-on-weekday 1)
+  (org-agenda-timegrid-use-ampm 1)
+  (org-agenda-show-all-dates nil)
+  (org-agenda-remove-tags t)
+  (org-agenda-tags-column -92)
+  (org-agenda-window-setup 'current-window)
+  (org-agenda-skip-deadline-if-done t)
+  (org-agenda-skip-schedule-if-done t)
+  (org-log-repeat nil)
+  (org-log-done 'time)
+  (org-log-into-drawer t)
+  (org-tag-alist
+   '(("@home" . ?h)
+     ("@family" . ?f)
+     ("@bills" . ?b)
+     ("@windows" . ?w)
+     ("@mac" . ?m)
+     ("@emacs" . ?e)
+     ("@linux" . ?l)
+     ("Toc:Quote" . ?t)
+     ("@games" . ?g)))
+  (org-todo-keywords
+   '((sequence "TODO(t)" "|" "DONE(d)" "KILL(k)")))
+  (org-agenda-time-grid
+   '((daily today require-timed)
+     (700 1000 1300 1600 1900 2200)
+     " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+  (org-agenda-current-time-string " Now")
+  (org-agenda-scheduled-leaders
+   '("" "%2dx"))
+  (org-agenda-deadline-leaders
+   '("" "In-%1dd" "Overdue %1dd"))
+  (org-agenda-prefix-format
+   '((agenda  . "  %?-8T %?-16t% s")
+     (todo   . "  %i")
+     (tags   . "  %i")
+     (search . "  %i")))
+  (org-agenda-custom-commands
+   `(("c" "Custom Agenda View"
+      ((agenda ""
+               ((org-agenda-block-separator nil)
+                (org-agenda-format-date "%A %d %b %Y")
+                (org-agenda-include-diary t)
+                (org-agenda-time-grid nil)
+                (org-agenda-span 2)
+                (org-agenda-skip-function
+                 '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                (org-agenda-overriding-header "Special Events")))
+       (agenda ""
+               ((org-agenda-block-separator nil)
+                (org-agenda-format-date "%A %d %b %Y")
+                (org-scheduled-past-days 0)
+                (org-agenda-span 0)
+                (org-agenda-entry-types '(:scheduled))
+                (org-agenda-overriding-header "\nToday's Schedule")))
+       (agenda ""
+               ((org-agenda-block-separator nil)
+                (org-agenda-format-date "%A %d %b %Y")
+                (org-agenda-time-grid nil)
+                (org-scheduled-past-days 0)
+                (org-deadline-warning-days 0)
+                (org-agenda-entry-types '(:scheduled))
+                (org-agenda-overriding-header "\nWeekly Schedule")))
+       (agenda ""
+               ((org-agenda-block-separator nil)
+                (org-agenda-format-date "%A %d %b %Y")
+                (org-agenda-time-grid nil)
+                (org-agenda-span 0)
+                (org-deadline-past-days 60)
+                (org-deadline-warning-days 60)
+                (org-agenda-entry-types '(:deadline))
+                (org-agenda-overriding-header "\nDeadlines")))))))
+  (org-refile-targets
+   '((nil :maxlevel . 1)
+     (org-agenda-files :maxlevel . 1)))
+  (org-capture-templates
+   '(("a" "Agenda Entries")
+     ("ae" "Entry Task" entry (file "gtd.org")
+      "* TODO %? %^G")
+     ("as" "Scheduled Task" entry (file "gtd.org")
+      "* TODO %? %^G\nSCHEDULED: %^t")
+     ("ad" "Deadline Task" entry (file "gtd.org")
+      "* TODO %? %^G\nDEADLINE: %^t")))
+  :config
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+  :bind
+  (("C-c a" . org-agenda)
+   ("C-'" . org-cycle-agenda-files)
+   ("C-c c" . org-capture)))
+
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-quit-no-match 'separator)
+  (corfu-popupinfo-delay 0.2)
+  (corfu-cycle t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.2)
+  :hook
+  (after-init . global-corfu-mode))
+
+(use-package cape
+  :after corfu
+  :init
+  (advice-add 'pcomplete-completions-at-point :around 'cape-wrap-silent)
+  (advice-add 'pcomplete-completions-at-point :around 'cape-wrap-purify)
+  (add-to-list 'completion-at-point-functions 'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions 'cape-file))
+
+(use-package vertico
+  :custom
+  (vertico-count-format '("%-5s " . "%2$s"))
+  (vertico-resize nil)
+  (vertico-cycle t)
+  :bind
+  ("DEL" . vertico-directory-delete-char)
+  :hook
+  (after-init . vertico-mode))
 
 ;;; init.el ends here
