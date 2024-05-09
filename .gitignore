@@ -49,6 +49,7 @@
 .config/zsh/.history
 .config/zsh/.zcompdump
 .local/downloads/
+.local/drafts/
 .local/orgdata/
 .local/screenshot/
 .local/share/cargo/
@@ -69,6 +70,6 @@
 .local/share/xorg/
 .local/share/recently-used.xbel
 .local/share/zathura/
+.local/src/
 .local/state/
 .local/torrent/
-.local/work/
