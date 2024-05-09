@@ -1,6 +1,6 @@
 #+title: Archlinux
 
 * Overview
-My [[https://archlinux.org/][Archlinux]] dotfiles.
+This is my dotfiles for [[https://archlinux.org/][Archlinux]]. I'm using [[https://qtile.org/][qtile]] as my window manager.
 
 [[./.local/share/arch.png]]
