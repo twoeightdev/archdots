@@ -75,6 +75,7 @@ keys = [
     Key([mod], "F1", lazy.spawn("ekill"), desc="Emacs daemon toggle"),
     Key([mod], "e", lazy.spawn(emacs), desc="Emacs"),
     Key([mod], "grave", lazy.spawn("emojis"), desc="Emojis"),
+    Key([], "Print", lazy.spawn("screenshot"), desc="Take screenshot"),
     Key([mod, "shift"], "s", lazy.spawn("dmenu-playlist"), desc="Search ncmpcpp song"),
     Key([mod], "p", lazy.spawn(mpctoggle), desc="Play toggle for ncmpcpp"),
     Key([mod], "comma", lazy.spawn(mpcprev), desc="Previous song in ncmpcpp"),
