@@ -6,8 +6,8 @@ My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qti
 [[./.local/share/arch.png]]
 
 * Dotfiles installation
-I use *git bare repository* to manage my dotfiles with my wrapper script
-[[./.local/bin/dot][dot]].
+I use *git bare repository* to manage my dotfiles and use a wrapper script
+[[./.local/bin/dot][dot]] after initial configuration below.
 
 #+begin_src shell
 - git clone --bare https://github.com/twoeightdev $HOME/.config/.dots
