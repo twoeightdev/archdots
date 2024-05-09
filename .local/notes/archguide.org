@@ -1,0 +1,39 @@
+#+title: Archlinux Installation Guide
+#+date: <2024-05-09 Thu 15:58>
+
+* Disclaimer
+_I am not responsible for any damages, loss of data, system corruption, or any
+mishap you may somehow cause by following this guide._
+
+* Preparation
+** Before booting from usb stick check your hardware settings
+- Disable Secure Boot
+- Disable Launch CSM or Legacy Support
+- Set Boot Mode to UEFI
+
+** Burn ISO with CLI using *dd*
+#+begin_src shell
+dd bs=4M if=path/to/archlinux.iso of=/dev/sdx conv=fsync oflag=direct status=progress
+#+end_src
+
+** Change font
+#+begin_src shell
+setfont ter-132b
+#+end_src
+
+** Verify Boot Mode
+#+begin_src shell
+efivar -l
+#+end_src
+
+** Connect to the internet with *iwctl*
+Check internet connection afterwards with =ping -c 3 archlinux.org=.
+#+begin_src shell
+[iwd]# device list
+[iwd]# station name scan
+[iwd]# station name get-networks
+[iwd]# station name connect SSID
+#+end_src
+
+** Update System Clock
+
