@@ -1,4 +1,6 @@
 #+title: Archlinux
 
 * Overview
-Hey this is my Archlinux dotfiles.
+My [[https://archlinux.org/][Archlinux]] dotfiles.
+
+[[./.local/share/arch.png]]
