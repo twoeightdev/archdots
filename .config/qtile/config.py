@@ -13,7 +13,6 @@ from libqtile.config import (
     Screen,
 )
 from libqtile.lazy import lazy
-
 from spotify import Spotify
 
 mod = "mod4"
