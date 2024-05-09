@@ -1,4 +1,4 @@
-#+title: Archlinux
+#+title: Archlinux Dotfiles
 
 * Overview
 My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]] as my window manager.
