@@ -9,5 +9,8 @@ My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qti
 I use *git bare repository* to manage my dotfiles with my wrapper script
 [[./.local/bin/dot][dot]].
 
+#+begin_src shell
 - git clone --bare https://github.com/twoeightdev $HOME/.config/.dots
 - git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
+#+end_src
+
