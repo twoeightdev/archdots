@@ -172,7 +172,8 @@ and =root== parameters with your linux partitions.
 efibootmgr -d /dev/nvme0n1 -p Y -c -L "Arch" -l /vmlinuz-linux -u \
            'root=PARTUUID=set_PARTUUID_value_here rw quiet loglevel=3 \
            modprobe.blacklist=sp5100_tco ipv6.disable=1 rd.systemd.show_status=false \
-           rd.udev.log_level=3 initrd=\initramfs-linux.img' --verbose
+           rd.udev.log_level=3 initrd=\amd-ucode.img initrd=\initramfs-linux.img' \
+           --verbose
 #+end_src
 
 
