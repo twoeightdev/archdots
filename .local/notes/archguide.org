@@ -120,3 +120,38 @@ Edit =/etc/hosts= and add matching entries:
 ::1          localhost
 127.0.1.1    preferred_hostname.localdomain preferred_hostname
 #+end_src
+
+*** Choose preferred network management
+**** Networkmanager
+#+begin_src shell
+pacman -S networkmanager
+systemctl enable NetworkManager.service
+#+end_src
+
+**** Systemd Networkd
+Find the name of network adapter with =ip addr= then enable the service
+=systemctl enable systemd-networkd.service=.
+
+***** Wired Setup
+Edit =/etc/systemd/network/20-wired.network= and add following entries:
+#+begin_src shell
+[Match]
+Name=enp5s0
+
+[Network]
+DHCP=yes
+DNS=1.1.1.1
+#+end_src
+
+***** Wireless Setup
+Edit =/etc/systemd/network/25-wireless.network=
+#+begin_src shell
+[Match]
+Name=wlp6s0
+
+[Network]
+DHCP=yes
+IgnoreCarrierLoss=3s
+#+end_src
+
+
