@@ -79,3 +79,44 @@ pacstrap -K /mnt base base-devel linux linux-firmware xf86-video-amdgpu mesa \
          vulkan-radeon libva-mesa-driver amd-ucode git neovim efibootmgr \
          networkmanager
 #+end_src
+
+* System Configuration
+
+** Generate Fstab
+#+begin_src shell
+genfstab -U /mnt >> /mnt/etc/fstab
+#+end_src
+
+** Chroot
+#+begin_src shell
+arch-chroot /mnt
+#+end_src
+
+** Timezone
+#+begin_src shell
+ln -sf /usr/share/zoneinfo/Asia/Manila /etc/localtime
+hwclock --systohc --utc
+#+end_src
+
+** Localization
+Edit =/etc/locale.gen= and uncomment =en_PH.UTF-8 UTF-8=. Generate the locales by
+running:
+#+begin_src shell
+locale-gen
+echo LANG=en_PH.UTF-8 > /etc/locale.conf
+#+end_src
+
+** Network Configuration
+*** Hostname
+Edit =/etc/hosts= with your preferred hostname
+#+begin_src shell
+echo preferred_hostname > /etc/hostname
+#+end_src
+
+**** Hosts
+Edit =/etc/hosts= and add matching entries:
+#+begin_src shell
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    preferred_hostname.localdomain preferred_hostname
+#+end_src
