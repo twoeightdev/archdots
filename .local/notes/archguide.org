@@ -36,4 +36,46 @@ Check internet connection afterwards with =ping -c 3 archlinux.org=.
 #+end_src
 
 ** Update System Clock
+#+begin_src shell
+timedatectl status
+timedatectl set-ntp true
+#+end_src
 
+** Partition Drive
+Recommended partitioning. Create GPT disklabel.
+| *Mount Point* | *Partition*      | *Partition Type*       | *Suggested Size*          |
+|-------------+----------------+----------------------+-------------------------|
+| /mnt/boot   | /dev/nvme0n1p1 | EFI System Partition | 512MiB                  |
+| /mnt        | /dev/nvme01pn2 | Linux File System    | Remainder of the device |
+
+#+begin_src shell
+lsblk -f
+fdisk /dev/nvme0n1
+#+end_src
+
+*** Format Drive
+#+begin_src shell
+mkfs.fat -n BOOT -F 32 /dev/nvme0n1p1
+mkfs.ext4 -L ROOT /dev/nvme0n1p2
+#+end_src
+
+*** Mount Disk
+#+begin_src shell
+mount /dev/nvme0n1p2 /mnt
+mount --mkdir /dev/nvme0n1p1 /mnt/boot
+#+end_src
+
+* Installation
+** Mirror list
+Check mirror list in =/etc/pacman.d/mirrorlist=.
+
+*** Preferred Servers
+- Server = https://mirror.xtom.com.hk/archlinux/$repo/os/$arch
+- Server = http://mirror.xtom.com.hk/archlinux/$repo/os/$arch
+
+** Pacstrap
+#+begin_src shell
+pacstrap -K /mnt base base-devel linux linux-firmware xf86-video-amdgpu mesa \
+         vulkan-radeon libva-mesa-driver amd-ucode git neovim efibootmgr \
+         networkmanager
+#+end_src
