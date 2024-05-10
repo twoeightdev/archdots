@@ -209,3 +209,10 @@ options root=PARTUUID=set_PARTUUID_here rw quiet loglevel=0 console=tty2 \
         modprobe.blacklist=sp5100_tco rd.systemd.show_status=false \
         rd.udev.log_level=3
 #+end_src
+
+** Unmount and Reboot
+#+begin_src shell
+exit
+umount -R /mnt
+reboot
+#+end_src
