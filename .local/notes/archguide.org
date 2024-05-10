@@ -2,8 +2,8 @@
 #+date: <2024-05-09 Thu 15:58>
 
 * Disclaimer
-_I am not responsible for any damages, loss of data, system corruption, or any
-mishap you may somehow cause by following this guide._
+/I am not responsible for any damages, loss of data, system corruption, or any/
+/mishap you may somehow cause by following this guide./
 
 * Preparation
 ** Before booting from usb stick check your hardware settings
@@ -151,7 +151,11 @@ Name=wlp6s0
 
 [Network]
 DHCP=yes
+DNS=1.1.1.1
 IgnoreCarrierLoss=3s
 #+end_src
 
-
+** Root Password
+#+begin_src shell
+passwd
+#+end_src
