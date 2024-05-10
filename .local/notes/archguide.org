@@ -165,7 +165,7 @@ passwd
 Get *UUID* with =blkid -s UUID -o value /dev/nvme0n1p2=
 or *PARTUUID* with =blkid -s PARTUUID -o value /dev/nvme0n1p2=. Delete old
 boot entries with =efibootmgr -b <bootnum> -B=. Create boot entry: Where
-=/dev/nvme0n1/= and =Y= are the *DRIVE* and *Partition Number* where *ESP* is located
+=/dev/nvme0n1/= and =Y= are the drive and partition number where *ESP* is located
 and =root== parameters with your linux partitions.
 
 #+begin_src shell
@@ -176,4 +176,36 @@ efibootmgr -d /dev/nvme0n1 -p Y -c -L "Arch" -l /vmlinuz-linux -u \
            --verbose
 #+end_src
 
+*** GRUB
+#+begin_src shell
+pacman -S grub efibootmgr amd-ucode
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+#+end_src
 
+*** Systemdboot
+**** Installation
+#+begin_src shell
+bootctl install
+#+end_src
+
+**** Loader Configuration
+Edit =/boot/loader/loader.conf=.
+#+begin_src shell
+default arch
+timeout 0
+console-mode max
+editor no
+#+end_src
+
+**** Adding Loaders
+Edit =/boot/loader/entries/arch.conf=.
+#+begin_src shell
+title Arch Linux
+linux /vmlinuz-linux
+initrd /amd-ucode.img
+initrd /initramfs-linux.img
+options root=PARTUUID=set_PARTUUID_here rw quiet loglevel=0 console=tty2 \
+        modprobe.blacklist=sp5100_tco rd.systemd.show_status=false \
+        rd.udev.log_level=3
+#+end_src
