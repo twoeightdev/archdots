@@ -108,12 +108,12 @@ echo LANG=en_PH.UTF-8 > /etc/locale.conf
 
 ** Network Configuration
 *** Hostname
-Edit =/etc/hosts= with your preferred hostname
+Edit =/etc/hostname= with your preferred hostname
 #+begin_src shell
 echo preferred_hostname > /etc/hostname
 #+end_src
 
-**** Hosts
+*** Hosts
 Edit =/etc/hosts= and add matching entries:
 #+begin_src shell
 127.0.0.1    localhost
