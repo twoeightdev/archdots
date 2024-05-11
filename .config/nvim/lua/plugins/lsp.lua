@@ -133,6 +133,7 @@ return {
                     },
                 },
             })
+            -- BUG: Running random scripts inside my `~/.local/bin/` folder.
             -- lspconfig.bashls.setup({ filetypes = { "sh", "zsh", "bash" } })
             lspconfig.marksman.setup({})
             lspconfig.taplo.setup({})
