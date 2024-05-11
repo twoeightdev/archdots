@@ -42,7 +42,12 @@ timedatectl set-ntp true
 #+end_src
 
 ** Partition Drive
-Recommended partitioning. Create GPT disklabel.
+Recommended partitioning. Create GPT disklabel. In fdisk, type =g= to set disk to gpt label,
+then type =n= for new partition, and on last sector, set it to =+1G=. Add another partition
+for root, type =n= then on last sector, just enter for all remainder of the device. Set
+partition type, press =t= then =1= to select first created partition, then type =1= again
+to set it to =EFI= partition. Type =p= to check if all partitions were correct, then
+type =w= to write changes and exit.
 | *Mount Point* | *Partition*      | *Partition Type*       | *Suggested Size*          |
 |-------------+----------------+----------------------+-------------------------|
 | /mnt/boot   | /dev/nvme0n1p1 | EFI System Partition | 512MiB                  |
@@ -76,8 +81,8 @@ Check mirror list in =/etc/pacman.d/mirrorlist=.
 ** Pacstrap
 #+begin_src shell
 pacstrap -K /mnt base base-devel linux linux-firmware xf86-video-amdgpu mesa \
-         vulkan-radeon libva-mesa-driver amd-ucode git neovim efibootmgr \
-         networkmanager
+         vulkan-radeon libva-mesa-driver amd-ucode git neovim networkmanager \
+         efibootmgr
 #+end_src
 
 * System Configuration
@@ -108,9 +113,10 @@ echo LANG=en_PH.UTF-8 > /etc/locale.conf
 
 ** Network Configuration
 *** Hostname
-Edit =/etc/hostname= with your preferred hostname
+Edit =/etc/hostname= with your preferred hostname which in this case i'll be using /core/ as my
+hostname name.
 #+begin_src shell
-echo preferred_hostname > /etc/hostname
+echo core > /etc/hostname
 #+end_src
 
 *** Hosts
@@ -118,7 +124,7 @@ Edit =/etc/hosts= and add matching entries:
 #+begin_src shell
 127.0.0.1    localhost
 ::1          localhost
-127.0.1.1    preferred_hostname.localdomain preferred_hostname
+127.0.1.1    core.localdomain core
 #+end_src
 
 *** Choose preferred network management
@@ -185,7 +191,15 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 *** Systemdboot
 **** Installation
+Get *UUID* with =blkid -s UUID -o value /dev/nvme0n1p2=. Remount to avoid errors
+with =bootctl install=.
 #+begin_src shell
+exit
+umount -R /mnt
+mount /dev/nvme0n1p2 /mnt
+arch-chroot /mnt
+mount -a
+
 bootctl install
 #+end_src
 
