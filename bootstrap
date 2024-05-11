@@ -1,0 +1,69 @@
+#!/bin/bash
+# https://github.com/twoeightdev
+# Author: twoeightdev
+
+me="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
+
+menu() {
+    echo "usage:          " $me "[OPTION]"
+    echo " "
+    echo "dotfiles:       Git clone dotfiles."
+    echo "aur:            Install yay aur helper."
+    echo "pkg:            Install all packages."
+}
+
+dotfiles() {
+    cd ~
+    git clone --bare git@github.com:twoeightdev/archdots.git $HOME/.config/.dots
+    git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
+}
+
+aur() {
+    cd /tmp/
+    curl -LO https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
+    tar xvzf yay.tar.gz
+    cd yay
+    makepkg -sci
+}
+
+pkg() {
+    # xorg
+    pkgs="xorg-server xorg-xdpyinfo xorg-xev xorg-xinit xorg-xinput"
+    pkgs="$pkgs xorg-xprop xorg-xset xorg-xsetroot xorg-xwininfo xterm"
+    pkgs="$pkgs xcape xclip xdo xdotool xwallpaper"
+    # amd
+    pkgs="$pkgs lib32-vulkan-radeon mesa-utils mesa-vdpau vulkan-tools"
+    # audio
+    pkgs="$pkgs pipewire pipewire-alsa pipewire-pulse alsa-utils pulsemixer"
+    # fonts
+    pkgs="$pkgs libertinus-font noto-fonts noto-fonts-emoji ttf-fontawesome"
+    pkgs="$pkgs ttc-iosevka ttc-iosevka-aile ttf-iosevka-nerd ttf-dejavu"
+    pkgs="$pkgs ttf-inconsolata ttf-inconsolata-nerd ttf-joypixels"
+    pkgs="$pkgs ttf-liberation roboto-mono"
+    # utilities
+    pkgs="$pkgs evtest exfat-utils brightnessctl dosfstools gnome-keyring"
+    pkgs="$pkgs bc bluez bluez-utils btop ffmpeg ffmpegthumbnailer highlight"
+    pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils"
+    pkgs="$pkgs nvtop ntfs-3g picom poppler psutils ripgrep tree unrar unzip"
+    pkgs="$pkgs wget yt-dlp zip"
+    # needed for neovim
+    pkgs="$pkgs lua-language-server luarocks npm selene"
+    # python
+    pkgs="$pkgs python-adblock python-dbus-next python-iwlib python-mpd2"
+    pkgs="$pkgs python-pip python-psutil"
+    # programs
+    pkgs="$pkgs alacritty dunst emacs firefox gimp gucharmap lf newsboat"
+    pkgs="$pkgs mpc mpd mpv ncmpcpp nsxiv qtile qutebrowser steam"
+    pkgs="$pkgs transmission-cli zathura zathura-pdf-mupdf"
+    # aur
+    pkgs="$pkgs tremc-git spotify"
+    # install all listed pkgs
+    yay --needed --noconfirm -Syu $pkgs
+}
+
+
+if [ -n "$1" ]; then
+    $1
+else
+    menu
+fi
