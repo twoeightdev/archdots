@@ -70,6 +70,16 @@ Section "InputClass"
 EndSection
 #+end_src
 
+** Root prompt
+#+begin_src shell
+sudo -i
+cp /etc/skel/.bash_profile /root
+cp /etc/skel/.bashrc /root
+
+# Change PS1 prompt to my prompt
+PS1='\[\e[1;31m\][\u\[\e[1;32m\]@\[\e[1;34m\]\h\[\e[1;35m\] \w\[\e[1;31m]\[\e[0m\]$ '
+#+end_src
+
 ** Disable Watchdog
 Edit or Add entries in =/etc/modprobe.d/watchdog.conf=. or just add kernel parameter to
 disable Watchdog.
