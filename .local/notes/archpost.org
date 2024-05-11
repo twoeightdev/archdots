@@ -21,6 +21,7 @@ pacman -Syu
 #+begin_src shell
 pacman -S zsh
 useradd -m -G users,wheel,video,audio,storage,bluetooth,disk -s /bin/zsh twoeightdev
+passwd twoeightdev
 #+end_src
 
 ** Add Sudoers
@@ -44,8 +45,10 @@ makepkg -sci
 ** Install Dotfiles
 #+begin_src shell
 cd ~
-git clone --bare https://github.com/twoeightdev/archdots.git $HOME/.config/dots
-git --git-dir=$HOME/.config/dots/ --work-tree=$HOME checkout
+git clone --bare https://github.com/twoeightdev/archdots.git $HOME/.config/.dots # Use if https
+git clone --bare git@github.com:twoeightdev/archdots.git $HOME/.config/.dots # Use if ssh
+
+git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
 #+end_src
 
 ** Disable Watchdog
