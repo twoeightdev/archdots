@@ -3,10 +3,10 @@
 dotfiles() { git --git-dir=$HOME/.config/.dots --work-tree=$HOME "$@"; }
 if [ $1 = 'out' ]; then
     dotfiles pull &&
-    dotfiles update-index --assume-unchanged ~/LICENSE ~/README.org &&
-    rm -rf ~/LICENSE ~/README.org
+    dotfiles update-index --assume-unchanged ~/LICENSE ~/README.org ~/bootstrap.sh &&
+    rm -rf ~/LICENSE ~/README.org ~/bootstrap.sh
 elif [ $1 = 'in' ]; then
-    dotfiles update-index --no-assume-unchanged ~/LICENSE ~/README.org &&
+    dotfiles update-index --no-assume-unchanged ~/LICENSE ~/README.org ~/bootstrap.sh &&
     dotfiles checkout -f
 else
     dotfiles $*
