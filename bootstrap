@@ -63,7 +63,8 @@ archpkg() {
 }
 
 aurpkg() {
-    yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S tremc-git
+    aurpkgs="tremc-git gtk-theme-arc-gruvbox-git"
+    yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S $aurpkgs
 }
 
 clean() {
