@@ -101,6 +101,12 @@ dot remote -v
 dot remote set-url origin git@github.com:twoeightdev/archdots.git
 #+end_src
 
+** Curl Private Repository
+Example my /personal token/: 12345abcde
+#+begin_src shell
+curl -s -O https://12345abcde@raw.githubusercontent.com/twoeightdev/reponame/main/file.md
+#+end_src
+
 ** Packages
 Archpackage and Voidlinux. I'll keep it here just in case i switch back to void.
 #+begin_src shell
