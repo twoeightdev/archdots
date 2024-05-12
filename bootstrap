@@ -8,17 +8,11 @@ name="$USER"
 menu() {
     echo "usage:          " $me "[OPTION]"
     echo " "
-    echo "dotfiles:       Git clone dotfiles."
     echo "aurhelper:      Install yay aur helper."
     echo "archpkg:        Install Arch packages."
     echo "aurpkg:         Install AUR packages."
+    echo "dotfiles:       Git clone dotfiles."
     echo "clean:          Clean up."
-}
-
-dotfiles() {
-    cd ~
-    git clone --bare https://github.com/twoeightdev/archdots.git $HOME/.config/.dots
-    git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
 }
 
 aurhelper() {
@@ -65,6 +59,12 @@ archpkg() {
 aurpkg() {
     aurpkgs="tremc-git gtk-theme-arc-gruvbox-git"
     yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S $aurpkgs
+}
+
+dotfiles() {
+    cd ~
+    git clone --bare https://github.com/twoeightdev/archdots.git $HOME/.config/.dots
+    git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
 }
 
 clean() {
