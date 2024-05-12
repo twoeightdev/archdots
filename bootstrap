@@ -3,6 +3,8 @@
 # Author: twoeightdev
 
 me="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
+srcdir="$HOME/.local/src"
+dmenudir="$HOME/.local/src/archdmenu"
 name="$USER"
 
 menu() {
@@ -12,6 +14,7 @@ menu() {
     echo "archpkg:        Install Arch packages."
     echo "aurpkg:         Install AUR packages."
     echo "dotfiles:       Git clone dotfiles."
+    echo "dmenu:          My arch dmenu build."
     echo "clean:          Clean up."
 }
 
@@ -65,6 +68,13 @@ dotfiles() {
     cd ~
     git clone --bare https://github.com/twoeightdev/archdots.git $HOME/.config/.dots
     git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
+}
+
+dmenu() {
+    cd $srcdir
+    git clone git@github.com:twoeightdev/archdmenu.git
+    cd $dmenudir
+    make && sudo make install
 }
 
 clean() {
