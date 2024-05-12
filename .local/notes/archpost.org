@@ -44,7 +44,7 @@ makepkg -sci
 
 ** Install Dotfiles with Bootstrap Script
 #+begin_src shell
-curl -O https://raw.githubusercontent.com/twoeightdev/archdots/main/bootstrap
+curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/bootstrap
 chmod +x bootstrap
 ./bootstrap [OPTIONS]
 #+end_src
