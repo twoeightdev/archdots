@@ -141,7 +141,7 @@ groups.append(
             ),
             DropDown(
                 "spotify",
-                "qtile run-cmd -g scratchpad spotify",
+                "qtile run-cmd -g scratchpad spotify-launcher",
                 match=Match(wm_class="Spotify"),
                 on_focus_lost_hide=False,
                 warp_pointer=False,
