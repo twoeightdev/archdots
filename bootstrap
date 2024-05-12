@@ -9,7 +9,7 @@ menu() {
     echo "usage:          " $me "[OPTION]"
     echo " "
     echo "dotfiles:       Git clone dotfiles."
-    echo "helperaur:      Install yay aur helper."
+    echo "aurhelper:      Install yay aur helper."
     echo "archpkg:        Install Arch packages."
     echo "aurpkg:         Install AUR packages."
     echo "clean:          Clean up."
@@ -21,7 +21,7 @@ dotfiles() {
     git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
 }
 
-helperaur() {
+aurhelper() {
     cd /tmp/
     curl -LO https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
     tar xvzf yay.tar.gz
