@@ -33,20 +33,20 @@ Edit with =EDITOR=nvim visudo= and uncomment =wheel group=.
 ** User login
 Exit =root= and login with your created =USER=.
 
-** Install Aur Helper
+** Install Dotfiles with Bootstrap Script
+#+begin_src shell
+curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/bootstrap
+chmod +x bootstrap
+./bootstrap [OPTIONS]
+#+end_src
+
+** Install Aur Helper Manually
 #+begin_src shell
 cd /tmp/
 curl -LO https://aur.archlinux.org/cgit/aur.git/snapshot/yay.tar.gz
 tar xvzf yay.tar.gz
 cd yay
 makepkg -sci
-#+end_src
-
-** Install Dotfiles with Bootstrap Script
-#+begin_src shell
-curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/bootstrap
-chmod +x bootstrap
-./bootstrap [OPTIONS]
 #+end_src
 
 ** Install Dotfiles Manually
