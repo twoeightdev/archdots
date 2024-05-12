@@ -89,6 +89,7 @@ pacstrap -K /mnt base base-devel linux linux-firmware xf86-video-amdgpu mesa \
 * System Configuration
 
 ** Generate Fstab
+After generating /fstab,/ Change /boot partition/ to =fmask=007= and =dmask=0077=.
 #+begin_src shell
 genfstab -U /mnt >> /mnt/etc/fstab
 #+end_src
