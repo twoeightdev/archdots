@@ -15,4 +15,4 @@ I use *git bare repository* to manage my dotfiles and use a wrapper script
 #+end_src
 
 * License
-[[https://img.shields.io/badge/License-WTFPL-brightgreen.svg][WTFPL]]
+[[http://www.wtfpl.net/about/][https://img.shields.io/badge/License-Zlib-lightgrey.svg]]
