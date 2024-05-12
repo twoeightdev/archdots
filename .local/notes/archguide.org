@@ -42,12 +42,13 @@ timedatectl set-ntp true
 #+end_src
 
 ** Partition Drive
-Recommended partitioning. Create GPT disklabel. In fdisk, type =g= to set disk to gpt label,
-then type =n= for new partition, and on last sector, set it to =+1G=. Add another partition
+Create drive partition in fdisk, type =g= to set disk to GPT disklabel, then type
+=n= for new partition, and on last sector, set it to =+1G=. Add another partition
 for root, type =n= then on last sector, just enter for all remainder of the device. Set
 partition type, press =t= then =1= to select first created partition, then type =1= again
 to set it to =EFI= partition. Type =p= to check if all partitions were correct, then
-type =w= to write changes and exit.
+type =w= to write changes and exit. Recommended partitions:
+
 | *Mount Point* | *Partition*      | *Partition Type*       | *Suggested Size*          |
 |-------------+----------------+----------------------+-------------------------|
 | /mnt/boot   | /dev/nvme0n1p1 | EFI System Partition | 512MiB                  |
@@ -219,7 +220,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd /initramfs-linux.img
-options root=PARTUUID=set_PARTUUID_here rw quiet loglevel=0 console=tty2 \
+options root=UUID=set_UUID_here rw quiet loglevel=0 console=tty2 \
         modprobe.blacklist=sp5100_tco rd.systemd.show_status=false \
         rd.udev.log_level=3
 #+end_src
