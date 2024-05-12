@@ -88,6 +88,19 @@ blacklist iTCO_wdt
 blacklist iTCO_vendor_support
 #+end_src
 
+** Generate SSH key
+#+begin_src shell
+cd ~/.ssh
+ssh-keygen -t ed25519 -C "your_email@example.com"
+#+end_src
+
+** Dotfile SSH remote url
+Change dotfiles remote url
+#+begin_src shell
+dot remote -v
+dot remote set-url origin git@github.com:twoeightdev/archdots.git
+#+end_src
+
 ** Packages
 Archpackage and Voidlinux. I'll keep it here just in case i switch back to void.
 #+begin_src shell
