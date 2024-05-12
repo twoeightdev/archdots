@@ -13,6 +13,3 @@ I use *git bare repository* to manage my dotfiles and use a wrapper script
 - git clone --bare https://github.com/twoeightdev $HOME/.config/.dots
 - git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
 #+end_src
-
-* License
-[[http://www.wtfpl.net/about/][https://img.shields.io/badge/License-Zlib-lightgrey.svg]]
