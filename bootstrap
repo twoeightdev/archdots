@@ -8,14 +8,14 @@ dmenudir="$HOME/.local/src/archdmenu"
 name="$USER"
 
 menu() {
-    echo "usage:          " $me "[OPTION]"
+    echo -e "\e[1;4;35mUsage:\e[0m \e[1;37m" $me "[OPTION]\e[0m"
     echo " "
-    echo "aurhelper:      Install yay aur helper."
-    echo "archpkg:        Install Arch packages."
-    echo "aurpkg:         Install AUR packages."
-    echo "dotfiles:       Git clone dotfiles."
-    echo "dmenu:          My arch dmenu build."
-    echo "clean:          Clean up."
+    echo -e "\e[1;92maurhelper:\e[0m ............ \e[37myay AUR helper installation.\e[0m"
+    echo -e "\e[1;92marchpkg:\e[0m .............. \e[37mARCH packages installation.\e[0m"
+    echo -e "\e[1;92maurpkg:\e[0m ............... \e[37mAUR packages installation.\e[0m"
+    echo -e "\e[1;92mdotfiles:\e[0m ............. \e[37mclone my personal dotfiles.\e[0m"
+    echo -e "\e[1;92mclean:\e[0m ................ \e[37mremove unwanted files and directory.\e[0m"
+    echo -e "\e[1;92mdmenu:\e[0m ................ \e[37mdmenu personal build.\e[0m"
 }
 
 aurhelper() {
@@ -43,7 +43,7 @@ archpkg() {
     # utilities
     pkgs="$pkgs evtest exfat-utils brightnessctl dosfstools gnome-keyring"
     pkgs="$pkgs bc bluez bluez-utils btop ffmpeg ffmpegthumbnailer highlight"
-    pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils"
+    pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils polkit"
     pkgs="$pkgs nvtop ntfs-3g picom poppler psutils ripgrep tree unrar unzip"
     pkgs="$pkgs wget yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd"
     # needed for neovim
@@ -68,13 +68,7 @@ dotfiles() {
     cd ~
     git clone --bare https://github.com/twoeightdev/archdots.git $HOME/.config/.dots
     git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
-}
-
-dmenu() {
-    cd $srcdir
-    git clone git@github.com:twoeightdev/archdmenu.git
-    cd $dmenudir
-    make && sudo make install
+    echo -e "\e[1;31mdone!\e[0m"
 }
 
 clean() {
@@ -87,8 +81,15 @@ clean() {
     mkdir -p /home/$name/.local/screenshot
     mkdir -p /home/$name/.local/src
     mkdir -p /home/$name/.local/torrent
+    echo -e "\e[1;31mdone!\e[0m"
 }
 
+dmenu() {
+    cd $srcdir
+    git clone git@github.com:twoeightdev/archdmenu.git
+    cd $dmenudir
+    make && sudo make install
+}
 
 if [ -n "$1" ]; then
     $1
