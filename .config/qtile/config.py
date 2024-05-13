@@ -382,7 +382,7 @@ def core_widget():
         # BUG: Causes crash if enabled at the same time with `widget.Systray`.
         # widget.Sep(**widget_defaults, size_percent=60),
         # widget.Bluetooth(default_show_battery=True, foreground=color[4]),
-        # TODO: Make a script only show icons when ncmpcpp is in paused state.
+        # TODO: Make a script to only show icons when ncmpcpp is in paused state.
         # widget.Sep(**widget_defaults, size_percent=60),
         # widget.Mpd2(status_format="{play_status} {title}"),
         widget.Sep(**widget_defaults, size_percent=60),
@@ -400,7 +400,7 @@ def core_widget():
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Volume(fmt="  {}", foreground=color[12]),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Clock(format=" %Y-%m-%d %a %I:%M %p", foreground=color[3]),
+        widget.Clock(format=" %B-%d-%Y %a %I:%M%p", foreground=color[3]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
             format="{char} {percent:2.0%}",
