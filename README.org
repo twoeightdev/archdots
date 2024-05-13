@@ -10,7 +10,7 @@ I use *git bare repository* to manage my dotfiles and use a wrapper script
 [[./.local/bin/dot][dot]] after initial configuration below.
 
 #+begin_src shell
-- curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/bootstrap
-- chmod +x bootstrap
-- ./bootstrap [OPTIONS]
+- curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/setup.sh
+- chmod +x setup.sh
+- ./setup.sh [OPTIONS]
 #+end_src
