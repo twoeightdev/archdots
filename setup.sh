@@ -43,9 +43,10 @@ archpkg() {
     # utilities
     pkgs="$pkgs evtest exfat-utils brightnessctl dosfstools gnome-keyring"
     pkgs="$pkgs bc bluez bluez-utils btop ffmpeg ffmpegthumbnailer highlight"
-    pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils polkit"
+    pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils"
     pkgs="$pkgs nvtop ntfs-3g picom poppler psutils ripgrep tree unrar unzip"
     pkgs="$pkgs wget yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd"
+    pkgs="$pkgs unclutter polkit"
     # needed for neovim
     pkgs="$pkgs lua-language-server luarocks npm selene"
     # python

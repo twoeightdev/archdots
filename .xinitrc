@@ -5,7 +5,7 @@ setbg &
 # /usr/bin/emacs --daemon &
 # emacs --daemon &
 
-autostart="picom dunst pipewire mpd"
+autostart="picom dunst pipewire unclutter mpd"
 
 for program in $autostart; do
     pidof -s "$program" || setsid -f "$program"
