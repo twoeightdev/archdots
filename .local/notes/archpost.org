@@ -36,9 +36,9 @@ Exit =root= and login with your created =USER=.
 ** Install Dotfiles with Bootstrap Script
 Download =bootstrap= script with curl. Do =dot push -u origin main= to push.
 #+begin_src shell
-curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/bootstrap
-chmod +x bootstrap
-./bootstrap [OPTIONS]
+curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/setup.sh
+chmod +x setup.sh
+./setup.sh [OPTIONS]
 #+end_src
 
 ** Install Aur Helper Manually
