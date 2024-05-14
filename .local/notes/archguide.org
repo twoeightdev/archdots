@@ -83,7 +83,7 @@ Check mirror list in =/etc/pacman.d/mirrorlist=.
 #+begin_src shell
 pacstrap -K /mnt base base-devel linux linux-firmware xf86-video-amdgpu mesa \
          vulkan-radeon libva-mesa-driver amd-ucode git neovim networkmanager \
-         efibootmgr
+         cpupower efibootmgr
 #+end_src
 
 * System Configuration
@@ -168,6 +168,11 @@ IgnoreCarrierLoss=3s
 passwd
 #+end_src
 
+** Enable cpupower service
+#+begin_src shell
+systemctl enable cpupower.service
+#+end_src
+
 ** Bootloader
 *** EFITSTUB
 Get *UUID* with =blkid -s UUID -o value /dev/nvme0n1p2=
@@ -179,8 +184,9 @@ and =root== parameters with your linux partitions.
 #+begin_src shell
 efibootmgr -d /dev/nvme0n1 -p Y -c -L "Arch" -l /vmlinuz-linux -u \
            'root=PARTUUID=set_PARTUUID_value_here rw quiet loglevel=3 \
-           modprobe.blacklist=sp5100_tco ipv6.disable=1 rd.systemd.show_status=false \
-           rd.udev.log_level=3 initrd=\amd-ucode.img initrd=\initramfs-linux.img' \
+           consol=ty2 amd_pstate=passive modprobe.blacklist=sp5100_tco \
+           ipv6.disable=1 rd.systemd.show_status=false rd.udev.log_level=3 \
+           initrd=\amd-ucode.img initrd=\initramfs-linux.img' \
            --verbose
 #+end_src
 
@@ -221,8 +227,8 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd /initramfs-linux.img
-options root=UUID=set_UUID_here rw quiet loglevel=0 console=tty2 \
-        modprobe.blacklist=sp5100_tco rd.systemd.show_status=false \
+options root=UUID=set_UUID_here rw quiet loglevel=0 console=tty2 amd_pstate=passive \
+        modprobe.blacklist=sp5100_tco ipv6.disable=1 rd.systemd.show_status=false \
         rd.udev.log_level=3
 #+end_src
 
