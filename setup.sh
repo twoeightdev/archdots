@@ -46,7 +46,7 @@ archpkg() {
     pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils"
     pkgs="$pkgs nvtop ntfs-3g picom poppler psutils ripgrep tree unrar unzip"
     pkgs="$pkgs wget yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd"
-    pkgs="$pkgs unclutter polkit"
+    pkgs="$pkgs unclutter polkit cpupower"
     # needed for neovim
     pkgs="$pkgs lua-language-server luarocks npm selene"
     # python
