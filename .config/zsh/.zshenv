@@ -105,7 +105,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 # Set Qt to use GTK theme
 export QT_QPA_PLATFORMTHEME="gtk2"
 # Enable DRM Content in qutebrowser
-export QTWEBENGINE_CHROMIUM_FLAGS="--widevine-path=/usr/lib/chromium/libwidevinecdm.so"
+# export QTWEBENGINE_CHROMIUM_FLAGS="--widevine-path=/usr/lib/chromium/libwidevinecdm.so"
 # Mozilla zoom in and out
 export MOZ_USE_XINPUT2=1
 
