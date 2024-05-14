@@ -59,6 +59,29 @@ git clone --bare git@github.com:twoeightdev/archdots.git $HOME/.config/.dots # U
 git --git-dir=$HOME/.config/.dots/ --work-tree=$HOME checkout
 #+end_src
 
+** CPU Governor
+Check current governor with =cpupower frequency-info= and the result of /current policy:/
+is the current governor. Needs kernel paramater =amd_pstate=passive= for this to work.
+The default governor for my cpu is =schedutil=. Available frequencies are: =ondemand=,
+=conservative=, =userspace=, =powersave=, =performance= and =schedutil=. Default max frequency
+is =4.83GHz=. Change governor and max frequency with:
+#+begin_src shell
+sudo cpupower frequency-set -g ondemand -u 4.0GHz
+#+end_src
+
+** Permanent change of CPU Governor and Frequency
+Enable service if its not =systemctl enable cpupower.service= Edit =/etc/default/cpupower=,
+then uncomment or add:
+#+begin_src shell
+governor='ondemand'
+max_freq="4GHz"
+#+end_src
+
+** Disable CPU boost or Turbo Core(AMD)
+#+begin_src shell
+echo 0 > /sys/devices/system/cpu/cpufreq/boost
+#+end_src
+
 ** Touchpad
 Enable touch to click. Add the following entries in =/etc/X11/xorg.conf.d/40-libinput.conf=.
 #+begin_src shell
