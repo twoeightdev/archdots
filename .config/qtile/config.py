@@ -27,6 +27,7 @@ powermenu = "power"
 dmenu = "dmenu_run"
 filemanager = "alacritty -e lf"
 browser = "firefox"
+qbrowser = "qutebrowser"
 emacs = "emacsclient -c -a 'emacs' "
 mpctoggle = "mpc toggle"
 mpcprev = "mpc prev"
@@ -71,7 +72,8 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "d", lazy.spawn(dmenu), desc="Dmenu"),
     Key([mod], "o", lazy.spawn(filemanager), desc="File manager lf"),
-    Key([mod], "b", lazy.spawn(browser), desc="Web browser"),
+    Key([mod], "b", lazy.spawn(browser), desc="Firefox web browser"),
+    Key([mod, "shift"], "b", lazy.spawn(qbrowser), desc="Qute web browser"),
     Key([mod], "F1", lazy.spawn("ekill"), desc="Emacs daemon toggle"),
     Key([mod], "e", lazy.spawn(emacs), desc="Emacs"),
     Key([mod], "grave", lazy.spawn("emojis"), desc="Emojis"),
@@ -389,6 +391,11 @@ def core_widget():
         widget.Memory(
             format="Mem:{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
             foreground=color[14],
+        ),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.ThermalSensor(
+            tag_sensor="Tctl",
+            format="CPU:{temp:.0f}{unit}",
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Wlan(
