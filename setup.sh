@@ -48,7 +48,7 @@ archpkg() {
     pkgs="$pkgs wget yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd"
     pkgs="$pkgs unclutter polkit cpupower"
     # needed for neovim
-    pkgs="$pkgs lua-language-server luarocks npm selene"
+    pkgs="$pkgs lua-language-server luarocks npm selene bash-language-server"
     # python
     pkgs="$pkgs python-adblock python-dbus-next python-iwlib python-mpd2"
     pkgs="$pkgs python-pip python-psutil"
@@ -77,6 +77,7 @@ clean() {
     rm -rf /home/$name/.bash_profile
     rm -rf /home/$name/.bashrc
     rm -rf /home/$name/.zshrc
+    mkdir -p /home/$name/.venv
     mkdir -p /home/$name/.local/downloads
     mkdir -p /home/$name/.local/drafts
     mkdir -p /home/$name/.local/screenshot
