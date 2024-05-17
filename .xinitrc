@@ -1,5 +1,6 @@
 #!/bin/sh
 
+xset s off -dpms &
 remaps &
 setbg &
 # /usr/bin/emacs --daemon &
