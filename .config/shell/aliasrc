@@ -14,7 +14,8 @@ alias \
     yta="yt -x -f bestaudio/best" \
     ffmpeg="ffmpeg -hide_banner" \
     mbsync="mbsync -c $HOME/.config/mbsync/mbsyncrc" \
-    va="source $HOME/.venv/pymain/bin/activate" \
+    ve="python -m venv" \
+    va="source $HOME/.venv/devtool/bin/activate" \
     vd="deactivate"
 
 # Colorize commands when possible
@@ -51,7 +52,7 @@ alias \
     df="df -h" \
     fn="fc-match -a | grep -i" \
     fne="fc-list : family | grep -i" \
-    frm="shred -zvu -n 5" \
+    srm="shred -zvu -n 5" \
     xtar="tar xfv" \
     sysinfo="echo "" && sysinfo" \
     ifn="fc-cache -f -v" \
