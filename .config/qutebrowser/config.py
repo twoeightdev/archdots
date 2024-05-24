@@ -5,10 +5,7 @@ config = config  # type: ConfigAPI # noqa
 c = c  # tpye: ConfigContainer # noqa
 
 config.load_autoconfig()
-
-# Host blocking
-# c.content.blocking.enabled = True
-# c.content.blocking.whitelist = ["www.googleadservices.com"]
+config.source("gruvbox.py")
 
 # Brave blocking, needs python-adblock
 # auto, adblock, hosts, both
@@ -21,44 +18,94 @@ c.content.blocking.adblock.lists = [
     "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt",
 ]
 
-config.source("gruvbox.py")
+c.qt.args = [
+    "enable-gpu-rasterization",
+    "enable-viz-display-compositor",
+    "enable-accelerated-2d-canvas",
+]
 
-# DRM Content
-# Dependencies: qt6-webengine-widevine widevine in AUR
-# c.qt.args = [
-#     "ppapi-widevine-path=/usr/lib/qt/plugins/ppapi/libwidevinecdmadapter.so"
-#     "widevine-path=/usr/lib/chromium/libwidevinecdm.so"
-# ]
+# Fonts
+c.fonts.default_family = "monospace"
+c.fonts.web.family.cursive = "sans"
+c.fonts.web.family.sans_serif = "sans-serif"
+c.fonts.default_size = "12pt"
+c.fonts.contextmenu = "12pt"
 
-# Dark mode
-# c.colors.webpage.preferred_color_scheme = "dark"
-# c.colors.webpage.darkmode.enabled = True
-# c.url.start_pages = ["~/.config/qutebrowser/start.html"]
-# c.url.default_page = "about:blank"
+# Enhancements
+c.colors.webpage.preferred_color_scheme = "dark"
 c.url.start_pages = ["~/.local/src/startpage/index.html"]
+c.url.default_page = "about:blank"
+# c.content.user_stylesheets = "~/.config/qutebrowser/gruvbox-all-sites.css"
 
+
+# Search engines
 c.url.searchengines = {
     "DEFAULT": "https://www.google.fi/search?q={}",
     "aw": "https://wiki.archlinux.org/?search={}",
     "gw": "https://wiki.gentoo.org/?search-{}",
     "yt": "https://youtube.com/results?search_query={}",
     "w": "https://en.wikipedia.org/?search={}",
-    "dgi": "https://duckduckgo.com/?q=!ddgi {}",
+    "dg": "https://duckduckgo.com/?q={}",
     "dick": "http://en.wiktionary.org/?search={}",
     "r": "https://reddit.com/r/{}",
 }
 
-# c.qt.args += [
-#     "ignore-gpu-blacklist",
-#     # "enable-accelerated-2d-canvas",
-#     # "enable-gpu-memory-buffer-video-frames",
-#     "enable-accelerated-video-decode",
-#     "enable-quic",
-#     "enable-gpu-rasterization",
-#     "enable-native-gpu-memory-buffers",
-#     # "enable-oop-rasterization",
-#     "enable-zero-copy",
-# ]
+# Alias
+c.aliases = {
+    "w": "session-save",
+    "wq": "quit --save",
+    "mpv": "spawn -d mpv --profile=H60 {url}",
+    "gh": "open -t https://github.com/twoeightdev",
+    "wh": "open -t https://wallhaven.cc",
+    "wt": "open -t https://www.webtoons.com/en/",
+    "fb": "open -t https://facebook.com/",
+    "ux": "open -t https://www.reddit.com/r/unixporn/",
+    "tr": "open -t https://1337x.to/home/",
+    "od": "open -t https://odysee.com/",
+    "cs": "open -t https://based.cooking/",
+    "ax": "open -t https://www.bilibili.tv/en/anime",
+    "suck": "open -t http://suckless.org/",
+}
+
+# Better defaults
+c.qt.highdpi = True
+c.qt.force_software_rendering = "none"
+c.zoom.default = "120%"
+c.changelog_after_upgrade = "never"
+c.editor.command = ["alacritty", "-e", "nvim '{}'"]
+c.completion.show = "always"
+c.auto_save.session = False
+c.hints.radius = 0
+c.hints.leave_on_load = False
+c.confirm_quit = ["downloads"]
+c.downloads.location.prompt = False
+c.downloads.remove_finished = 1000
+c.scrolling.smooth = True
+c.scrolling.bar = "never"
+c.content.autoplay = True
+c.content.fullscreen.overlay_timeout = 3000
+c.content.fullscreen.window = True
+c.content.pdfjs = False
+c.content.cookies.accept = "no-3rdparty"
+c.content.webrtc_ip_handling_policy = "default-public-interface-only"
+c.content.headers.do_not_track = True
+c.content.dns_prefetch = False
+c.content.javascript.clipboard = "access"
+c.content.local_content_can_access_remote_urls = True
+c.input.insert_mode.auto_load = True
+c.input.insert_mode.leave_on_load = True
+c.tabs.show = "multiple"
+c.tabs.indicator.width = 0
+c.tabs.background = False
+c.tabs.title.format = "{audio} {current_title}"
+c.tabs.select_on_remove = "prev"
+c.tabs.new_position.unrelated = "next"
+c.tabs.last_close = "ignore"
+c.tabs.position = "top"
+c.tabs.favicons.scale = 1.0
+c.tabs.padding = {"top": 2, "right": 2, "bottom": 2, "left": 2}
+c.statusbar.widgets = ["url"]
+c.statusbar.padding = {"top": 2, "right": 2, "bottom": 2, "left": 2}
 
 # Keybinds
 config.unbind("d")
@@ -70,45 +117,10 @@ config.bind("h", "scroll-px -100 0")
 config.bind("j", "scroll-px 0 100")
 config.bind("k", "scroll-px 0 -100")
 config.bind("l", "scroll-px 100 0")
-
-config.bind("<Alt-f>", "hint links spawn --detach mpv --profile=M60 {hint-url}")
-
-# Font
-# c.fonts.default_family = "Inconsolata Nerd Font"
-# c.fonts.default_size = "14pt"
-# c.fonts.web.family.fixed = "Inconsolata Nerd Font"
-# c.fonts.web.family.sans_serif = "Libertinus Sans"
-# c.fonts.web.family.serif = "Libertinus Sans"
-c.fonts.default_family = [
-    "Inconsolata Nerd Font",
-    "Libertinus Sans",
-    "Libertinus Serif",
-    "Noto Color Emoji",
-    "FontAwesome",
-]
-c.fonts.default_size = "12pt"
-c.fonts.contextmenu = "12pt"
-# c.fonts.web.size.default = 20
-# c.fonts.web.size.default_fixed = 20
-# c.fonts.web.size.minimum = 20
-
-# General settings
-c.content.autoplay = True
-c.qt.highdpi = True
-c.scrolling.smooth = True
-c.scrolling.bar = "never"
-c.zoom.default = "120%"
-c.statusbar.widgets = ["url"]
-c.tabs.show = "multiple"
-c.tabs.indicator.width = 0
-c.tabs.background = False
-# c.tabs.title.alignment = "center"
-c.content.cookies.accept = "no-3rdparty"
-c.content.webrtc_ip_handling_policy = "default-public-interface-only"
-c.tabs.title.format = "{audio} {current_title}"
-c.hints.leave_on_load = False
-c.input.insert_mode.auto_load = True
-c.input.insert_mode.leave_on_load = True
-c.content.headers.do_not_track = True
-c.content.dns_prefetch = False
-c.content.javascript.clipboard = "access"
+config.bind("0", "zoom")
+config.bind("=", "zoom-in")
+config.bind("-", "zoom-out")
+config.bind("ya", "spawn ytubeaudio {url}")
+config.bind("yv", "spawn ytubevideo {url}")
+config.bind("<Alt-f>", "hint links spawn --detach mpv --profile=L60 {hint-url}")
+config.bind("<Alt-Shift-f>", "hint links spawn --detach mpv --profile=M60 {hint-url}")
