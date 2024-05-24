@@ -21,6 +21,7 @@ return {
             DiagnosticSignInfo = { bg = "none", fg = "#b16286" },
             -- DapUIWatchesEmpty = { bg = "#cc241d", fg = "#cc241d" },
             WhichKeyFloat = { bg = "#1d2021" },
+            WhichKeyBorder = { bg = "#1d2021" },
         },
     },
     config = function(_, opts)
