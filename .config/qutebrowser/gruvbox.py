@@ -280,34 +280,34 @@ c.colors.tabs.indicator.error = bright_red
 c.colors.tabs.odd.fg = fg2
 
 # Background color of unselected odd tabs.
-c.colors.tabs.odd.bg = bg2
+c.colors.tabs.odd.bg = bg0_hard
 
 # Foreground color of unselected even tabs.
 c.colors.tabs.even.fg = c.colors.tabs.odd.fg
 
 # Background color of unselected even tabs.
-c.colors.tabs.even.bg = bg3
+c.colors.tabs.even.bg = bg0_hard
 
 # Foreground color of selected odd tabs.
-c.colors.tabs.selected.odd.fg = fg2
+c.colors.tabs.selected.odd.fg = bg0_hard
 
 # Background color of selected odd tabs.
-c.colors.tabs.selected.odd.bg = bg0
+c.colors.tabs.selected.odd.bg = dark_green
 
 # Foreground color of selected even tabs.
 c.colors.tabs.selected.even.fg = c.colors.tabs.selected.odd.fg
 
 # Background color of selected even tabs.
-c.colors.tabs.selected.even.bg = bg0
+c.colors.tabs.selected.even.bg = dark_green
 
 # Background color of pinned unselected even tabs.
-c.colors.tabs.pinned.even.bg = bright_green
+c.colors.tabs.pinned.even.bg = dark_orange
 
 # Foreground color of pinned unselected even tabs.
 c.colors.tabs.pinned.even.fg = bg2
 
 # Background color of pinned unselected odd tabs.
-c.colors.tabs.pinned.odd.bg = bright_green
+c.colors.tabs.pinned.odd.bg = dark_orange
 
 # Foreground color of pinned unselected odd tabs.
 c.colors.tabs.pinned.odd.fg = c.colors.tabs.pinned.even.fg
@@ -325,5 +325,5 @@ c.colors.tabs.pinned.selected.odd.bg = c.colors.tabs.pinned.selected.even.bg
 c.colors.tabs.pinned.selected.odd.fg = c.colors.tabs.selected.odd.fg
 
 # Background color for webpages if unset (or empty to use the theme's
-# color).
-# c.colors.webpage.bg = bg4
+# color). Use this to remove white color flash at startup
+c.colors.webpage.bg = bg0_hard
