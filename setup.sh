@@ -16,6 +16,7 @@ menu() {
     echo -e "\e[1;92mdotfiles:\e[0m ............. \e[37mclone my personal dotfiles.\e[0m"
     echo -e "\e[1;92mclean:\e[0m ................ \e[37mremove unwanted files and directory.\e[0m"
     echo -e "\e[1;92mdmenu:\e[0m ................ \e[37mdmenu personal build.\e[0m"
+    echo -e "\e[1;92mstartpage:\e[0m ............ \e[37mstartpage for qutebrowser.\e[0m"
 }
 
 aurhelper() {
@@ -88,9 +89,14 @@ clean() {
 
 dmenu() {
     cd $srcdir
-    git clone git@github.com:twoeightdev/archdmenu.git
+    git clone https://github.com/twoeightdev/archdmenu.git
     cd $dmenudir
     make && sudo make install
+}
+
+startpage() {
+    cd $srcdir
+    git clone https://github.com/twoeightdev/startpage.git
 }
 
 if [ -n "$1" ]; then
