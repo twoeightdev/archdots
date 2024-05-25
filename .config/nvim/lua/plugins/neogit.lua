@@ -17,7 +17,7 @@ return {
     },
     opts = {
         console_timeout = 10000,
-        disable_insert_on_commit = "auto",
+        -- disable_insert_on_commit = "auto",
         kind = "replace",
         status = { recent_commit_count = 25 },
         integrations = {
