@@ -4,7 +4,7 @@
 url="$1"
 
 notify-send --urgency low " Youtube download" "started $url"~
-if yt-dlp -f 'bestvideo+bestaudio' --merge-output-format mp4 --restrict-filenames -o "$HOME/.config/dl/youtube-dl/vids/%(title)s.%(ext)s" "$url"
+if yt-dlp -f 'bestvideo+bestaudio' --merge-output-format mp4 --restrict-filenames -o "$HOME/.local/downloads/%(title)s.%(ext)s" "$url"
     then
         notify-send --urgency normal " Youtube download" "finished $url"
     else
