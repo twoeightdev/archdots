@@ -13,6 +13,7 @@ from libqtile.config import (
     Screen,
 )
 from libqtile.lazy import lazy
+
 from spotify import Spotify
 
 mod = "mod4"
@@ -381,9 +382,8 @@ def core_widget():
         widget.WindowName(**widget_defaults, max_chars=51, foreground=color[4]),
         widget.Sep(**widget_defaults, size_percent=60),
         Spotify(format="{artist} {icon}  {track}", foreground=color[5]),
-        # BUG: Causes crash if enabled at the same time with `widget.Systray`.
-        # widget.Sep(**widget_defaults, size_percent=60),
-        # widget.Bluetooth(default_show_battery=True, foreground=color[4]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Bluetooth(default_show_battery=True, foreground=color[4]),
         # TODO: Make a script to only show icons when ncmpcpp is in paused state.
         # widget.Sep(**widget_defaults, size_percent=60),
         # widget.Mpd2(status_format="{play_status} {title}"),
