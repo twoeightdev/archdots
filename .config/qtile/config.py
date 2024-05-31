@@ -75,6 +75,7 @@ keys = [
     Key([mod], "o", lazy.spawn(filemanager), desc="File manager lf"),
     Key([mod], "b", lazy.spawn(browser), desc="Firefox web browser"),
     Key([mod, "shift"], "b", lazy.spawn(qbrowser), desc="Qute web browser"),
+    Key([mod], "F2", lazy.spawn("btoggle"), desc="Connect airpods"),
     Key([mod], "F1", lazy.spawn("ekill"), desc="Emacs daemon toggle"),
     Key([mod], "e", lazy.spawn(emacs), desc="Emacs"),
     Key([mod], "grave", lazy.spawn("emojis"), desc="Emojis"),
