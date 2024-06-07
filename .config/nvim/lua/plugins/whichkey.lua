@@ -18,7 +18,7 @@ return {
             ["<leader>g"] = { name = "git" },
             ["<leader>f"] = { name = "find" },
             ["<leader>b"] = { name = "buffers" },
-            ["<leader>x"] = { name = "diagnostics/quickfix" },
+            ["<leader>d"] = { name = "diagnostics/quickfix" },
             ["<leader>t"] = { name = "todo" },
         },
     },
