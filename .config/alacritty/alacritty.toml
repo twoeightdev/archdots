@@ -49,7 +49,19 @@ size = 9
 
 [font.normal]
 family = "monospace"
-style = "medium"
+style = "Regular"
+
+# [font.italic]
+# family = "monospace"
+# style = "Italic"
+#
+# [font.bold]
+# family = "monospace"
+# style = "Bold"
+#
+# [font.bold_italic]
+# family = "monospace"
+# style = "Bold Italic"
 
 [window]
 opacity = 0.95
