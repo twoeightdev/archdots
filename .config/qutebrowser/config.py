@@ -35,7 +35,7 @@ c.fonts.contextmenu = "12pt"
 c.colors.webpage.preferred_color_scheme = "dark"
 c.url.start_pages = ["~/.local/src/startpage/index.html"]
 c.url.default_page = "about:blank"
-# c.content.user_stylesheets = "~/.config/qutebrowser/gruvbox-all-sites.css"
+# c.content.user_stylesheets = "~/.config/qutebrowser/all-sites.css"
 
 
 # Search engines
@@ -77,6 +77,7 @@ c.completion.show = "always"
 c.auto_save.session = False
 c.hints.radius = 0
 c.hints.leave_on_load = False
+# c.hints.scatter = True
 c.confirm_quit = ["downloads"]
 c.downloads.location.prompt = False
 c.downloads.remove_finished = 1000
