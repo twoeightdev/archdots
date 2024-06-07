@@ -385,18 +385,27 @@ def core_widget():
         Spotify(format="{artist} {icon}  {track}", foreground=color[5]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Bluetooth(default_show_battery=True, foreground=color[4]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Backlight(
+            backlight_name="amdgpu_bl2",
+            format="☼{percent:2.0%}",
+            foreground=color[11],
+        ),
         # TODO: Make a script to only show icons when ncmpcpp is in paused state.
         # widget.Sep(**widget_defaults, size_percent=60),
         # widget.Mpd2(status_format="{play_status} {title}"),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Memory(
-            format="Mem:{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
+            # format="Mem:{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
+            format="Mem:{MemUsed: .0f}{mm}",
+            measure_mem="G",
             foreground=color[14],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.ThermalSensor(
             tag_sensor="Tctl",
             format="CPU:{temp:.0f}{unit}",
+            foreground=color[15],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Wlan(
@@ -408,13 +417,17 @@ def core_widget():
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Volume(fmt="  {}", foreground=color[12]),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Clock(format=" %B-%d-%Y %a %I:%M%p", foreground=color[3]),
+        # widget.Clock(format=" %B-%d-%Y %a %I:%M%p", foreground=color[3]),
+        widget.Clock(format="%B-%d-%Y %a", foreground=color[3]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Clock(format="%I:%M%p", foreground=color[2]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
             format="{char} {percent:2.0%}",
             charge_char=" ",
             # BUG: Not working `full_char`
             # full_char=" ",
+            full_char=" ",
             discharge_char=" ",
             update_interval=5,
             mouse_callbacks={"Button1": power},
