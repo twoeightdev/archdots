@@ -4,8 +4,8 @@ return {
     priority = 1000,
     opts = {
         italic = {
-            strings = false,
-            emphasis = false,
+            strings = true,
+            emphasis = true,
             comments = false,
             operators = false,
             folds = false,
