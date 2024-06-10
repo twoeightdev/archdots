@@ -70,7 +70,7 @@ c.aliases = {
 # Better defaults
 c.qt.highdpi = True
 c.qt.force_software_rendering = "none"
-c.zoom.default = "120%"
+c.zoom.default = "150%"
 c.changelog_after_upgrade = "never"
 c.editor.command = ["alacritty", "-e", "nvim '{}'"]
 c.completion.show = "always"
