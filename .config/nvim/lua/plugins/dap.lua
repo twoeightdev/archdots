@@ -103,7 +103,8 @@ return {
                 ft = "python",
                 config = function()
                     local dap_python = require("dap-python")
-                    dap_python.setup("~/.venv/devtool/bin/python")
+                    -- dap_python.setup("~/.venv/devtool/bin/python")
+                    dap_python.setup("/usr/bin/python")
                 end,
             },
         },
