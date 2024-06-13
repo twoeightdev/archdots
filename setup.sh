@@ -51,18 +51,17 @@ archpkg() {
     # needed for neovim
     pkgs="$pkgs lua-language-server luarocks npm selene bash-language-server"
     # python
-    pkgs="$pkgs python-adblock python-dbus-next python-iwlib python-mpd2"
-    pkgs="$pkgs python-pip python-psutil"
+    pkgs="$pkgs python-dbus-next python-iwlib python-mpd2 python-pip python-psutil"
     # programs
-    pkgs="$pkgs alacritty dunst emacs firefox gimp gucharmap lf newsboat"
-    pkgs="$pkgs mpc mpd mpv ncmpcpp nsxiv qtile qutebrowser steam"
+    pkgs="$pkgs alacritty dunst emacs firefox firefox-tridactyl firefox-ublock-origin"
+    pkgs="$pkgs mpc mpd mpv ncmpcpp nsxiv lf newsboat qtile gimp gucharmap steam"
     pkgs="$pkgs transmission-cli zathura zathura-pdf-mupdf spotify-launcher"
     # install all listed pkgs
     yay --needed --noconfirm -Syu $pkgs
 }
 
 aurpkg() {
-    aurpkgs="tremc-git gtk-theme-arc-gruvbox-git"
+    aurpkgs="tremc-git gtk-theme-arc-gruvbox-git firefox-tridactyl-native"
     yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S $aurpkgs
 }
 
