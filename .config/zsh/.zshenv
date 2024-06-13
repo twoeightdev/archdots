@@ -17,7 +17,7 @@ export TERMINAL="alacritty"
 export TERM="alacritty"
 # export MANPAGER="nvim +Man!"
 # export DIFFPROG="nvim -d"
-export BROWSER="qutebrowser"
+export BROWSER="firefox"
 export READER="zathura"
 export FILE="lf"
 export WM="qtile"
@@ -45,6 +45,7 @@ export GOPATH="$XDG_DATA_HOME/go"
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/rgrc"
+export NIMBLE_DIR="$HOME/.config/nimble"
 
 # Npm path
 export PATH="$HOME/.config/node_modules/bin:$PATH"
