@@ -1,0 +1,35 @@
+" Delete all settings except what's here
+sanitize tridactyllocal tridactylsync
+
+" Manage screen space
+guiset_quiet hoverlink right
+
+" General Settings
+set smoothscroll true
+set hintfiltermode vimperator
+set findresults -1
+
+" Bindings
+unbind d
+unbind <C-f>
+unbind <C-b>
+unbind --mode=hint <Space>
+bind dd tabclose
+bind u undo
+bind = zoom 0.1 true
+bind - zoom -0.1 true
+bind zz zoom 1.5
+bind / fillcmdline find
+bind ? fillcmdline find -?
+bind n findnext 1
+bind N findnext -1
+bind ,<Space> nohlsearch
+bind o fillcmdline open
+bind O fillcmdline tabopen
+bind s fillcmdline open search
+bind S fillcmdline tabopen search
+bind p clipboard open
+bind P clipboard tabopen
+bind <C-h> tabmove -1
+bind <C-l> tabmove +1
+bind q qall
