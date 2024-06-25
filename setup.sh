@@ -82,6 +82,7 @@ clean() {
     mkdir -p /home/$name/.local/drafts
     mkdir -p /home/$name/.local/screenshot
     mkdir -p /home/$name/.local/src
+    mkdir -p /home/$name/.local/testfiles
     mkdir -p /home/$name/.local/torrent
     echo -e "\e[1;31mdone!\e[0m"
 }
