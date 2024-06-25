@@ -11,7 +11,9 @@ return {
             folds = false,
         },
         contrast = "hard",
+        transparent_mode = true,
         overrides = {
+            NormalFloat = { bg = "#32302f" },
             SignColumn = { bg = "#1d2021" },
             FoldColumn = { bg = "#1d2021" },
             MatchParen = { bg = "", fg = "#d79921", underline = true },
