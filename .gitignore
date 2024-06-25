@@ -19,6 +19,8 @@
 .config/emacs/auto-saves/
 .config/emacs/backups/
 .config/emacs/custom.el
+.config/emacs/early-init.el
+.config/emacs/init.el
 .config/emacs/elpa/
 .config/emacs/.org-id-locations
 .config/emacs/places
@@ -73,4 +75,5 @@
 .local/share/zathura/
 .local/src/
 .local/state/
+.local/testfiles/
 .local/torrent/
