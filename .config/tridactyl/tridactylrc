@@ -6,8 +6,12 @@ guiset_quiet hoverlink right
 
 " General Settings
 set smoothscroll true
-set hintfiltermode vimperator
+" set hintfiltermode vimperator
 set findresults -1
+set hintfiltermode simple
+set hintshift false
+set hintnames uniform
+set tabsort mru
 
 " Bindings
 unbind d
@@ -22,8 +26,8 @@ bind zz zoom 1.5
 bind / fillcmdline find
 bind ? fillcmdline find -?
 bind n findnext 1
-bind N findnext -1
-bind ,<Space> nohlsearch
+bind N findnext 1 -?
+bind <A-Space> nohlsearch
 bind o fillcmdline open
 bind O fillcmdline tabopen
 bind s fillcmdline open search
@@ -32,4 +36,7 @@ bind p clipboard open
 bind P clipboard tabopen
 bind <C-h> tabmove -1
 bind <C-l> tabmove +1
+bind <A-m> mute toggle
+bind p clipboard open
+bind P clipboard tabopen
 bind q qall
