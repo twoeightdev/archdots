@@ -24,6 +24,7 @@ return {
                 "yaml",
                 "html",
                 "css",
+                "xml",
                 "git_config",
                 "git_rebase",
                 "gitcommit",
