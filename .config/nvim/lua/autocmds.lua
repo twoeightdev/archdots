@@ -117,3 +117,24 @@ autocmd("FileType", {
         vim.opt_local.conceallevel = 0
     end,
 })
+
+-- Reload shortcuts script when configuration is updated
+autocmd("BufWritePost", {
+    group = augroup("reload_shortcuts"),
+    pattern = { "bm-files", "bm-dirs" },
+    command = "silent! !shortcuts",
+})
+
+-- Xdefaults configuration reload when updated
+autocmd("BufWritePost", {
+    group = augroup("reload_xdefault"),
+    pattern = { "xdefaults" },
+    command = "silent! !xrdb %",
+})
+
+-- Reload dunst when configuration is updated
+autocmd("BufWritePost", {
+    group = augroup("reload_dunst"),
+    pattern = { "dunstrc" },
+    command = "silent! !pkill dunst; dunst &",
+})
