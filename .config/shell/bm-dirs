@@ -5,7 +5,8 @@ d   $HOME/.local/downloads
 w   $HOME/.local/src
 b   $HOME/.local/bin
 m   $HOME/.config/mnt
-t   $HOME/.local/screenshot
+i   $HOME/.local/screenshot
+t   $HOME/.local/testfiles
 n   $HOME/.config/nvim/lua/plugins
 f   /media/data
 p   /media/data/wallpapers
