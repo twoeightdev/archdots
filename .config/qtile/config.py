@@ -353,7 +353,7 @@ floating_layout = layout.Floating(
 
 # Widgets
 widget_defaults = dict(
-    font="monospace bold",
+    font="IosevkaTermSlab Nerd Font Bold",
     fontsize=16,
     background=color[0],
     padding=5,
