@@ -121,7 +121,6 @@ This file is loaded before the package system and GUI is initialized.
 
 ** Footer early-init
 Convent footer for early-init.el
-
 #+begin_src emacs-lisp
   ;;; early-init.el ends here
 #+end_src
@@ -134,7 +133,6 @@ Generated init.el file.
 
 ** Better defaults
 Preferred defaults.
-
 #+begin_src emacs-lisp :noweb yes :comments no
   <<header>>
 
@@ -154,7 +152,6 @@ Preferred defaults.
 
 ** Package management
 Package.el with use-package.
-
 #+begin_src emacs-lisp
   (setq-default use-package-always-defer t)
   (setq-default use-package-always-ensure t)
@@ -167,7 +164,6 @@ Package.el with use-package.
 
 ** Organize
 Clean clutter
-
 #+begin_src emacs-lisp
   (use-package no-littering)
 
@@ -194,7 +190,6 @@ Clean clutter
 
 ** Auto tangle
 Auto tangle this org file.
-
 #+begin_src emacs-lisp
   (use-package org-auto-tangle
 	:hook
@@ -203,7 +198,6 @@ Auto tangle this org file.
 
 ** Evil
 Evil mode.
-
 #+begin_src emacs-lisp
   (use-package evil
 	:demand t
@@ -215,7 +209,6 @@ Evil mode.
 
 ** Org
 Org mode.
-
 #+begin_src emacs-lisp :tangle no
   (use-package org
   :ensure nil
@@ -225,7 +218,6 @@ Org mode.
 
 ** Footer init
 Convent footer for init.el
-
 #+begin_src emacs-lisp
   ;;; init.el ends here
 #+end_src
