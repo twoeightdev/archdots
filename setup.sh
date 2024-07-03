@@ -37,7 +37,7 @@ archpkg() {
     # audio
     pkgs="$pkgs pipewire pipewire-alsa pipewire-pulse alsa-utils pulsemixer"
     # fonts
-    pkgs="$pkgs libertinus-font noto-fonts noto-fonts-emoji ttf-font-awesome"
+    pkgs="$pkgs libertinus-font noto-fonts noto-fonts-emoji"
     pkgs="$pkgs ttc-iosevka ttc-iosevka-aile ttf-iosevka-nerd ttf-dejavu"
     pkgs="$pkgs ttf-inconsolata ttf-inconsolata-nerd ttf-joypixels"
     pkgs="$pkgs ttf-liberation ttf-roboto-mono"
@@ -52,6 +52,7 @@ archpkg() {
     pkgs="$pkgs lua-language-server luarocks npm selene bash-language-server"
     # python
     pkgs="$pkgs python-dbus-next python-iwlib python-mpd2 python-pip python-psutil"
+    pkgs="$pkgs python-lsp-server"
     # programs
     pkgs="$pkgs alacritty dunst emacs firefox firefox-tridactyl firefox-ublock-origin"
     pkgs="$pkgs mpc mpd mpv ncmpcpp nsxiv lf newsboat qtile gimp gucharmap steam"
