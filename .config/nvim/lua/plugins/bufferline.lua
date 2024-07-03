@@ -136,28 +136,28 @@ return {
         highlights = {
             -- bufferline background
             fill = {
-                bg = "#1d2021",
-                ctermbg = "#1d2021",
+                bg = "#191724",
+                ctermbg = "#191724",
             },
             -- selected tab background
             background = {
-                bg = "#1d2021",
-                ctermbg = "#1d2021",
+                bg = "#191724",
+                ctermbg = "#191724",
             },
             -- Close button background
             close_button = {
-                bg = "#1d2021",
-                ctermbg = "#1d2021",
+                bg = "#191724",
+                ctermbg = "#191724",
             },
             -- Numberline background
             numbers = {
-                bg = "#1d2021",
-                ctermbg = "#1d2021",
+                bg = "#191724",
+                ctermbg = "#191724",
             },
             -- Separator background
             separator = {
-                bg = "#1d2021",
-                ctermbg = "#1d2021",
+                bg = "#191724",
+                ctermbg = "#191724",
             },
         },
     },
