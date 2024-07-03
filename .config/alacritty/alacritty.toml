@@ -1,41 +1,115 @@
 live_config_reload = true
 
-# Default colors
+# GRUVBOX
+# [colors.primary]
+# background = '#1d2021'
+# foreground = '#ebdbb2'
+
+# [colors.cursor]
+# text = '#1d2021'
+# cursor = '#ebdbb2'
+
+# [colors.normal]
+# black   = '#282828'
+# red     = '#cc241d'
+# green   = '#98971a'
+# yellow  = '#d79921'
+# blue    = '#458588'
+# magenta = '#b16286'
+# cyan    = '#689d6a'
+# white   = '#a89984'
+
+# [colors.bright]
+# black   = '#928374'
+# red     = '#fb4934'
+# green   = '#b8bb26'
+# yellow  = '#fabd2f'
+# blue    = '#83a598'
+# magenta = '#d3869b'
+# cyan    = '#8ec07c'
+# white   = '#ebdbb2'
+
+# ROSE PINE
+# Colors section of "Alacritty - TOML configuration file format"
+# https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd#colors
+[colors.normal]
+black = "#26233a"
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+white = "#e0def4"
+
+[colors.bright]
+black = "#6e6a86"
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+white = "#e0def4"
+
+[colors.dim]
+black = "#6e6a86"
+red = "#eb6f92"
+green = "#31748f"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ebbcba"
+white = "#e0def4"
+
 [colors.primary]
-background = '#1d2021'
-foreground = '#ebdbb2'
+foreground = "#e0def4"
+background = "#191724"
+dim_foreground = "#908caa"
+bright_foreground = "#e0def4"
 
 [colors.cursor]
-text = '#1d2021'
-cursor = '#ebdbb2'
+# text = "#e0def4"
+# cursor = "#524f67"
+cursor = "#e0def4"
 
-# Gruvbox normal colors
-[colors.normal]
-black   = '#282828'
-red     = '#cc241d'
-green   = '#98971a'
-yellow  = '#d79921'
-blue    = '#458588'
-magenta = '#b16286'
-cyan    = '#689d6a'
-white   = '#a89984'
+[colors.vi_mode_cursor]
+text = "#e0def4"
+cursor = "#524f67"
 
-# Gruvbox bright colors
-[colors.bright]
-black   = '#928374'
-red     = '#fb4934'
-green   = '#b8bb26'
-yellow  = '#fabd2f'
-blue    = '#83a598'
-magenta = '#d3869b'
-cyan    = '#8ec07c'
-white   = '#ebdbb2'
+[colors.search.matches]
+foreground = "#908caa"
+background = "#26233a"
+
+[colors.search.focused_match]
+foreground = "#191724"
+background = "#ebbcba"
+
+[colors.hints.start]
+foreground = "#908caa"
+background = "#1f1d2e"
+
+[colors.hints.end]
+foreground = "#6e6a86"
+background = "#1f1d2e"
+
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+[colors.footer_bar]
+foreground = "#e0def4"
+background = "#1f1d2e"
+
+[colors.selection]
+text = "#e0def4"
+background = "#403d52"
 
 [keyboard]
 bindings = [
     { key = "p", mods = "Alt", action = "Paste" },
     { key = "y", mods = "Alt", action = "Copy" },
-    { key = "i", mods = "Alt", action = "ToggleViMode" },
+    # { key = "i", mods = "Alt", action = "ToggleViMode" },
     { key = "k", mods = "Control|Shift", action = "ScrollLineUp" },
     { key = "j", mods = "Control|Shift", action = "ScrollLineDown" },
     { key = "Up", mods = "Control|Alt", action = "ScrollPageUp" },
