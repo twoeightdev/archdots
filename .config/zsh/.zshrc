@@ -27,6 +27,11 @@ if [ ! -d $ZPLUG/auto-suggestions ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZPLUG/auto-suggestions
 fi
 
+# Install zsh-system-clipboard
+if [ ! -d $ZPLUG/system-clipboard ]; then
+    git clone https://github.com/kutsan/zsh-system-clipboard $ZPLUG/system-clipboard
+fi
+
 # Load aliases and shortcuts if it exist
 [ -f "$XDG_CONFIG_HOME/shell/shrc" ] && source "$XDG_CONFIG_HOME/shell/shrc"
 [ -f "$XDG_CONFIG_HOME/shell/aliasrc" ] && source "$XDG_CONFIG_HOME/shell/aliasrc"
@@ -124,6 +129,9 @@ fi
 
 # Source zsh-auto-suggestions
 source $ZPLUG/auto-suggestions/zsh-autosuggestions.zsh
+
+# Source zsh-system-clipboard
+source $ZPLUG/system-clipboard/zsh-system-clipboard.zsh
 
 # Source zsh-fast-syntax-highlighting
 source $ZPLUG/fasthl/fast-syntax-highlighting.plugin.zsh
