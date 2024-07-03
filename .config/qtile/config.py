@@ -80,10 +80,13 @@ keys = [
     Key([mod], "e", lazy.spawn(emacs), desc="Emacs"),
     Key([mod], "grave", lazy.spawn("emojis"), desc="Emojis"),
     Key([], "Print", lazy.spawn("screenshot"), desc="Take screenshot"),
+    Key([mod], "p", lazy.spawn("spotify-toggle"), desc="Play toggle for spotify"),
+    Key([mod], "period", lazy.spawn("spotify-next"), desc="Next song in spotify"),
+    Key([mod], "comma", lazy.spawn("spotify-prev"), desc="Previous song in spotify"),
     Key([mod, "shift"], "s", lazy.spawn("dmenu-playlist"), desc="Search ncmpcpp song"),
-    Key([mod], "p", lazy.spawn(mpctoggle), desc="Play toggle for ncmpcpp"),
-    Key([mod], "comma", lazy.spawn(mpcprev), desc="Previous song in ncmpcpp"),
-    Key([mod], "period", lazy.spawn(mpcnext), desc="Next song in ncmpcpp"),
+    Key([mod, "shift"], "p", lazy.spawn(mpctoggle), desc="Play toggle for ncmpcpp"),
+    Key([mod, "shift"], "comma", lazy.spawn(mpcprev), desc="Previous song in ncmpcpp"),
+    Key([mod, "shift"], "period", lazy.spawn(mpcnext), desc="Next song in ncmpcpp"),
     Key([mod], "F9", lazy.spawn("dmenu-mount"), desc="Mount drive"),
     Key([mod, "shift"], "F9", lazy.spawn("dmenu-unmount"), desc="Unmount drive"),
     Key([mod], "w", lazy.spawn("dmenu-favlink"), desc="Web search via dmenu"),
@@ -300,24 +303,45 @@ mouse = [
 ]
 
 # Gruvbox colors
+# color = [
+#     ["#1d2021", "#1d2021"],  # 0
+#     ["#cc241d", "#cc241d"],  # 1
+#     ["#98971a", "#98971a"],  # 2
+#     ["#d79921", "#d79921"],  # 3
+#     ["#458588", "#458588"],  # 4
+#     ["#b16286", "#b16286"],  # 5
+#     ["#689d6a", "#689d6a"],  # 6
+#     ["#a89984", "#a89984"],  # 7
+#     ["#928374", "#928374"],  # 8
+#     ["#fb4934", "#fb4934"],  # 9
+#     ["#b8bb26", "#b8bb26"],  # 10
+#     ["#fabd2f", "#fabd2f"],  # 11
+#     ["#83a598", "#83a598"],  # 12
+#     ["#d3869b", "#d3869b"],  # 13
+#     ["#8ec07c", "#8ec07c"],  # 14
+#     ["#ebdbb2", "#ebdbb2"],  # 15
+#     ["#3c3836", "#3c3836"],  # 16
+# ]
+
+# Rose-pine
 color = [
-    ["#1d2021", "#1d2021"],  # 0
-    ["#cc241d", "#cc241d"],  # 1
-    ["#98971a", "#98971a"],  # 2
-    ["#d79921", "#d79921"],  # 3
-    ["#458588", "#458588"],  # 4
-    ["#b16286", "#b16286"],  # 5
-    ["#689d6a", "#689d6a"],  # 6
-    ["#a89984", "#a89984"],  # 7
-    ["#928374", "#928374"],  # 8
-    ["#fb4934", "#fb4934"],  # 9
-    ["#b8bb26", "#b8bb26"],  # 10
-    ["#fabd2f", "#fabd2f"],  # 11
-    ["#83a598", "#83a598"],  # 12
-    ["#d3869b", "#d3869b"],  # 13
-    ["#8ec07c", "#8ec07c"],  # 14
-    ["#ebdbb2", "#ebdbb2"],  # 15
-    ["#3c3836", "#3c3836"],  # 16
+    ["#191724", "#191724"],  # 0
+    ["#eb6f92", "#eb6f92"],  # 1
+    ["#f6c177", "#f6c177"],  # 2
+    ["#ebbcba", "#ebbcba"],  # 3
+    ["#31748f", "#31748f"],  # 4
+    ["#c4a7e7", "#c4a7e7"],  # 5
+    ["#9ccfd8", "#9ccfd8"],  # 6
+    ["#6e6a86", "#6e6a86"],  # 7
+    ["#26233a", "#26233a"],  # 8
+    ["#eb6f92", "#eb6f92"],  # 9
+    ["#f6c177", "#f6c177"],  # 10
+    ["#ebbcba", "#ebbcba"],  # 11
+    ["#31748f", "#31748f"],  # 12
+    ["#c4a7e7", "#c4a7e7"],  # 13
+    ["#9ccfd8", "#9ccfd8"],  # 14
+    ["#908caa", "#908caa"],  # 15
+    ["#1f1d2e", "#1f1d2e"],  # 16
 ]
 
 # Layouts
@@ -353,7 +377,7 @@ floating_layout = layout.Floating(
 
 # Widgets
 widget_defaults = dict(
-    font="IosevkaTermSlab Nerd Font Bold",
+    font="Iosevka Nerd Font Bold",
     fontsize=16,
     background=color[0],
     padding=5,
@@ -375,7 +399,7 @@ def core_widget():
         widget.GroupBox(
             # fontsize=16,
             active=color[1],
-            inactive=color[16],
+            inactive=color[15],
             this_current_screen_border=color[0],
             block_highlight_text_color=color[2],
         ),
@@ -388,7 +412,7 @@ def core_widget():
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Backlight(
             backlight_name="amdgpu_bl2",
-            format="☼{percent:2.0%}",
+            format="🔆 {percent:2.0%}",
             foreground=color[11],
         ),
         # TODO: Make a script to only show icons when ncmpcpp is in paused state.
