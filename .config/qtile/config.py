@@ -98,7 +98,7 @@ keys = [
 ]
 
 # Groups
-# groups = [Group(f"{i+1}", label="●") for i in range(8)]
+# groups = [Group(f"{i+1}", label="●") for i in range(5)]
 # groups = [
 #     Group("1", label="1"),
 #     Group("2", label="2"),
@@ -302,46 +302,25 @@ mouse = [
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
-# Gruvbox colors
-# color = [
-#     ["#1d2021", "#1d2021"],  # 0
-#     ["#cc241d", "#cc241d"],  # 1
-#     ["#98971a", "#98971a"],  # 2
-#     ["#d79921", "#d79921"],  # 3
-#     ["#458588", "#458588"],  # 4
-#     ["#b16286", "#b16286"],  # 5
-#     ["#689d6a", "#689d6a"],  # 6
-#     ["#a89984", "#a89984"],  # 7
-#     ["#928374", "#928374"],  # 8
-#     ["#fb4934", "#fb4934"],  # 9
-#     ["#b8bb26", "#b8bb26"],  # 10
-#     ["#fabd2f", "#fabd2f"],  # 11
-#     ["#83a598", "#83a598"],  # 12
-#     ["#d3869b", "#d3869b"],  # 13
-#     ["#8ec07c", "#8ec07c"],  # 14
-#     ["#ebdbb2", "#ebdbb2"],  # 15
-#     ["#3c3836", "#3c3836"],  # 16
-# ]
-
-# Rose-pine
+# Catppuccin
 color = [
-    ["#191724", "#191724"],  # 0
-    ["#eb6f92", "#eb6f92"],  # 1
-    ["#f6c177", "#f6c177"],  # 2
-    ["#ebbcba", "#ebbcba"],  # 3
-    ["#31748f", "#31748f"],  # 4
-    ["#c4a7e7", "#c4a7e7"],  # 5
-    ["#9ccfd8", "#9ccfd8"],  # 6
-    ["#6e6a86", "#6e6a86"],  # 7
-    ["#26233a", "#26233a"],  # 8
-    ["#eb6f92", "#eb6f92"],  # 9
-    ["#f6c177", "#f6c177"],  # 10
-    ["#ebbcba", "#ebbcba"],  # 11
-    ["#31748f", "#31748f"],  # 12
-    ["#c4a7e7", "#c4a7e7"],  # 13
-    ["#9ccfd8", "#9ccfd8"],  # 14
-    ["#908caa", "#908caa"],  # 15
-    ["#1f1d2e", "#1f1d2e"],  # 16
+    ["#1e1e2e", "#1e1e2e"],  # 0
+    ["#f38ba8", "#f38ba8"],  # 1
+    ["#a6e3a1", "#a6e3a1"],  # 2
+    ["#f9e2af", "#f9e2af"],  # 3
+    ["#89b4fa", "#89b4fa"],  # 4
+    ["#f5c2e7", "#f5c2e7"],  # 5
+    ["#94e2d5", "#94e2d5"],  # 6
+    ["#bac2de", "#bac2de"],  # 7
+    ["#585b70", "#585b70"],  # 8
+    ["#f38ba8", "#f38ba8"],  # 9
+    ["#a6e3a1", "#a6e3a1"],  # 10
+    ["#f9e2af", "#f9e2af"],  # 11
+    ["#89b4fa", "#89b4fa"],  # 12
+    ["#f5c2e7", "#f5c2e7"],  # 13
+    ["#94e2d5", "#94e2d5"],  # 14
+    ["#a6adc8", "#a6adc8"],  # 15
+    ["#45475a", "#45475a"],  # 16
 ]
 
 # Layouts
@@ -353,7 +332,7 @@ layout_theme = {
 floating_theme = layout_theme.copy()
 
 layouts = [
-    layout.Columns(**layout_theme, shift_windows=True, margin=8, border_on_single=True),
+    layout.Columns(**layout_theme, shift_windows=True, margin=5, border_on_single=True),
     layout.Floating(**layout_theme),
     # layout.Max(**layout_theme),
     # layout.Tile(**layout_theme),
@@ -377,7 +356,7 @@ floating_layout = layout.Floating(
 
 # Widgets
 widget_defaults = dict(
-    font="Iosevka Nerd Font Bold",
+    font="monospace Bold",
     fontsize=16,
     background=color[0],
     padding=5,
@@ -396,23 +375,33 @@ def core_widget():
             # margin=3,
             # background=color[1],
         ),
+        widget.Clock(format="󰸗 %A %d %B", foreground=color[3]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.Clock(format="󰥔 %I:%M%p", foreground=color[14]),
+        widget.Sep(**widget_defaults, size_percent=60),
+        widget.CurrentLayoutIcon(**widget_defaults, scale=0.5),
+        widget.Sep(**widget_defaults, size_percent=60),
         widget.GroupBox(
-            # fontsize=16,
             active=color[1],
             inactive=color[15],
+            padding=5,
             this_current_screen_border=color[0],
             block_highlight_text_color=color[2],
         ),
-        widget.CurrentLayout(**widget_defaults, foreground=color[3]),
-        widget.WindowName(**widget_defaults, max_chars=51, foreground=color[4]),
         widget.Sep(**widget_defaults, size_percent=60),
+        widget.WindowName(**widget_defaults, max_chars=51, foreground=color[4]),
+        widget.Spacer(),
         Spotify(format="{artist} {icon}  {track}", foreground=color[5]),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Bluetooth(default_show_battery=True, foreground=color[4]),
+        widget.Bluetooth(
+            default_text="󰂯{connected_devices}",
+            default_show_battery=True,
+            foreground=color[4],
+        ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Backlight(
             backlight_name="amdgpu_bl2",
-            format="🔆 {percent:2.0%}",
+            format=" {percent:2.0%}",
             foreground=color[11],
         ),
         # TODO: Make a script to only show icons when ncmpcpp is in paused state.
@@ -420,40 +409,34 @@ def core_widget():
         # widget.Mpd2(status_format="{play_status} {title}"),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Memory(
-            # format="Mem:{MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
-            format="Mem:{MemUsed: .0f}{mm}",
+            format="󰍛{MemUsed: .0f}{mm}",
             measure_mem="G",
             foreground=color[14],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.ThermalSensor(
             tag_sensor="Tctl",
-            format="CPU:{temp:.0f}{unit}",
+            format=" {temp:.0f}{unit}",
             foreground=color[15],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Wlan(
             format="󰖩  {essid}",
+            # format="󰖩 ",
             disconnected_message="󰖪 ",
             interface="wlp6s0",
             foreground=color[9],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Volume(fmt="  {}", foreground=color[12]),
-        widget.Sep(**widget_defaults, size_percent=60),
-        # widget.Clock(format=" %B-%d-%Y %a %I:%M%p", foreground=color[3]),
-        widget.Clock(format="%B-%d-%Y %a", foreground=color[3]),
-        widget.Sep(**widget_defaults, size_percent=60),
-        widget.Clock(format="%I:%M%p", foreground=color[2]),
+        widget.PulseVolume(fmt="󰕾 {}", foreground=color[12]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
             format="{char} {percent:2.0%}",
-            charge_char=" ",
+            charge_char=" ",
             # BUG: Not working `full_char`
-            # full_char=" ",
-            full_char=" ",
+            # full_char=" ",
             discharge_char=" ",
-            update_interval=5,
+            update_interval=10,
             mouse_callbacks={"Button1": power},
             foreground=color[13],
         ),
@@ -462,7 +445,7 @@ def core_widget():
     ]
 
 
-screens = [Screen(top=bar.Bar(widgets=core_widget(), size=24))]
+screens = [Screen(top=bar.Bar(widgets=core_widget(), size=34))]
 
 follow_mouse_focus = True
 bring_front_click = False
