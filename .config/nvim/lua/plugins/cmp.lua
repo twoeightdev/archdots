@@ -1,20 +1,17 @@
 return {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    --commit = "b356f2c",
     dependencies = {
+        "onsails/lspkind.nvim",
         "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-nvim-lsp-signature-help",
-        "hrsh7th/cmp-nvim-lua",
         "saadparwaiz1/cmp_luasnip",
-        "hrsh7th/cmp-cmdline",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-calc",
         "hrsh7th/cmp-path",
+        "hrsh7th/cmp-buffer",
         "windwp/nvim-autopairs",
         {
             "L3MON4D3/LuaSnip",
             build = "make install_jsregexp",
-            version = "v2.*",
-            config = true,
         },
         {
             "rafamadriz/friendly-snippets",
@@ -22,14 +19,14 @@ return {
                 require("luasnip.loaders.from_vscode").lazy_load()
             end,
         },
+        "brenoprata10/nvim-highlight-colors",
     },
-    event = "InsertEnter",
     opts = function()
         vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
         local luasnip = require("luasnip")
         local cmp = require("cmp")
-        local defaults = require("cmp.config.default")()
         local function has_words_before()
+            ---@diagnostic disable-next-line: deprecated
             local line, col = unpack(vim.api.nvim_win_get_cursor(0))
             return col ~= 0
                 and vim.api
@@ -39,7 +36,7 @@ return {
                     == nil
         end
         return {
-            completion = { completeopt = "menu,menuone" },
+            completion = { completeopt = "menu,menuone,noinsert" },
             snippet = {
                 expand = function(args)
                     luasnip.lsp_expand(args.body)
@@ -85,63 +82,46 @@ return {
                 end,
             }),
             sources = cmp.config.sources({
-                { name = "nvim_lsp" },
-                { name = "nvim_lsp_signature_help" },
-                { name = "nvim_lua" },
-                { name = "luasnip" },
-                { name = "buffer" },
-                { name = "calc" },
-                { name = "path" },
+                { name = "nvim_lsp", priority = 100 },
+                { name = "luasnip", priority = 30 },
+                { name = "buffer", priority = 20 },
+                { name = "path", priority = 10 },
             }),
             formatting = {
-                format = function(_, item)
-                    local icons = {
-                        Array = " ",
-                        Boolean = " ",
-                        Class = " ",
-                        Color = " ",
-                        Constant = " ",
-                        Constructor = " ",
-                        Copilot = " ",
-                        Enum = " ",
-                        EnumMember = " ",
-                        Event = " ",
-                        Field = " ",
-                        File = " ",
-                        Folder = " ",
-                        Function = " ",
-                        Interface = " ",
-                        Key = " ",
-                        Keyword = " ",
-                        Method = " ",
-                        Module = " ",
-                        Namespace = " ",
-                        Null = " ",
-                        Number = " ",
-                        Object = " ",
-                        Operator = " ",
-                        Package = " ",
-                        Property = " ",
-                        Reference = " ",
-                        Snippet = " ",
-                        String = " ",
-                        Struct = " ",
-                        Text = " ",
-                        TypeParameter = " ",
-                        Unit = " ",
-                        Value = " ",
-                        Variable = " ",
-                    }
-                    if icons[item.kind] then
-                        item.kind = icons[item.kind] .. item.kind
-                    end
-                    return item
+                fields = { "kind", "abbr", "menu" },
+                format = function(entry, item)
+                    local kind = require("lspkind").cmp_format({
+                        mode = "symbol_text",
+                        maxwidth = 50,
+                        ellipsis_char = "...",
+                        menu = {
+                            nvim_lsp = "LSP",
+                            luasnip = "Snippet",
+                            buffer = "Buffer",
+                            path = "Path",
+                        },
+                    })(entry, item)
+
+                    local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                    kind.kind = " " .. (strings[1] or "") .. " "
+                    kind.menu = "    [" .. kind.menu .. "]"
+
+                    return kind
                 end,
             },
-            experimental = { ghost_text = { hl_group = "CmpGhostText" } },
-            sorting = defaults.sorting,
+            experimental = {
+                ghost_text = { hl_group = "CmpGhostText" },
+            },
             window = {
-                completion = { scrollbar = false },
+                completion = {
+                    scrollbar = false,
+                    border = "single",
+                    winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+                },
+                documentation = {
+                    border = "single",
+                    winhighlight = "Normal:CmpDoc",
+                },
             },
             view = {
                 entries = {

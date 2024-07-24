@@ -6,6 +6,7 @@ return {
                 "help",
                 "dashboard",
                 "Trouble",
+                "fzf",
                 "trouble",
                 "lazy",
                 "mason",

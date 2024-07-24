@@ -1,49 +1,58 @@
--- return {
---     "ellisonleao/gruvbox.nvim",
---     lazy = false,
---     priority = 1000,
---     opts = {
---         italic = {
---             strings = false,
---             emphasis = true,
---             comments = false,
---             operators = false,
---             folds = false,
---         },
---         contrast = "hard",
---         transparent_mode = true,
---         overrides = {
---             NormalFloat = { bg = "#32302f" },
---             SignColumn = { bg = "#1d2021" },
---             FoldColumn = { bg = "#1d2021" },
---             MatchParen = { bg = "", fg = "#d79921", underline = true },
---             DiagnosticSignError = { bg = "none", fg = "#cc241d" },
---             DiagnosticSignWarn = { bg = "none", fg = "#d79921" },
---             DiagnosticSignHint = { bg = "none", fg = "#458588" },
---             DiagnosticSignInfo = { bg = "none", fg = "#b16286" },
---             -- DapUIWatchesEmpty = { bg = "#cc241d", fg = "#cc241d" },
---             WhichKeyFloat = { bg = "#1d2021" },
---             WhichKeyBorder = { bg = "#1d2021" },
---         },
---     },
---     config = function(_, opts)
---         local gruvbox = require("gruvbox")
---         gruvbox.setup(opts)
---         gruvbox.load()
---     end,
--- }
-
 return {
-    "rose-pine/neovim",
+    "catppuccin/nvim",
     lazy = false,
-    name = "rose-pine",
+    name = "catppuccin",
     priority = 1000,
     opts = {
-        disable_background = true,
+        flavour = "mocha",
+        background = {
+            light = "latte",
+            dark = "mocha",
+        },
+        transparent_background = true,
+        no_italic = false,
+        no_bold = false,
+        no_underline = false,
+        styles = {
+            comments = { "italic" },
+            conditionals = { "italic" },
+            loops = {},
+            functions = {},
+            keywords = {},
+            strings = {},
+            variables = {},
+            numbers = {},
+            booleans = {},
+            properties = {},
+            types = {},
+            operators = {},
+        },
+        color_overrides = {},
+        custom_highlights = function(colors)
+            return {
+                CursorColumn = { bg = colors.surface0 },
+                -- NormalFloat = { bg = colors.surface0 },
+                -- FloatBorder = { fg = colors.lavender },
+                -- Pmenu = { bg = colors.surface0 },
+                -- MiniIndentscopeSymbol = { fg = colors.mauve },
+            }
+        end,
+        integrations = {
+            cmp = true,
+            gitsigns = true,
+            illuminate = true,
+            treesitter = true,
+            indent_blankline = {
+                enable = true,
+                scope_color = "mauve",
+            },
+            mason = true,
+            which_key = true,
+        },
     },
     config = function(_, opts)
-        local rose_pine = require("rose-pine")
-        rose_pine.setup(opts)
-        vim.cmd("colorscheme rose-pine")
+        local catppuccin = require("catppuccin")
+        catppuccin.setup(opts)
+        catppuccin.load()
     end,
 }

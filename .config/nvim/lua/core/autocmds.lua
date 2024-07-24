@@ -10,6 +10,7 @@ end
 autocmd("BufWritePre", {
     group = augroup("trailing_space"),
     command = "%s/\\s\\+$//e",
+    desc = "Remove trailing white spaces",
 })
 
 -- Highlight text on yank
@@ -85,29 +86,29 @@ autocmd("BufWritePre", {
 })
 
 -- Check for spelling in text filetypes and enable wrapping
-autocmd("FileType", {
-    group = augroup("wrap_spell"),
-    pattern = {
-        "gitcommit",
-        "markdown",
-        "text",
-        "NeogitCommitMessage",
-    },
-    callback = function()
-        vim.opt_local.spell = true
-        vim.opt_local.wrap = true
-    end,
-})
+-- autocmd("FileType", {
+--     group = augroup("wrap_spell"),
+--     pattern = {
+--         "gitcommit",
+--         "markdown",
+--         "text",
+--         "NeogitCommitMessage",
+--     },
+--     callback = function()
+--         vim.opt_local.spell = true
+--         vim.opt_local.wrap = true
+--     end,
+-- })
 
 -- Check if the file needs to be reloaded when it's changed
-autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-    group = augroup("checktime"),
-    callback = function()
-        if vim.opt.buftype:get() ~= "nofile" then
-            vim.cmd.checktime()
-        end
-    end,
-})
+-- autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+--     group = augroup("checktime"),
+--     callback = function()
+--         if vim.opt.buftype:get() ~= "nofile" then
+--             vim.cmd.checktime()
+--         end
+--     end,
+-- })
 
 -- Disable conceallevel for json filetypes
 autocmd("FileType", {

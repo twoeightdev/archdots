@@ -10,7 +10,7 @@ local function _load(module)
 end
 
 -- Load modules
-_load("globals")
-_load("keymaps")
-_load("autocmds")
-_load("bootstrap")
+_load("core.options")
+_load("core.keymaps")
+_load("core.autocmds")
+_load("core.bootstrap")

@@ -1,7 +1,7 @@
 local better_defaults = {
     -- Cursor highlighting
-    cursorline = true,
-    cursorcolumn = true,
+    -- cursorline = true,
+    -- cursorcolumn = true,
     -- Pane splitting
     splitright = true,
     splitbelow = true,
@@ -16,7 +16,7 @@ local better_defaults = {
     showmode = false,
     -- Set relative line numbers
     number = true,
-    relativenumber = true,
+    -- relativenumber = true,
     numberwidth = 4,
     -- Tab config
     expandtab = true,

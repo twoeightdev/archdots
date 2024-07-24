@@ -21,7 +21,7 @@ return {
     ft = "gitcommit",
     keys = {
         {
-            "<leader>gB",
+            "<leade>gB",
             function()
                 return require("gitsigns").blame_line()
             end,
@@ -115,6 +115,7 @@ return {
         },
     },
     opts = {
+        -- signcolumn = false,
         signs = {
             add = { text = "+" },
             change = { text = "~" },
