@@ -1,115 +1,87 @@
 live_config_reload = true
 
-# GRUVBOX
-# [colors.primary]
-# background = '#1d2021'
-# foreground = '#ebdbb2'
-
-# [colors.cursor]
-# text = '#1d2021'
-# cursor = '#ebdbb2'
-
-# [colors.normal]
-# black   = '#282828'
-# red     = '#cc241d'
-# green   = '#98971a'
-# yellow  = '#d79921'
-# blue    = '#458588'
-# magenta = '#b16286'
-# cyan    = '#689d6a'
-# white   = '#a89984'
-
-# [colors.bright]
-# black   = '#928374'
-# red     = '#fb4934'
-# green   = '#b8bb26'
-# yellow  = '#fabd2f'
-# blue    = '#83a598'
-# magenta = '#d3869b'
-# cyan    = '#8ec07c'
-# white   = '#ebdbb2'
-
-# ROSE PINE
-# Colors section of "Alacritty - TOML configuration file format"
-# https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd#colors
-[colors.normal]
-black = "#26233a"
-red = "#eb6f92"
-green = "#31748f"
-yellow = "#f6c177"
-blue = "#9ccfd8"
-magenta = "#c4a7e7"
-cyan = "#ebbcba"
-white = "#e0def4"
-
-[colors.bright]
-black = "#6e6a86"
-red = "#eb6f92"
-green = "#31748f"
-yellow = "#f6c177"
-blue = "#9ccfd8"
-magenta = "#c4a7e7"
-cyan = "#ebbcba"
-white = "#e0def4"
-
-[colors.dim]
-black = "#6e6a86"
-red = "#eb6f92"
-green = "#31748f"
-yellow = "#f6c177"
-blue = "#9ccfd8"
-magenta = "#c4a7e7"
-cyan = "#ebbcba"
-white = "#e0def4"
-
+# Catppuccin
 [colors.primary]
-foreground = "#e0def4"
-background = "#191724"
-dim_foreground = "#908caa"
-bright_foreground = "#e0def4"
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+dim_foreground = "#7f849c"
+bright_foreground = "#cdd6f4"
 
 [colors.cursor]
-# text = "#e0def4"
-# cursor = "#524f67"
-cursor = "#e0def4"
+text = "#1e1e2e"
+cursor = "#f5e0dc"
 
 [colors.vi_mode_cursor]
-text = "#e0def4"
-cursor = "#524f67"
+text = "#1e1e2e"
+cursor = "#b4befe"
 
 [colors.search.matches]
-foreground = "#908caa"
-background = "#26233a"
+foreground = "#1e1e2e"
+background = "#a6adc8"
 
 [colors.search.focused_match]
-foreground = "#191724"
-background = "#ebbcba"
-
-[colors.hints.start]
-foreground = "#908caa"
-background = "#1f1d2e"
-
-[colors.hints.end]
-foreground = "#6e6a86"
-background = "#1f1d2e"
-
-[colors.line_indicator]
-foreground = "None"
-background = "None"
+foreground = "#1e1e2e"
+background = "#a6e3a1"
 
 [colors.footer_bar]
-foreground = "#e0def4"
-background = "#1f1d2e"
+foreground = "#1e1e2e"
+background = "#a6adc8"
+
+[colors.hints.start]
+foreground = "#1e1e2e"
+background = "#f9e2af"
+
+[colors.hints.end]
+foreground = "#1e1e2e"
+background = "#a6adc8"
 
 [colors.selection]
-text = "#e0def4"
-background = "#403d52"
+text = "#1e1e2e"
+background = "#f5e0dc"
+
+[colors.normal]
+black = "#45475a"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#bac2de"
+
+[colors.bright]
+black = "#585b70"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#a6adc8"
+
+[colors.dim]
+black = "#45475a"
+red = "#f38ba8"
+green = "#a6e3a1"
+yellow = "#f9e2af"
+blue = "#89b4fa"
+magenta = "#f5c2e7"
+cyan = "#94e2d5"
+white = "#bac2de"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#fab387"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#f5e0dc"
 
 [keyboard]
 bindings = [
-    { key = "p", mods = "Alt", action = "Paste" },
-    { key = "y", mods = "Alt", action = "Copy" },
-    # { key = "i", mods = "Alt", action = "ToggleViMode" },
+    # { key = "p", mods = "Alt", action = "Paste" },
+    # { key = "y", mods = "Alt", action = "Copy" },
+    { key = "i", mods = "Alt", action = "ToggleViMode" },
     { key = "k", mods = "Control|Shift", action = "ScrollLineUp" },
     { key = "j", mods = "Control|Shift", action = "ScrollLineDown" },
     { key = "Up", mods = "Control|Alt", action = "ScrollPageUp" },
@@ -119,7 +91,15 @@ bindings = [
 ]
 
 [font]
-size = 9
+size=9
+
+[font.glyph_offset]
+x=0
+y=0
+
+[font.offset]
+x=0
+y=0
 
 [font.normal]
 family = "monospace"
@@ -138,7 +118,7 @@ style = "Regular"
 # style = "Bold Italic"
 
 [window]
-opacity = 0.95
+opacity = 0.98
 
 [cursor]
 # vi_mode_style = "Beam"
