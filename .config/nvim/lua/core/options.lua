@@ -44,7 +44,7 @@ local better_defaults = {
     -- Show invisible characters
     list = true,
     -- Have the statusline only display at the bottom
-    laststatus = 2,
+    laststatus = 0,
     -- Confirm to save changed before exiting the modified buffer
     confirm = true,
     -- Hide markup for bold and italic, but not markers with substitutions
