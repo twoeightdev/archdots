@@ -7,10 +7,11 @@
 .venv
 .steampath
 .steampid
-.dotfiles
+.dots
 cef_user_data
 dconf
 elpa
+GIMP
 transient
 fzf
 htop
