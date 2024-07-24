@@ -67,17 +67,17 @@ export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [n
 #export PATH="$HOME/.config/fzf/bin:$PATH"
 
 export FZF_DEFAULT_OPTS='
---color fg:7,hl:4,fg+:15,bg+:0,hl+:10
---color pointer:9,info:8,spinner:3,header:8,prompt:11,marker:8
---info=hidden
---height 20%
---no-mouse
---no-separator
---no-scrollbar
---border=none
---tiebreak=chunk
---cycle
+--color bg+:0
+--color gutter:-1,pointer:2,spinner:3
+-e
 --reverse
+--no-border
+--height 20%
+--header-first
+--no-bold
+--no-scrollbar
+--no-separator
+--cycle
 --pointer=">"
 '
 
@@ -111,4 +111,4 @@ export QT_QPA_PLATFORMTHEME="gtk2"
 export MOZ_USE_XINPUT2=1
 
 # Shortcuts
-[ ! -f $XDG_CONFIG_HOME/shell/shrc ] && shortcuts >/dev/null 2>&1 &
+[ ! -f "$XDG_CONFIG_HOME"/shell/shrc ] && shortcuts >/dev/null 2>&1 &
