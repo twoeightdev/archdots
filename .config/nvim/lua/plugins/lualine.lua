@@ -231,6 +231,13 @@ return {
                 },
                 lualine_z = { location },
             },
+            extensions = {
+                "man",
+                "mason",
+                "toggleterm",
+                "lazy",
+                "nvim-dap-ui",
+            },
         }
     end,
 }
