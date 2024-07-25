@@ -5,7 +5,7 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd vcs_info
 
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%F{blue} %f %F{red}%b%u%c%f'
+zstyle ':vcs_info:git:*' formats '%F{blue} %f %F{red}%b%u%c%f '
 # zstyle ':vcs_info:git:*' actionformats '%F{red}%b|%a%u%c%f'
 zstyle ':vcs_info:*' unstagedstr ' * '
 zstyle ':vcs_info:*' stagedstr ' + '
@@ -18,18 +18,18 @@ if [ ! -d ~/.config/fzf ]; then
 fi
 
 # Install zsh-fast-syntax-highlighting
-if [ ! -d $ZPLUG/fasthl ]; then
-    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting $ZPLUG/fasthl
+if [ ! -d "$ZPLUG"/fasthl ]; then
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting "$ZPLUG"/fasthl
 fi
 
 # Install zsh-auto-suggestions
-if [ ! -d $ZPLUG/auto-suggestions ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions $ZPLUG/auto-suggestions
+if [ ! -d "$ZPLUG"/auto-suggestions ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZPLUG"/auto-suggestions
 fi
 
 # Install zsh-system-clipboard
-if [ ! -d $ZPLUG/system-clipboard ]; then
-    git clone https://github.com/kutsan/zsh-system-clipboard $ZPLUG/system-clipboard
+if [ ! -d "$ZPLUG"/system-clipboard ]; then
+    git clone https://github.com/kutsan/zsh-system-clipboard "$ZPLUG"/system-clipboard
 fi
 
 # Load aliases and shortcuts if it exist
@@ -66,10 +66,10 @@ bindkey -v '^?' backward-delete-char
 # Change cursor style for different vi modes
 function zle-keymap-select() {
     case $KEYMAP in
-        # block
-        vicmd) echo -ne '\e[1 q';;
-        # beam
-        viins|main) echo -ne '\e[5 q';;
+    # block
+    vicmd) echo -ne '\e[1 q' ;;
+    # beam
+    viins | main) echo -ne '\e[5 q' ;;
     esac
 }
 zle -N zle-keymap-select
@@ -94,7 +94,7 @@ function command_not_found_handler() {
 cd() {
     new_directory="$*"
     if [ $# -eq 0 ]; then
-        new_directory=${HOME};
+        new_directory=${HOME}
     fi
     builtin cd "${new_directory}" && ls -AhN --color=auto --group-directories-first
 }
@@ -107,19 +107,19 @@ lfcd() {
     lf -last-dir-path="$tmp" "$@"
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || exit
     fi
 }
 bindkey -s "^o" "^ulfcd\n"
 
 # Search $HOME directory with fzf and open with $EDITOR
 e() {
-    rg $HOME --files | sort -u | fzf -m | xargs -r $EDITOR;
+    rg "$HOME" --files | sort -u | fzf -m | xargs -r "$EDITOR"
 }
 
 # Search directory in $HOME and cd to that directory with fzf
 j() {
-    cd "$(rg $HOME -0 --files | xargs -0 dirname | sort -u | fzf)"
+    cd "$(rg "$HOME" -0 --files | xargs -0 dirname | sort -u | fzf)" || exit
 }
 
 # Source fzf
@@ -128,10 +128,10 @@ if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ]]; then
 fi
 
 # Source zsh-auto-suggestions
-source $ZPLUG/auto-suggestions/zsh-autosuggestions.zsh
+source "$ZPLUG"/auto-suggestions/zsh-autosuggestions.zsh
 
 # Source zsh-system-clipboard
-source $ZPLUG/system-clipboard/zsh-system-clipboard.zsh
+source "$ZPLUG"/system-clipboard/zsh-system-clipboard.zsh
 
 # Source zsh-fast-syntax-highlighting
-source $ZPLUG/fasthl/fast-syntax-highlighting.plugin.zsh
+source "$ZPLUG"/fasthl/fast-syntax-highlighting.plugin.zsh
