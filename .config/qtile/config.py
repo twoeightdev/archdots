@@ -432,13 +432,13 @@ def core_widget():
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
             format="{char} {percent:2.0%}",
-            charge_char=" ",
+            charge_char="",
             # BUG: Not working `full_char`
             # full_char=" ",
             discharge_char=" ",
             update_interval=10,
             mouse_callbacks={"Button1": power},
-            foreground=color[13],
+            foreground=color[14],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Systray(icon_size=18),
