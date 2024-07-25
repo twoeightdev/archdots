@@ -45,7 +45,9 @@
 .config/spotify/
 .config/transmission-daemon/bandwidth-groups.json
 .config/transmission-daemon/dht.dat
+.config/transmission-daemon/resume
 .config/transmission-daemon/stats.json
+.config/transmission-daemon/torrents/
 .config/tremc/history.json
 .config/zsh/zplug/
 .config/zsh/.history
