@@ -61,7 +61,7 @@ Xcursor.size: 32
 *color14: c14
 *color15: c15
 
-dmenu.font: monospace
+dmenu.font: monospace-14
 dmenu.foreground: fg
 dmenu.background: bg
 dmenu.selforeground: bg
