@@ -1,40 +1,40 @@
 Xcursor*theme: Adwaita
 Xcursor.size: 32
 
-#define bg #1d2021
-#define fg #ebdbb2
+#define bg #1e1e2e
+#define fg #cdd6f4
 
 ! black
-#define c00 #282828
-#define c08 #928374
+#define c00 #45475a
+#define c08 #585b70
 
 ! red
-#define c01 #cc241d
-#define c09 #fb4934
+#define c01 #f38ba8
+#define c09 #f38ba8
 
 ! green
-#define c02 #98971a
-#define c10 #b8bb26
+#define c02 #a6e3a1
+#define c10 #a6e3a1
 
 ! yellow
-#define c03 #d79921
-#define c11 #fabd2f
+#define c03 #f9e2af
+#define c11 #f9e2af
 
 ! blue
-#define c04 #458588
-#define c12 #83a598
+#define c04 #89b4fa
+#define c12 #89b4fa
 
 ! magenta
-#define c05 #b16286
-#define c13 #d3869b
+#define c05 #f5c2e7
+#define c13 #f5c2e7
 
 ! cyan
-#define c06 #689d6a
-#define c14 #8ec07c
+#define c06 #94e2d5
+#define c14 #94e2d5
 
 ! white
-#define c07 #a89984
-#define c15 #ebdbb2
+#define c07 #bac2de
+#define c15 #a6adc8
 
 ! special
 #define accent c04
