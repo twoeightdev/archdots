@@ -47,7 +47,7 @@ archpkg() {
     pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils"
     pkgs="$pkgs nvtop ntfs-3g picom poppler psutils ripgrep tree unrar unzip"
     pkgs="$pkgs wget yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd"
-    pkgs="$pkgs unclutter polkit cpupower npm"
+    pkgs="$pkgs unclutter polkit cpupower pacutils npm fd"
     # python
     pkgs="$pkgs python-dbus-next python-iwlib python-mpd2 python-pip python-psutil"
     # programs
@@ -59,7 +59,7 @@ archpkg() {
 }
 
 aurpkg() {
-    aurpkgs="tremc-git gtk-theme-arc-gruvbox-git firefox-tridactyl-native"
+    aurpkgs="tremc-git catppuccin-gtk-theme-mocha firefox-tridactyl-native"
     aurpkgs="$aurpkgs python-pulsectl-asyncio"
     yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S "$aurpkgs"
 }
