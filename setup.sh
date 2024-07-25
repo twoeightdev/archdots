@@ -28,40 +28,44 @@ aurhelper() {
 }
 
 archpkg() {
-    # xorg
-    pkgs="xorg-server xorg-xdpyinfo xorg-xev xorg-xinit xorg-xinput"
-    pkgs="$pkgs xorg-xprop xorg-xset xorg-xsetroot xorg-xwininfo xterm"
-    pkgs="$pkgs xcape xclip xdo xdotool xwallpaper"
-    # amd
-    pkgs="$pkgs lib32-vulkan-radeon mesa-utils mesa-vdpau vulkan-tools"
-    # audio
-    pkgs="$pkgs pipewire pipewire-alsa pipewire-pulse pulsemixer"
-    # fonts
-    pkgs="$pkgs libertinus-font noto-fonts noto-fonts-emoji"
-    pkgs="$pkgs ttc-iosevka ttc-iosevka-aile ttf-iosevka-nerd ttf-dejavu"
-    pkgs="$pkgs ttf-inconsolata ttf-inconsolata-nerd ttf-joypixels"
-    pkgs="$pkgs ttf-liberation ttf-roboto-mono"
-    # utilities
-    pkgs="$pkgs evtest exfat-utils brightnessctl dosfstools gnome-keyring"
-    pkgs="$pkgs bc bluez bluez-utils btop ffmpeg ffmpegthumbnailer highlight"
-    pkgs="$pkgs htop imagemagick libnotify maim man-db mediainfo moreutils"
-    pkgs="$pkgs nvtop ntfs-3g picom poppler psutils ripgrep tree unrar unzip"
-    pkgs="$pkgs wget yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd"
-    pkgs="$pkgs unclutter polkit cpupower pacutils npm fd"
-    # python
-    pkgs="$pkgs python-dbus-next python-iwlib python-mpd2 python-pip python-psutil"
-    # programs
-    pkgs="$pkgs alacritty dunst emacs firefox firefox-tridactyl firefox-ublock-origin"
-    pkgs="$pkgs mpc mpd mpv ncmpcpp nsxiv lf newsboat qtile gimp gucharmap steam"
-    pkgs="$pkgs transmission-cli zathura zathura-pdf-mupdf spotify-launcher"
+    pkgs=(
+        # xorg
+        xorg-server xorg-xdpyinfo xorg-xev xorg-xinit xorg-xinput xorg-xprop xcape
+        xorg-xset xorg-xsetroot xorg-xwininfo xterm xclip xdo xdotool xwallpaper
+        # amd
+        lib32-vulkan-radeon mesa-utils mesa-vdpau vulkan-tools
+        # audio
+        pipewire pipewire-alsa pipewire-pulse pulsemixer
+        # fonts
+        libertinus-font noto-fonts noto-fonts-emoji ttf-dejavu ttf-liberation
+        ttc-iosevka ttc-iosevka-aile ttf-iosevka-nerd ttf-joypixels
+        ttf-inconsolata ttf-inconsolata-nerd ttf-roboto-mono
+        # utilities
+        evtest exfat-utils brightnessctl dosfstools gnome-keyring bc btop htop
+        bluez bluez-utils ffmpeg ffmpegthumbnailer highlight imagemagick maim
+        libnotify man-db mediainfo moreutils nvtop ntfs-3g picom poppler psutils
+        unrar unzip yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd
+        wget tree ripgrep fd unclutter polkit cpupower pacutils npm
+        # python
+        python-dbus-next python-iwlib python-mpd2 python-pip python-psutil
+        # programs
+        alacritty dunst emacs firefox firefox-tridactyl firefox-ublock-origin
+        mpc mpd mpv ncmpcpp nsxiv lf newsboat qtile gimp gucharmap steam
+        transmission-cli zathura zathura-pdf-mupdf spotify-launcher
+    )
     # install all listed pkgs
-    yay --needed --noconfirm -Syu "$pkgs"
+    yay --needed --noconfirm -Syu "${pkgs[@]}"
 }
 
 aurpkg() {
-    aurpkgs="tremc-git catppuccin-gtk-theme-mocha firefox-tridactyl-native"
-    aurpkgs="$aurpkgs python-pulsectl-asyncio"
-    yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S "$aurpkgs"
+    aurpkgs=(
+        tremc-git
+        catppuccin-gtk-theme-mocha
+        firefox-tridactyl-native
+        python-pulsectl-asyncio
+    )
+    # install all aur packages
+    yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S "${aurpkgs[@]}"
 }
 
 dotfiles() {
