@@ -76,7 +76,8 @@ This is loaded before the package system and GUI is initialized.
 (add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "themes/" user-emacs-directory))
 ;; (load-theme 'gruvbox t)
-(load-theme 'rose-pine t)
+;;(load-theme 'rose-pine t)
+(load-theme 'catppuccin t)
 
 (set-face-attribute 'font-lock-comment-face nil :slant  'italic)
 (set-face-attribute 'font-lock-function-name-face nil :weight 'bold)
