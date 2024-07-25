@@ -422,7 +422,6 @@ def core_widget():
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Wlan(
             format="󰖩  {essid}",
-            # format="󰖩 ",
             disconnected_message="󰖪 ",
             interface="wlp6s0",
             foreground=color[9],
@@ -434,9 +433,8 @@ def core_widget():
             format="{char} {percent:2.0%}",
             show_short_text=False,
             charge_char="",
-            # BUG: Not working `full_char`
-            full_char=" ",
-            discharge_char=" ",
+            full_char="",
+            discharge_char="",
             update_interval=10,
             mouse_callbacks={"Button1": power},
             foreground=color[14],
