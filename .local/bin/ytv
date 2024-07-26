@@ -1,0 +1,3 @@
+#!/bin/sh
+
+yt-dlp -f 'bestvideo+bestaudio' --merge-output-format mp4 --restrict-filenames -o "$HOME/.local/downloads/%(title)s.%(ext)s" "$1"
