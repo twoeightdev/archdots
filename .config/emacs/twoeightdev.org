@@ -67,7 +67,7 @@ This is loaded before the package system and GUI is initialized.
 			  warning-suppress-log-types '((comp) (bytecomp)))
 
 (modify-all-frames-parameters '((font . "Iosevka Nerd Font-14")
-								(alpha . 95)
+								(alpha . 98)
 								(menu-bar-lines . nil)
 								(tool-bar-lines . nil)
 								(vertical-scroll-bars . nil)
