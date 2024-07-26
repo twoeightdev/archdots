@@ -24,7 +24,7 @@ from subprocess import CompletedProcess, run
 from typing import List
 
 from libqtile.group import _Group
-from libqtile.lazy import lazy
+from libqtile.lazy import lazy  # noqa: F401
 from libqtile.widget import base
 
 
@@ -34,8 +34,8 @@ class Spotify(base.ThreadPoolText):
     """
 
     defaults = [
-        ("play_icon", "", "icon to display when playing music"),
-        ("pause_icon", "", "icon to display when music paused"),
+        ("play_icon", "󰎇", "icon to display when playing music"),
+        ("pause_icon", "󰏤", "icon to display when music paused"),
         ("update_interval", 0.5, "polling rate in seconds"),
         ("format", "{artist} {icon} {track}", "Spotify display format"),
     ]
