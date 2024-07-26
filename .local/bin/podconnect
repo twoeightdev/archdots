@@ -1,0 +1,9 @@
+#!/bin/sh
+
+devmac="07:B7:DB:22:BA:D9"
+
+if bluetoothctl info $devmac | grep "Connected: yes" -q; then
+    bluetoothctl disconnect "$devmac" 2>/dev/null 2>&1 && bluetoothctl scan off && notify-send "Airpods Disconnected!"
+else
+    bluetoothctl scan on && bluetoothctl connect "$devmac" 2>/dev/null 2>&1 && notify-send "Airpods Connected!"
+fi
