@@ -41,9 +41,9 @@ archpkg() {
         ttc-iosevka ttc-iosevka-aile ttf-iosevka-nerd ttf-joypixels
         ttf-inconsolata ttf-inconsolata-nerd ttf-roboto-mono
         # utilities
-        evtest exfat-utils brightnessctl dosfstools gnome-keyring bc btop htop
-        bluez bluez-utils ffmpeg ffmpegthumbnailer highlight imagemagick maim
-        libnotify man-db mediainfo moreutils nvtop ntfs-3g picom poppler psutils
+        evtest exfat-utils brightnessctl dosfstools bc btop htop nvtop
+        ffmpeg ffmpegthumbnailer highlight imagemagick maim gnome-keyring
+        libnotify man-db mediainfo moreutils ntfs-3g picom poppler psutils
         unrar unzip yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd
         wget tree ripgrep fd unclutter polkit cpupower pacutils npm
         # python
