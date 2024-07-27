@@ -329,21 +329,19 @@ color = [
     ["#f5c2e7", "#f5c2e7"],  # 5
     ["#94e2d5", "#94e2d5"],  # 6
     ["#bac2de", "#bac2de"],  # 7
-    ["#585b70", "#585b70"],  # 8
-    ["#f38ba8", "#f38ba8"],  # 9
-    ["#a6e3a1", "#a6e3a1"],  # 10
-    ["#f9e2af", "#f9e2af"],  # 11
-    ["#89b4fa", "#89b4fa"],  # 12
-    ["#f5c2e7", "#f5c2e7"],  # 13
-    ["#94e2d5", "#94e2d5"],  # 14
-    ["#a6adc8", "#a6adc8"],  # 15
-    ["#45475a", "#45475a"],  # 16
+    ["#eba0ac", "#eba0ac"],  # 8
+    ["#b4befe", "#b4befe"],  # 9
+    ["#fab387", "#fab387"],  # 10
+    ["#74c7ec", "#74c7ec"],  # 11
+    ["#cba6f7", "#cba6f7"],  # 12
+    ["#89dceb", "#89dceb"],  # 13
+    ["#313244", "#313244"],  # 14
 ]
 
 # Layouts
 layout_theme = {
-    "border_width": 2,
-    "border_focus": color[1],
+    "border_width": 3,
+    "border_focus": color[12],
     "border_normal": color[0],
 }
 floating_theme = layout_theme.copy()
@@ -351,6 +349,8 @@ floating_theme = layout_theme.copy()
 layouts = [
     layout.Columns(**layout_theme, shift_windows=True, margin=5, border_on_single=True),
     layout.Floating(**layout_theme),
+    layout.MonadTall(**layout_theme, ratio=0.25, new_client_position="before_current"),
+    layout.MonadWide(**layout_theme),
     # layout.Max(**layout_theme),
     # layout.Tile(**layout_theme),
     # layout.Bsp(**layout_theme),
@@ -394,13 +394,13 @@ def core_widget():
         ),
         widget.Clock(format="󰸗 %A %d %B", foreground=color[3]),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Clock(format="󰥔 %I:%M%p", foreground=color[14]),
+        widget.Clock(format="󰥔 %I:%M%p", foreground=color[6]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.CurrentLayoutIcon(**widget_defaults, scale=0.5),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.GroupBox(
             active=color[1],
-            inactive=color[15],
+            inactive=color[7],
             padding=5,
             this_current_screen_border=color[0],
             block_highlight_text_color=color[2],
@@ -420,7 +420,7 @@ def core_widget():
         widget.Backlight(
             backlight_name="amdgpu_bl2",
             format=" {percent:2.0%}",
-            foreground=color[11],
+            foreground=color[3],
         ),
         # TODO: Make a script to only show icons when ncmpcpp is in paused state.
         # widget.Sep(**widget_defaults, size_percent=60),
@@ -429,26 +429,31 @@ def core_widget():
         widget.Memory(
             format="󰍛{MemUsed: .0f}{mm}",
             measure_mem="G",
-            foreground=color[14],
+            foreground=color[6],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.ThermalSensor(
             tag_sensor="Tctl",
             format=" {temp:.0f}{unit}",
-            foreground=color[15],
+            foreground=color[8],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Wlan(
-            # format="󱚽  {essid}",
-            format="󱚽 ",
+            format="󱚽  {essid}",
+            # format="󱚽 ",
             disconnected_message="󰖪 ",
             interface="wlp6s0",
-            foreground=color[9],
+            foreground=color[2],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Wttr(location={"Philippines": "Home"}, format="%m%t"),
+        widget.Wttr(
+            location={"Philippines": "Home"},
+            format="%m%t",
+            foreground=color[10],
+            update_interval=3600,
+        ),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.PulseVolume(fmt="󰕾 {}", foreground=color[12]),
+        widget.PulseVolume(fmt="󰕾 {}", foreground=color[4]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
             format="{char} {percent:2.0%}",
@@ -458,7 +463,7 @@ def core_widget():
             discharge_char="",
             update_interval=10,
             mouse_callbacks={"Button1": power},
-            foreground=color[14],
+            foreground=color[6],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Systray(icon_size=18),
