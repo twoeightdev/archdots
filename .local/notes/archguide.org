@@ -29,6 +29,7 @@ efivar -l
 ** Connect to the internet with *iwctl*
 Check internet connection afterwards with =ping -c 3 archlinux.org=.
 #+begin_src shell
+iwctl
 [iwd]# device list
 [iwd]# station name scan
 [iwd]# station name get-networks
@@ -61,8 +62,8 @@ fdisk /dev/nvme0n1
 
 *** Format Drive
 #+begin_src shell
-mkfs.fat -n BOOT -F 32 /dev/nvme0n1p1
-mkfs.ext4 -L ROOT /dev/nvme0n1p2
+mkfs.fat -F 32 /dev/nvme0n1p1
+mkfs.ext4 /dev/nvme0n1p2
 #+end_src
 
 *** Mount Disk
@@ -73,7 +74,7 @@ mount --mkdir /dev/nvme0n1p1 /mnt/boot
 
 * Installation
 ** Mirror list
-Check mirror list in =/etc/pacman.d/mirrorlist=.
+Edit mirror list =vim /etc/pacman.d/mirrorlist=.
 
 *** Preferred Servers
 - Server = https://mirror.xtom.com.hk/archlinux/$repo/os/$arch
@@ -83,13 +84,13 @@ Check mirror list in =/etc/pacman.d/mirrorlist=.
 #+begin_src shell
 pacstrap -K /mnt base base-devel linux linux-firmware xf86-video-amdgpu mesa \
          vulkan-radeon libva-mesa-driver amd-ucode git neovim networkmanager \
-         cpupower efibootmgr
+         bluez bluez-utils cpupower efibootmgr
 #+end_src
 
 * System Configuration
 
 ** Generate Fstab
-After generating /fstab,/ Change /boot partition/ to =fmask=007= and =dmask=0077=.
+After generating /fstab,/ Change /boot partition/ to =fmask=0077= and =dmask=0077=.
 #+begin_src shell
 genfstab -U /mnt >> /mnt/etc/fstab
 #+end_src
@@ -102,7 +103,7 @@ arch-chroot /mnt
 ** Timezone
 #+begin_src shell
 ln -sf /usr/share/zoneinfo/Asia/Manila /etc/localtime
-hwclock --systohc --utc
+hwclock --systohc
 #+end_src
 
 ** Localization
@@ -132,7 +133,6 @@ Edit =/etc/hosts= and add matching entries:
 *** Choose preferred network management
 **** Networkmanager
 #+begin_src shell
-pacman -S networkmanager
 systemctl enable NetworkManager.service
 #+end_src
 
@@ -163,14 +163,20 @@ DNS=1.1.1.1
 IgnoreCarrierLoss=3s
 #+end_src
 
-** Root Password
+** Bluetooth
+Enable bluetooth service
 #+begin_src shell
-passwd
+systemctl enable bluetooth.service
 #+end_src
 
 ** Enable cpupower service
 #+begin_src shell
 systemctl enable cpupower.service
+#+end_src
+
+** Root Password
+#+begin_src shell
+passwd
 #+end_src
 
 ** Bootloader
