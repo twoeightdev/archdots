@@ -80,6 +80,7 @@ clean() {
     rm -rf /home/"$name"/.bash_profile
     rm -rf /home/"$name"/.bashrc
     rm -rf /home/"$name"/.zshrc
+    rm -rf /home/"$name"/.nimble
     mkdir -p /home/"$name"/.venv
     mkdir -p /home/"$name"/.local/downloads
     mkdir -p /home/"$name"/.local/drafts
