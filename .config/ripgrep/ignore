@@ -1,6 +1,7 @@
 .cache
 .local
 .mono
+backups
 .mozilla
 .pki
 .steam
