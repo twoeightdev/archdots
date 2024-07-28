@@ -226,10 +226,10 @@ visudo
 *** EFISTUB
 Get *UUID* or *PARTUUID* in =neovim= =:r !blkid -s UUID -o value /dev/nvme0n1p2=.
 Delete old boot entries with =efibootmgr -b <bootnum> -B=. Create boot entry:
-Where =/dev/nvme0n1/= and =Y= are the drive and partition number where *ESP* is
-located and =root== parameters with your linux partitions.
+Where =/dev/nvme0n1/= and =1= is the drive and partition number where *ESP* is
+located, and =root== parameters with your linux root partitions.
 #+begin_src shell
-efibootmgr -d /dev/nvme0n1 -p Y -c -L "Arch" -l /vmlinuz-linux -u \
+efibootmgr -d /dev/nvme0n1 -p 1 -c -L "Arch" -l /vmlinuz-linux -u \
            'root=PARTUUID=set_PARTUUID_value_here rw quiet loglevel=3 \
            consol=ty2 amd_pstate=passive modprobe.blacklist=sp5100_tco \
            ipv6.disable=1 rd.systemd.show_status=false rd.udev.log_level=3 \
