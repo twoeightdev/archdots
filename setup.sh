@@ -13,11 +13,12 @@ menu() {
     echo " "
     echo -e "\e[1;92maurhelper:\e[0m ............ \e[37myay AUR helper installation.\e[0m"
     echo -e "\e[1;92marchpkg:\e[0m .............. \e[37mARCH packages installation.\e[0m"
-    echo -e "\e[1;92maurpkg:\e[0m ............... \e[37mAUR packages installation.\e[0m"
     echo -e "\e[1;92mdotfiles:\e[0m ............. \e[37mclone my personal dotfiles.\e[0m"
+    echo -e "\e[1;92maurpkg:\e[0m ............... \e[37mAUR packages installation.\e[0m"
     echo -e "\e[1;92mclean:\e[0m ................ \e[37mremove unwanted files and directory.\e[0m"
     echo -e "\e[1;92mdmenu:\e[0m ................ \e[37mdmenu personal build.\e[0m"
     echo -e "\e[1;92mstartpage:\e[0m ............ \e[37mstartpage for qutebrowser.\e[0m"
+    echo -e "\e[1;92mgenkey:\e[0m ............... \e[37mgenerate ssh-key.\e[0m"
     echo -e "\e[1;92mremoteurl:\e[0m ............ \e[37mchange src remote urls.\e[0m"
 }
 
@@ -59,6 +60,13 @@ archpkg() {
     yay --needed --noconfirm -Syu "${pkgs[@]}"
 }
 
+dotfiles() {
+    cd ~ || exit
+    git clone --bare https://github.com/twoeightdev/archdots.git "$HOME"/.config/.dots
+    git --git-dir="$HOME"/.config/.dots/ --work-tree="$HOME" checkout
+    echo -e "\e[1;31mdone!\e[0m"
+}
+
 aurpkg() {
     aurpkgs=(
         tremc-git
@@ -68,13 +76,6 @@ aurpkg() {
     )
     # install all aur packages
     yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S "${aurpkgs[@]}"
-}
-
-dotfiles() {
-    cd ~ || exit
-    git clone --bare https://github.com/twoeightdev/archdots.git "$HOME"/.config/.dots
-    git --git-dir="$HOME"/.config/.dots/ --work-tree="$HOME" checkout
-    echo -e "\e[1;31mdone!\e[0m"
 }
 
 clean() {
@@ -103,6 +104,10 @@ dmenu() {
 startpage() {
     cd "$srcdir" || exit
     git clone https://github.com/twoeightdev/startpage.git
+}
+
+genkey() {
+    yes "y" | ssh-keygen -t ed25519 -C "twoeightdev@gmail.com" -f ~/.ssh/githubkey -N "" -q
 }
 
 remoteurl() {
