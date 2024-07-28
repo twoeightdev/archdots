@@ -118,12 +118,6 @@ cd ~/.ssh
 ssh-keygen -t ed25519 -C "your_email@example.com"
 #+end_src
 
-** Enable bluetooth
-Needs =bluez= =bluez-utils= package installed.
-#+begin_src shell
-sudo systemctl enable bluetooth.service
-#+end_src
-
 ** Dotfile SSH remote url
 Change dotfiles remote url
 #+begin_src shell
