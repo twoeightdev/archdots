@@ -5,10 +5,10 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd vcs_info
 
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%F{blue} %f %F{red}%b%u%c%f '
+zstyle ':vcs_info:git:*' formats '%F{blue} %f %F{red}%b%u %c%f'
 # zstyle ':vcs_info:git:*' actionformats '%F{red}%b|%a%u%c%f'
-zstyle ':vcs_info:*' unstagedstr ' * '
-zstyle ':vcs_info:*' stagedstr ' + '
+zstyle ':vcs_info:*' unstagedstr ' *'
+zstyle ':vcs_info:*' stagedstr ' +'
 PROMPT='%B%F{magenta}%~%f ${vcs_info_msg_0_}>%b '
 
 # Install fzf
