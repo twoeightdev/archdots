@@ -227,7 +227,7 @@ visudo
 Get *UUID* or *PARTUUID* in =neovim= =:r !blkid -s UUID -o value /dev/nvme0n1p2=.
 Delete old boot entries with =efibootmgr -b <bootnum> -B=. Create boot entry:
 Where =/dev/nvme0n1/= and =1= is the drive and partition number where *ESP* is
-located, and =root== parameters with your linux root partitions.
+located, and =root== is the drive UUID of your linux root partitions.
 #+begin_src shell
 efibootmgr -d /dev/nvme0n1 -p 1 -c -L "Arch" -l /vmlinuz-linux -u \
            'root=PARTUUID=set_PARTUUID_value_here rw quiet loglevel=3 \
