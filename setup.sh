@@ -5,6 +5,7 @@
 me="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
 srcdir="$HOME/.local/src"
 dmenudir="$HOME/.local/src/archdmenu"
+startdir="$HOME/.local/src/startpage"
 name="$USER"
 
 menu() {
@@ -17,6 +18,7 @@ menu() {
     echo -e "\e[1;92mclean:\e[0m ................ \e[37mremove unwanted files and directory.\e[0m"
     echo -e "\e[1;92mdmenu:\e[0m ................ \e[37mdmenu personal build.\e[0m"
     echo -e "\e[1;92mstartpage:\e[0m ............ \e[37mstartpage for qutebrowser.\e[0m"
+    echo -e "\e[1;92mremoteurl:\e[0m ............ \e[37mchange src remote urls.\e[0m"
 }
 
 aurhelper() {
@@ -101,6 +103,13 @@ dmenu() {
 startpage() {
     cd "$srcdir" || exit
     git clone https://github.com/twoeightdev/startpage.git
+}
+
+remoteurl() {
+    cd "$dmenudir" || exit
+    git remote set-url origin git@github.com:twoeightdev/archdmenu.git
+    cd "$startdir" || exit
+    git remote set-url origin git@github.com:twoeightdev/startpage.git
 }
 
 if [ -n "$1" ]; then
