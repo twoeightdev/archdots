@@ -367,6 +367,8 @@ floating_layout = layout.Floating(
         Match(title="pinentry"),
         Match(wm_class="Steam setup"),
         Match(title="Steam Settings"),
+        Match(title="Downloading spotify"),
+        Match(wm_class="zenity"),
     ],
     **floating_theme,
 )
