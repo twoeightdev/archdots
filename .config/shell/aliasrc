@@ -29,6 +29,7 @@ alias \
 # shellcheck disable=SC2139
 alias \
     pk="pkill -9" \
+    rg="\rg --ignore-file ~/.config/ripgrep/ignore" \
     o="$FILE" \
     v="$EDITOR" \
     yu="yay -Syu" \
