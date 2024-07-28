@@ -109,8 +109,7 @@ hwclock --systohc
 #+end_src
 
 ** Localization
-Edit =/etc/locale.gen= and uncomment =en_PH.UTF-8 UTF-8=. Generate the locales by
-running:
+Edit =nvim /etc/locale.gen= and uncomment =en_PH.UTF-8 UTF-8=, then generate locales.
 #+begin_src shell
 locale-gen
 echo LANG=en_PH.UTF-8 > /etc/locale.conf
@@ -125,7 +124,7 @@ echo core > /etc/hostname
 #+end_src
 
 *** Hosts
-Edit =/etc/hosts= and add matching entries:
+Edit =nvim /etc/hosts= and add matching entries:
 #+begin_src shell
 127.0.0.1    localhost
 ::1          localhost
@@ -143,7 +142,7 @@ Find the name of network adapter with =ip addr= then enable the service
 =systemctl enable systemd-networkd.service=.
 
 ***** Wired Setup
-Edit =/etc/systemd/network/20-wired.network= and add following entries:
+Edit =nvim /etc/systemd/network/20-wired.network= and add following entries:
 #+begin_src shell
 [Match]
 Name=enp5s0
@@ -154,7 +153,7 @@ DNS=1.1.1.1
 #+end_src
 
 ***** Wireless Setup
-Edit =/etc/systemd/network/25-wireless.network=
+Edit =nvim /etc/systemd/network/25-wireless.network=
 #+begin_src shell
 [Match]
 Name=wlp6s0
@@ -177,7 +176,7 @@ systemctl enable cpupower.service
 #+end_src
 
 ** Touchpad
-Enable touch to click. Add the following entries in =/etc/X11/xorg.conf.d/40-libinput.conf=.
+Enable touch to click. Add the following entries, =nvim /etc/X11/xorg.conf.d/40-libinput.conf=.
 #+begin_src shell
 Section "InputClass"
         Identifier "libinput touchpad catchall"
@@ -189,7 +188,7 @@ EndSection
 #+end_src
 
 ** Disable Watchdog
-Edit or Add entries in =/etc/modprobe.d/watchdog.conf=. or just add kernel parameter to
+Add entries =nvim /etc/modprobe.d/watchdog.conf=.
 #+begin_src shell
 blacklist iTCO_wdt
 blacklist iTCO_vendor_support
@@ -201,7 +200,7 @@ passwd
 #+end_src
 
 ** Enable Multilib
-Edit =/etc/pacman.conf/= then uncomment the following.
+Add and uncomment in =nvim /etc/pacman.conf/=.
 #+begin_src shell
 Color
 VerbosePkgLists
@@ -249,8 +248,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 *** Systemdboot
 **** Installation
-Get *UUID* with =blkid -s UUID -o value /dev/nvme0n1p2=. Remount to avoid errors
-with =bootctl install=.
+Remount to avoid errors with =bootctl install=.
 #+begin_src shell
 exit
 umount -R /mnt
@@ -262,7 +260,7 @@ bootctl install
 #+end_src
 
 **** Loader Configuration
-Edit =/boot/loader/loader.conf=.
+Edit =nvim /boot/loader/loader.conf=.
 #+begin_src shell
 default arch
 timeout 0
@@ -271,7 +269,8 @@ editor no
 #+end_src
 
 **** Adding Loaders
-Edit =/boot/loader/entries/arch.conf=.
+Edit =nvim /boot/loader/entries/arch.conf=.
+Get *UUID* in =neovim= with =:r !blkid -s UUID -o value /dev/nvme0n1p2=.
 #+begin_src shell
 title Arch Linux
 linux /vmlinuz-linux
