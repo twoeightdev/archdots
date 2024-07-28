@@ -22,4 +22,6 @@ I use *git bare repository* to manage my dotfiles and use a wrapper script
 - ./setup.sh clean
 - ./setup.sh dmenu
 - ./setup.sh startpage
+- ./setup.sh genkey
+- ./setup.sh remoteurl
 #+end_src
