@@ -101,6 +101,7 @@ cd() {
 }
 
 # Use lf to jump in directories with ctrl-o
+# shellcheck disable=SC2164
 lfcd() {
     tmp="$(mktemp -uq)"
     trap 'rm -f $tmp >/dev/null 2>&1 &&
@@ -108,7 +109,7 @@ lfcd() {
     lf -last-dir-path="$tmp" "$@"
     if [ -f "$tmp" ]; then
         dir="$(cat "$tmp")"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir" || exit
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
 }
 bindkey -s "^o" "^ulfcd\n"
