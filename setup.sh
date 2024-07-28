@@ -49,9 +49,9 @@ archpkg() {
         # python
         python-dbus-next python-iwlib python-mpd2 python-pip python-psutil
         # programs
-        alacritty dunst emacs firefox firefox-tridactyl firefox-ublock-origin
-        mpc mpd mpv ncmpcpp nsxiv lf newsboat qtile gimp gucharmap steam
-        transmission-cli zathura zathura-pdf-mupdf spotify-launcher
+        emacs firefox firefox-dark-reader firefox-tridactyl firefox-ublock-origin
+        mpc mpd mpv ncmpcpp nsxiv lf newsboat qtile gimp gucharmap steam dunst
+        alacritty transmission-cli zathura zathura-pdf-mupdf spotify-launcher
     )
     # install all listed pkgs
     yay --needed --noconfirm -Syu "${pkgs[@]}"
