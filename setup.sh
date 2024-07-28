@@ -110,6 +110,8 @@ remoteurl() {
     git remote set-url origin git@github.com:twoeightdev/archdmenu.git
     cd "$startdir" || exit
     git remote set-url origin git@github.com:twoeightdev/startpage.git
+    cd ~/ || exit
+    git --git-dir="$HOME"/.config/.dots --work-tree="$HOME" remote set-url origin git@github.com:twoeightdev/archdots.git
 }
 
 if [ -n "$1" ]; then
