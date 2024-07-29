@@ -7,7 +7,7 @@
 My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]] as my window manager.
 
 ** 📸 Screenshots
-[[./.local/wallpapers/screen01.png]
+[[./.local/wallpapers/screen01.png]]
 
 [[./.local/wallpapers/screen02.png]]
 
