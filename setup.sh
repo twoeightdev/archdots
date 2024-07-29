@@ -108,6 +108,7 @@ startpage() {
 
 genkey() {
     yes "y" | ssh-keygen -t ed25519 -C "twoeightdev@gmail.com" -f ~/.ssh/githubkey -N "" -q
+    echo -e "\e[1;31mdone!\e[0m"
 }
 
 remoteurl() {
@@ -117,6 +118,7 @@ remoteurl() {
     git remote set-url origin git@github.com:twoeightdev/startpage.git
     cd ~/ || exit
     git --git-dir="$HOME"/.config/.dots --work-tree="$HOME" remote set-url origin git@github.com:twoeightdev/archdots.git
+    echo -e "\e[1;31mdone!\e[0m"
 }
 
 if [ -n "$1" ]; then
