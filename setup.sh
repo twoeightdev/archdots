@@ -33,7 +33,7 @@ aurhelper() {
 archpkg() {
     pkgs=(
         # xorg
-        xorg-server xorg-xdpyinfo xorg-xev xorg-xinit xorg-xinput xorg-xprop xcape
+        xorg-xdpyinfo xorg-xev xorg-xinit xorg-xinput xorg-xprop xcape
         xorg-xset xorg-xsetroot xorg-xwininfo xterm xclip xdo xdotool xwallpaper
         # amd
         lib32-vulkan-radeon mesa-utils mesa-vdpau vulkan-tools
