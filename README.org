@@ -3,7 +3,9 @@
 * Overview
 My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]] as my window manager.
 
-[[./.local/share/arch.png]]
+[[./.local/wallpapers/screen01.png]]
+
+[[./.local/wallpapers/screen02.png]]
 
 * Dotfiles installation
 I use *git bare repository* to manage my dotfiles and use a wrapper script
