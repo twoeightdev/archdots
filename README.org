@@ -2,9 +2,21 @@
 #+author: twoeightdev
 
 * 📔 Overview
-My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]] as my window manager.
+My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]] as default window manager.
 
 [[./.local/wallpapers/archlinux-logo.svg]]
+
+* Table Of Contents
+:properties:
+:TOC: :include all :ignore this
+:end:
+
+:CONTENTS:
+- [[#-overview][📔 Overview]]
+  - [[#-screenshots][📸 Screenshots]]
+  - [[#-dotfiles-installation][💠 Dotfiles Installation]]
+  - [[#neovim][Neovim]]
+:END:
 
 ** 📸 Screenshots
 [[./.local/wallpapers/screen01.png]]
@@ -24,3 +36,5 @@ I use *git bare* repository to manage my dotfiles and use a wrapper script
 - rm -rf ~/script
 - reboot
 #+end_src
+
+** Neovim
