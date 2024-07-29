@@ -1,0 +1,46 @@
+#!/bin/bash
+
+reset="\033[0m"
+magenta="\033[1;35m"
+green="\033[1;32m"
+white="\033[1;4;37m"
+blue="\033[1;34m"
+red="\033[1;31m"
+yellow="\033[1;33m"
+cyan="\033[1;36m"
+
+c0=${reset}
+c1=${magenta}
+c2=${green}
+c3=${white}
+c4=${blue}
+c5=${red}
+c6=${yellow}
+c7=${cyan}
+
+name=$USER
+host=$(cat /proc/sys/kernel/hostname)
+distro=$(uname -o | awk -F '"' '/PRETTY_NAME/ { print $2 }' /etc/os-release)
+namekernel=$(uname -r)
+kernel=${namekernel%%-*}
+cpu=$(lscpu | grep "Model name" | cut -f 2 -d ":" | awk '{print $2,$3,$4}')
+gpu=$(lspci | grep VGA | cut -f 3 -d "[" | awk 'FNR == 1 {print $1, $2, $3}')
+pkg=$(pacman -Qqs | wc -l)
+getwm=$(xprop -id "$(xprop -root -notype | awk '$1=="_NET_SUPPORTING_WM_CHECK:"{print $5}')" -notype -f _NET_WM_NAME 8t | grep "WM_NAME" | cut -f2 -d \")
+mem=$(free --mega | awk 'NR == 2 { print $3" / "$2" MB" }')
+# uptime=$(uptime -p | sed 's/up //')
+uptime=$(uptime -p | sed -e 's/hour/hr/' -e 's/hours/hrs/' -e 's/minutes/mins/' -e 's/minute/min/' -e 's/up //')
+
+echo "               "
+echo -e "Hi ${c5}$name${c0}, Welcome to ${c2}$host${c0}"
+echo -e "    uptime ${c6}$uptime"
+echo -e "      ${c6}󰮯  ${c6}${c2}󰊠  ${c2}${c4}󰊠  ${c4}${c5}󰊠  ${c5}${c7}󰊠  ${c7}"
+echo "               "
+echo -e "${c1} [distro] ${c0}    ${c3}$distro${c0}"
+echo -e "${c2} [kernel] ${c0}    ${c3}$kernel${c0}"
+echo -e "${c4} [cpu] ${c0}       ${c3}$cpu${c0}"
+echo -e "${c6} [gpu] ${c0}       ${c3}$gpu${c0}"
+echo -e "${c2} [wm] ${c0}        ${c3}$getwm${c0}"
+echo -e "${c7} [packages] ${c0}  ${c3}$pkg${c0}"
+echo -e "${c1} [shell] ${c0}     ${c3}${SHELL##*/}${c0}"
+echo -e "${c4} [ram] ${c0}       ${c3}$mem${c0}"
