@@ -219,7 +219,7 @@ passwd twoeightdev
 ** Add user to sudoers
 uncomment =%wheel ALL=(ALL:ALL) ALL=
 #+begin_src shell
-visudo
+EDITOR=nvim visudo
 #+end_src
 
 ** Bootloader

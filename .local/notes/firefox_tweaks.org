@@ -19,3 +19,15 @@ both files.
 =extensions.pocket.enabled= *false*
 ** Prevent download panel from opening automatically
 =browser.download.alwaysOpenPanel= *false*
+
+* Inspect UI Elements
+Tool for inspecting firefox UI Elements. Uncheck them once you're done.
+
+1.) Enable the remote debugging tool. Press F12 on any tab to open DevTool.
+2.) Click three dots to open settings of DevTool.
+3.) Enable the following settings:
+    3.a) Enable browser chrome and add-on debugging toolboxes
+	3.b) Enable remote debugging
+4.) Turn on the local /remote/ debugger with =Ctrl-Alt-Shift+l= and
+you should get a prompt from the debugger asking to connect to your own Firefox.
+Press ok.

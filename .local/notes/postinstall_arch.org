@@ -3,10 +3,11 @@
 
 * Post-installation
 ** Login
-Login as user =twoeightdev= then =pacman -Syu=
+Login as user =twoeightdev= then connect to the internet.
 
 ** Update Repository
 #+begin_src shell
+nmtui
 pacman -Syu
 #+end_src
 
@@ -25,6 +26,8 @@ chmod +x setup.sh
 ./setup.sh clean
 ./setup.sh dmenu
 ./setup.sh startpage
+./setup.sh genkey
+./setup.sh remoteurl
 #+end_src
 
 ** Install Aur Helper Manually
