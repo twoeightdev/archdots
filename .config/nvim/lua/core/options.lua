@@ -82,6 +82,8 @@ local better_defaults = {
     swapfile = false,
     -- Don't show partial command letters below statusline
     showcmd = false,
+    -- Don't show commandline
+    cmdheight = 0,
 }
 for key, value in pairs(better_defaults) do
     vim.opt[key] = value
