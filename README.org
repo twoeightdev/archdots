@@ -14,8 +14,7 @@ My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qti
 :CONTENTS:
 - [[#-overview][📔 Overview]]
   - [[#-screenshots][📸 Screenshots]]
-  - [[#-dotfiles-installation][💠 Dotfiles Installation]]
-  - [[#neovim][Neovim]]
+  - [[#-dotfiles-installation][🚀 Dotfiles Installation]]
 :END:
 
 ** 📸 Screenshots
@@ -23,10 +22,9 @@ My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qti
 
 [[./.local/wallpapers/screen02.png]]
 
-** 💠 Dotfiles Installation
+** 🚀 Dotfiles Installation
 I use *git bare* repository to manage my dotfiles and use a wrapper script
 [[./.local/bin/dot][dot]] after initial configuration below.
-
 #+begin_src shell
 - mkdir ~/script
 - cd ~/script
@@ -36,5 +34,3 @@ I use *git bare* repository to manage my dotfiles and use a wrapper script
 - rm -rf ~/script
 - reboot
 #+end_src
-
-** Neovim
