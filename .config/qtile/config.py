@@ -441,11 +441,11 @@ def core_widget():
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Wlan(
-            format="󱚽  {essid}",
-            # format="󱚽 ",
+            # format="󱚽  {essid}",
+            format="󱚽 ",
             disconnected_message="󰖪 ",
             interface="wlp6s0",
-            foreground=color[2],
+            foreground=color[12],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Wttr(
