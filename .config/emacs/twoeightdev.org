@@ -8,6 +8,34 @@ This org document is a literate configuration for vanilla GNU Emacs.
 ~C-c C-v t~ to tangle this file and restart emacs. This file will
 automatically tangle on save after the packages are downloaded.
 
+* Table Of Contents
+:properties:
+:TOC: :include all :ignore this
+:end:
+
+:CONTENTS:
+- [[#overview][Overview]]
+- [[#convent-header][Convent Header]]
+- [[#early-init][Early Init]]
+  - [[#early-init-footer][Early-init footer]]
+- [[#init][Init]]
+  - [[#better-defaults][Better defaults]]
+  - [[#package][Package]]
+  - [[#organize][Organize]]
+  - [[#auto-tangle][Auto-tangle]]
+  - [[#evil][Evil]]
+  - [[#general][General]]
+  - [[#org][Org]]
+  - [[#toc-generator][TOC Generator]]
+  - [[#test-treesit][Test Treesit]]
+  - [[#treesit][Treesit]]
+  - [[#treesit-auto][Treesit-auto]]
+  - [[#eglot][Eglot]]
+  - [[#which-key][Which-key]]
+  - [[#garbage-collect][Garbage collect]]
+  - [[#init-footer][Init footer]]
+:END:
+
 * Convent Header
 Auto-generate a header on top of ~early-init.el~ and ~init.el~ using
 [[https://orgmode.org/manual/Noweb-Reference-Syntax.html][noweb]] syntax.
@@ -244,6 +272,13 @@ Org mode.
   :custom
   (org-edit-src-content-indentation 0)
   (org-src-preserve-indentation nil))
+#+end_src
+
+** TOC Generator
+#+begin_src emacs-lisp
+(use-package org-make-toc
+  :hook
+  (org-mode . org-make-toc-mode))
 #+end_src
 
 ** Test Treesit
