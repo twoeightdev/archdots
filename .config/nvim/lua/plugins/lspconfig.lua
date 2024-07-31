@@ -59,6 +59,7 @@ return {
             local lspconfig = require("lspconfig")
             local mason_lspconfig = require("mason-lspconfig")
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            ---@diagnostic disable-next-line: unused-local
             local on_attach = function(client, bufnr) end
 
             -- NOTE: Set signs to true to enable signs
