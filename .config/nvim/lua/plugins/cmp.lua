@@ -19,7 +19,6 @@ return {
                 require("luasnip.loaders.from_vscode").lazy_load()
             end,
         },
-        "brenoprata10/nvim-highlight-colors",
     },
     opts = function()
         vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
