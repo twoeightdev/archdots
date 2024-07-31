@@ -209,7 +209,16 @@ return {
                 -- section_separators = { left = "", right = "" },
                 ignore_focus = {},
                 always_divide_middle = true,
-                globalstatus = true,
+                -- globalstatus = true,
+                disabled_filetypes = {
+                    statusline = {
+                        "dashboard",
+                        "NeogitStatus",
+                        "NeogitCommitView",
+                        "NeogitPopup",
+                        "NeogitConsole",
+                    },
+                },
             },
             sections = {
                 lualine_a = {
@@ -234,6 +243,7 @@ return {
             extensions = {
                 "man",
                 "mason",
+                "fzf",
                 "toggleterm",
                 "lazy",
                 "nvim-dap-ui",
