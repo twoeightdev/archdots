@@ -1,7 +1,4 @@
-local better_defaults = {
-    -- Cursor highlighting
-    -- cursorline = true,
-    -- cursorcolumn = true,
+local defaults = {
     -- Pane splitting
     splitright = true,
     splitbelow = true,
@@ -10,89 +7,89 @@ local better_defaults = {
     ignorecase = true,
     -- Terminal truecolor support
     termguicolors = true,
-    -- Use system clipboard
+    -- Use system clipboard -> xclip
     clipboard = "unnamedplus",
-    -- Disable old vim status
+    -- Old vim status
     showmode = false,
-    -- Set relative line numbers
+    -- Line numbers
     number = true,
-    -- relativenumber = true,
+    relativenumber = true,
     numberwidth = 4,
-    -- Tab config
+    -- Tabs
+    tabstop = 4,
     expandtab = true,
     smartindent = true,
     shiftwidth = 4,
-    tabstop = 4,
     shiftround = true,
-    -- Code folding
+    -- Folds
     foldlevel = 99,
     foldlevelstart = 99,
     foldcolumn = "1",
-    -- Decrease update time
+    -- Update time
     updatetime = 200,
-    -- Enable persistent undo
+    -- Persistent undo
     undofile = true,
-    -- Always show tabline
+    -- Max number of undo changes
+    undolevels = 10000,
+    -- Tabline
     showtabline = 0,
-    -- Disable mouse support
+    -- Mouse support disable
     mouse = "",
+    -- Swapfile
+    swapfile = false,
     -- Scrolloff
     scrolloff = 5,
     sidescrolloff = 5,
-    -- Disable wrapping
+    -- Wrapping
     wrap = false,
     -- Show invisible characters
     list = true,
-    -- Have the statusline only display at the bottom
+    -- Statusline only at the bottom
     laststatus = 0,
-    -- Confirm to save changed before exiting the modified buffer
+    -- Confirm save changed on exit
     confirm = true,
-    -- Hide markup for bold and italic, but not markers with substitutions
+    -- Hide markup for bold and italics, but not markers with substitutions
     conceallevel = 2,
-    -- Use ripgrep as the grep program for neovim
+    -- Use ripgrep as grep program for neovim
     grepprg = "rg --vimgrep",
     grepformat = "%f:%l:%c:%m",
-    -- Enable autowrite
+    -- Autowrite
     autowrite = true,
-    -- Keep cursor to the same screen line when opening a split
+    -- Keep cursor at the same line when opening a split
     splitkeep = "screen",
-    -- Set completion options
+    -- Completions
     completeopt = "menu,menuone,noselect",
-    -- Set key timeout to 300ms
+    wildmode = "longest:full,full",
+    -- Display 10 items in a completion menu
+    pumheight = 10,
+    -- Keytimeout to 300ms
     timeoutlen = 300,
     -- Window configuration
     winwidth = 5,
     winminwidth = 5,
     equalalways = false,
-    -- Always show the signcolumn
+    -- Signcolumn
     signcolumn = "yes",
-    -- Formatting options
+    -- Formatting
     formatoptions = "jcroqlnt",
-    -- Put the cursor at the start of the line for large jumps
+    -- Put cursor at the start of the line for large jumps
     startofline = true,
-    -- Allow cursor to move where this is no text is visual block mode
+    -- Allow cursor to move where there is no text in visual block mode
     virtualedit = "block",
-    -- Command-line completion mode
-    wildmode = "longest:full,full",
-    -- Maximum number of undo changes
-    undolevels = 10000,
-    -- Only display 10 items in a completion menu
-    pumheight = 10,
-    -- Disable swap file
-    swapfile = false,
-    -- Don't show partial command letters below statusline
+    -- Partial command letters below statusline
     showcmd = false,
-    -- Don't show commandline
-    cmdheight = 0,
+    -- Enable lazy redraw for performance
+    lazyredraw = true,
 }
-for key, value in pairs(better_defaults) do
+
+for key, value in pairs(defaults) do
     vim.opt[key] = value
 end
 
 local opt = vim.opt
 local g = vim.g
 
--- shortmess options
+-- Shortmess
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
 
 -- Fill chars
@@ -119,12 +116,12 @@ opt.sessionoptions = {
     "resize",
 }
 
--- Disable lsp logging
+-- Disable LSP logging
 vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 
---g.python3_host_prog = '~/.local/work/pythonvenv/pymain/bin/python3'
+-- g.python3_host_prog = "~/.venv/work/mainpy/bin/python"
 
--- Disable provider warnings in the healthcheck
+-- Disabled provider warnings in checkhealth
 g.loaded_node_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
