@@ -23,9 +23,11 @@
 .config/emacs/early-init.el
 .config/emacs/elpa/
 .config/emacs/init.el
+.config/emacs/logo/
 .config/emacs/places
 .config/emacs/transient/
 .config/emacs/tree-sitter/
+.config/emacs/var/
 .config/fzf/
 .config/GIMP/
 .config/htop/
