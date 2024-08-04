@@ -164,3 +164,10 @@ autocmd("BufWritePost", {
     command = "silent! !pkill dunst; dunst &",
     desc = "Auto reload dunstrc when configuration is updated",
 })
+
+autocmd("FileType", {
+    group = augroup("unfold_orgmode"),
+    pattern = "org",
+    command = "setlocal nofoldenable",
+    desc = "Start org files unfolded",
+})
