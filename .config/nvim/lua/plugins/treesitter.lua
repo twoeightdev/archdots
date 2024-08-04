@@ -8,6 +8,7 @@ return {
             "markdown",
             "markdown_inline",
             "python",
+            "org",
             "vim",
             "vimdoc",
             "bash",
