@@ -83,6 +83,7 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp", priority = 100 },
                 { name = "luasnip", priority = 30 },
+                { name = "orgmode", priority = 25 },
                 { name = "buffer", priority = 20 },
                 { name = "path", priority = 10 },
             }),
@@ -96,6 +97,7 @@ return {
                         menu = {
                             nvim_lsp = "LSP",
                             luasnip = "Snippet",
+                            orgmode = "orgmode",
                             buffer = "Buffer",
                             path = "Path",
                         },
