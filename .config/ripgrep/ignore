@@ -1,5 +1,6 @@
 .cache
-.local
+share
+state
 .mono
 backups
 .mozilla
