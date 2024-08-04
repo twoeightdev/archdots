@@ -11,6 +11,13 @@ return {
                 { "<leader>f", group = "find" },
                 { "<leader><tab>", group = "buffers" },
                 { "<leader>d", group = "diagnostics" },
+                { "<leader>o", group = "orgmode" },
+                { "<leader>ob", group = "org buffer" },
+                { "<leader>od", group = "org date" },
+                { "<leader>oi", group = "org insert" },
+                { "<leader>ol", group = "org links" },
+                { "<leader>on", group = "org notes" },
+                { "<leader>ox", group = "org clock" },
             },
         },
         win = {
