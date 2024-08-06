@@ -1,0 +1,33 @@
+#+title: Firefox Tweaks
+
+* Introduction
+This file is all about tweaking firefox based on my personal preferences.
+First you need to enable =toolkit.legacyUserProfileCustomizations.stylesheets=
+in =about:config= in firefox address bar. Then we're going to create two files in
+=~/.mozilla/firefox/profile.default-release/chrome/=, First is =userContent.css= then
+=userChrome.css=, which some of the customization in this guide will be using
+both files.
+
+* Tweaks
+** Screen tearing
+=layers.acceleration.force-enabled= *true*
+** Fix mouse right click
+=ui.context_menus.after_mouseup= *true*
+** Remove video fullscreen warning
+=full-screen-api.warning.timeout= *0*
+** Remove pocket
+=extensions.pocket.enabled= *false*
+** Prevent download panel from opening automatically
+=browser.download.alwaysOpenPanel= *false*
+
+* Inspect UI Elements
+Tool for inspecting firefox UI Elements. Uncheck them once you're done.
+
+1.) Enable the remote debugging tool. Press F12 on any tab to open DevTool.
+2.) Click three dots to open settings of DevTool.
+3.) Enable the following settings:
+    3.a) Enable browser chrome and add-on debugging toolboxes
+	3.b) Enable remote debugging
+4.) Turn on the local /remote/ debugger with =Ctrl-Alt-Shift+l= and
+you should get a prompt from the debugger asking to connect to your own Firefox.
+Press ok.
