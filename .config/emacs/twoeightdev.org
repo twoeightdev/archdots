@@ -1,7 +1,7 @@
 #+title: Emacs configuration
 #+author: twoeightdev
-#+auto_tangle: t
 #+property: header-args :comments org
+#+startup: overview
 
 * Overview
 This org document is a literate configuration for vanilla GNU Emacs.
@@ -22,24 +22,27 @@ automatically tangle on save after the packages are downloaded.
   - [[#better-defaults][Better defaults]]
   - [[#package][Package]]
   - [[#organize][Organize]]
-  - [[#auto-tangle][Auto-tangle]]
   - [[#evil][Evil]]
   - [[#general][General]]
+  - [[#rg][Rg]]
   - [[#org][Org]]
   - [[#toc-generator][TOC Generator]]
-  - [[#test-treesit][Test Treesit]]
   - [[#treesit][Treesit]]
-  - [[#treesit-auto][Treesit-auto]]
+  - [[#python][Python]]
+  - [[#treesit-old][Treesit Old]]
+  - [[#treesit-auto][Treesit auto]]
   - [[#eglot][Eglot]]
   - [[#which-key][Which-key]]
   - [[#garbage-collect][Garbage collect]]
+  - [[#statusline][Statusline]]
+  - [[#dashboard][Dashboard]]
   - [[#init-footer][Init footer]]
 :END:
 
 * Convent Header
 Auto-generate a header on top of ~early-init.el~ and ~init.el~ using
 [[https://orgmode.org/manual/Noweb-Reference-Syntax.html][noweb]] syntax.
-#+name: header
+#+name: autogen-header
 #+begin_src emacs-lisp
 ;;; Auto-generated --- DO NOT EDIT -*- lexical-binding: t -*-
 
@@ -61,10 +64,10 @@ Auto-generate a header on top of ~early-init.el~ and ~init.el~ using
 :end:
 This is loaded before the package system and GUI is initialized.
 #+begin_src emacs-lisp :noweb yes :comments no
-<<header>>
+<<autogen-header>>
 
-;; (eval-after-load "startup"
-  ;; '(fset 'display-startup-echo-area-message 'ignore))
+(eval-after-load "startup"
+  '(fset 'display-startup-echo-area-message 'ignore))
 
 (defvar file-name-handler-alist-original file-name-handler-alist)
 
@@ -103,9 +106,9 @@ This is loaded before the package system and GUI is initialized.
 
 (add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "themes/" user-emacs-directory))
-;; (load-theme 'gruvbox t)
-;;(load-theme 'rose-pine t)
 (load-theme 'catppuccin t)
+
+;; (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (set-face-attribute 'font-lock-comment-face nil :slant  'italic)
 (set-face-attribute 'font-lock-function-name-face nil :weight 'bold)
@@ -120,10 +123,10 @@ This is loaded before the package system and GUI is initialized.
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
-(defun startup-echo-area-message ()
-  (format "Emacs initialized in %.2fs with %d garbage collected."
-		  (float-time (time-subtract after-init-time before-init-time))
-		  gcs-done))
+;; (defun startup-echo-area-message ()
+  ;; (format "Emacs initialized in %.2fs with %d garbage collected."
+		  ;; (float-time (time-subtract after-init-time before-init-time))
+		  ;; gcs-done))
 #+end_src
 
 ** Early-init footer
@@ -141,7 +144,7 @@ Main configuration file that will generate ~init.el~ on save.
 ** Better defaults
 Preferred defaults.
 #+begin_src emacs-lisp :noweb yes :comments no
-<<header>>
+<<autogen-header>>
 
 (setq-default read-process-output-max (* 1024 1024))
 (setq-default ad-redefinition-action 'accept)
@@ -174,13 +177,14 @@ Package.el with use-package.
 ** Organize
 Keep emacs directory clean.
 #+begin_src emacs-lisp
-(use-package no-littering)
+(use-package no-littering
+  :functions no-littering-expand-var-file-name
+  :config
+  (setq auto-save-file-name-transforms
+		`((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
 
-(make-directory (expand-file-name "auto-saves/" user-emacs-directory) t)
-(setq auto-save-list-file-prefix
-	  (expand-file-name "auto-saves/sessions/" user-emacs-directory)
-	  auto-save-file-name-transforms
-	  `((".*" ,(expand-file-name "tmp/auto-saves/" user-emacs-directory) t)))
+;; (setq auto-save-file-name-transforms
+;; 	  `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
@@ -197,14 +201,6 @@ Keep emacs directory clean.
 (setq large-file-warning-threshold nil)
 #+end_src
 
-** Auto-tangle
-Automatically tangle org files on save.
-#+begin_src emacs-lisp
-(use-package org-auto-tangle
-  :hook
-  (org-mode . org-auto-tangle-mode))
-#+end_src
-
 ** Evil
 Extensible vi layer Emacs.
 #+begin_src emacs-lisp
@@ -213,8 +209,24 @@ Extensible vi layer Emacs.
   :custom
   (evil-want-C-i-jump nil)
   (evil-want-C-d-scroll nil)
+  (evil-want-keybinding nil)
   :hook
   (after-init . evil-mode))
+
+(use-package evil-collection
+  :hook
+  (evil-mode . evil-collection-init))
+
+(use-package evil-org
+  :diminish evil-org-mode
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+			(lambda () (evil-org-set-key-theme))))
+
+(require 'evil-org-agenda)
+(evil-org-agenda-set-keys)
 #+end_src
 
 ** General
@@ -222,6 +234,8 @@ More convenient key definitions.
 #+begin_src emacs-lisp
 (use-package general
   :demand t
+  :defines twoeightdev/leader-keys
+  :functions general-evil-setup general-create-definer twoeightdev/leader-keys general-unbind
   :config
   (general-evil-setup)
   (general-create-definer twoeightdev/leader-keys
@@ -253,25 +267,60 @@ More convenient key definitions.
 	"br" '(revert-buffer :wk "revert buffer")))
 #+end_src
 
+** Rg
+#+begin_src emacs-lisp
+(use-package rg
+  :general
+  (twoeightdev/leader-keys
+	"fw" '(rg-menu :wk "word grep")))
+#+end_src
+
 ** Org
 Org mode.
 #+begin_src emacs-lisp
 (use-package org
   :ensure nil
-  :general
-  (twoeightdev/leader-keys
-	"fc" '(twoeightdev/org-config :wk "org config"))
-  :config
+  :preface
+  (defconst twoeightdev/notes-path
+	(expand-file-name "notes.org" "~/.local/notes")
+	"Path to personal notes file.")
+
   (defconst twoeightdev/org-path
 	(locate-user-emacs-file "twoeightdev.org")
 	"Path to my `org' configuration file.")
+
   (defun twoeightdev/org-config ()
 	"Open my `org' configuraiton file."
 	(interactive)
 	(find-file twoeightdev/org-path))
+
+  (defun twoeightdev/org-tangle-config ()
+	"Auto tangle this org configuration file."
+	(when (string-equal (buffer-file-name)
+						(expand-file-name "twoeightdev.org" user-emacs-directory))
+	  (org-babel-tangle)))
+  :general
+  (twoeightdev/leader-keys
+	"fc" '(twoeightdev/org-config :wk "org configuration file")
+	"aa" '(org-agenda :wk "org agenda"))
   :custom
   (org-edit-src-content-indentation 0)
-  (org-src-preserve-indentation nil))
+  (org-src-preserve-indentation nil)
+  (org-directory "~/.local/org/agenda")
+  (org-default-notes-file twoeightdev/notes-path)
+  (org-src-window-setup 'current-window)
+  (org-return-follows-link t)
+  (org-image-actual-width nil)
+  (org-hide-emphasis-markers t)
+  (org-hide-leading-stars t)
+  (org-catch-invisible-edits 'show-and-error)
+  (org-agenda-files (list "gtd.org" "purge.org"))
+  (org-agenda-start-on-weekday 1)
+  (org-agenda-timegrid-use-ampm 1)
+  (org-agenda-show-all-dates nil)
+  (org-agenda-window-setup 'current-window)
+  :hook
+  (after-save . twoeightdev/org-tangle-config))
 #+end_src
 
 ** TOC Generator
@@ -281,31 +330,74 @@ Org mode.
   (org-mode . org-make-toc-mode))
 #+end_src
 
-** Test Treesit
-#+begin_src emacs-lisp :tangle no
-(setq treesit-language-source-alist
-	  ''((bash "https://github.com/tree-sitter/tree-sitter-bash")
-		 (python "https://github.com/tree-sitter/tree-sitter-python")
-		 (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-		 (lua "https://github.com/Azganoth/tree-sitter-lua")))
-
-(mapc #'treesit-install-language-grammar
-	  (mapcar #'car treesit-language-source-alist))
-
-(setq major-mode-remap-alist
-	  '((bash-mode . bash-ts-mode)
-		(python-mode . python-ts-mode)
-		(lua-mode . lua-ts-mode)
-		(markdown-mode . markdown-ts-mode)))
-#+end_src
-
 ** Treesit
-Treesitter
+Source [[https://github.com/andreyorst/dotfiles/blob/master/.config/emacs/init.el][andreyorst-github]]
 #+begin_src emacs-lisp :tangle no
 (use-package treesit
   :ensure nil
-  :commands (treesit-install-language-grammar twoeightdev/treesit-install-all)
+  :when (treesit-p)
+  :preface
+  (defun treesit-p ()
+	"Check if Emacs was built with treesiter in a protable way."
+	(and (fboundp 'treesit-available-p)
+		 (treesit-available-p)))
+
+  (cl-defun treesit-install-and-remap
+	  (lang url &key revision source-dir modes remap org-src)
+	"Convenience function for installing and enabling a ts-* mode."
+	(when (and (fboundp 'treesit-available-p)
+			   (treesit-available-p))
+	  (unless (treesit-language-available-p lang)
+		(add-to-list
+		 'treesit-language-source-alist
+		 (list lang url revision source-dir))
+		(treesit-install-language-grammar lang))
+	  (when (and remap (treesit-ready-p lang))
+		(dolist (mode modes)
+		  (add-to-list
+		   'major-mode-remap-alist
+		   (cons mode remap))))
+	  (when (and org-src (treesit-ready-p lang))
+		(eval-after-load 'org
+		  (lambda ()
+			(add-to-list 'org-src-lang-modes org-src))))))
+  :custom
+  (treesit-font-lock-level 2))
+#+end_src
+
+** Python
+#+begin_src emacs-lisp :tangle no
+(use-package python-ts-mode
+  :ensure nil
+  :defer t
+  :after python
+  :when (treesit-p)
   :init
+  (treesit-install-and-remap
+   'python "https://github.com/tree-sitter/tree-sitter-python"
+   :modes '(python-mode)
+   :remap 'python-ts-mode
+   :org-src '("py" . python-ts)))
+#+end_src
+
+** Treesit Old
+Treesitter
+#+begin_src emacs-lisp
+(use-package treesit
+  :ensure nil
+  :defines c-ts-mode-indent-offset
+  :commands (treesit-install-language-grammar twoeightdev/treesit-install-all)
+  :preface
+  (defun twoeightdev/treesit-install-all ()
+	"Install all languages specified by `treesit-language-source-alist'."
+	(interactive)
+	(let ((languages (mapcar 'car treesit-language-source-alist)))
+	  (dolist (lang languages)
+		(treesit-install-language-grammar lang)
+		(message "`%s' parser was installed." lang)
+		(sit-for 0.75))))
+  :custom
+  (setq c-ts-mode-indent-offset 4)
   (setq treesit-language-source-alist
 		'((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
 		  (css . ("https://github.com/tree-sitter/tree-sitter-css"))
@@ -320,38 +412,17 @@ Treesitter
 		  (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
 		  (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
 		  (yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))))
-  :config
-  (defun twoeightdev/treesit-install-all()
-	"Install all languages specified by `treesit-language-source-alist'."
-	(interactive)
-	(let ((languages (mapcar 'car treesit-language-source-alist)))
-	  (dolist (lang languages)
-		(treesit-install-language-grammar lang)
-		(message "`%s' parser was installed." lang)
-		(sit-for 0.75)))))
+  :custom
+  (treesit-font-lock-level 2))
 #+end_src
 
-** Treesit-auto
-Treesit auto install.
-#+begin_src emacs-lisp :tangle no
+** Treesit auto
+#+begin_src emacs-lisp
 (use-package treesit-auto
-  :demand t
+  :functions treesit-auto-add-to-auto-mode-alist global-treesit-auto-mode
   :config
-  (global-treesit-auto-mode)
-  (setq treesit-language-source-alist
-		'((bash "https://github.com/tree-sitter/tree-sitter-bash")
-		  (css "https://github.com/tree-sitter/tree-sitter-css")
-		  (html "https://github.com/tree-sitter/tree-sitter-html")
-		  (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
-		  (json "https://github.com/tree-sitter/tree-sitter-json")
-		  (lua "https://github.com/Azganoth/tree-sitter-lua")
-		  (make "https://github.com/alemuller/tree-sitter-make")
-		  (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-		  (python "https://github.com/tree-sitter/tree-sitter-python")
-		  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-		  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-		  (toml "https://github.com/tree-sitter/tree-sitter-toml")
-		  (yaml "https://github.com/ikatyang/tree-sitter-yaml"))))
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode 1))
 #+end_src
 
 ** Eglot
@@ -360,7 +431,11 @@ Eglot
 (use-package eglot
   :ensure nil
   :hook
-  (prog-mode . eglot-ensure))
+  (python-mode . eglot-ensure)
+  (sh-mode . eglot-ensure)
+  (bash-mode . eglot-ensure)
+  :init
+  (setq eglot-stay-out-of '(flymake)))
 #+end_src
 
 ** Which-key
@@ -368,6 +443,7 @@ Display key bindings following your currently entered incomplete command
 in a popup.
 #+begin_src emacs-lisp
 (use-package which-key
+  :functions which-key-setup-minibuffer
   :config
   (which-key-setup-minibuffer)
   :hook
@@ -393,11 +469,40 @@ Emacs garbage collection. [[https://akrl.sdf.org/#orgc15a10d][reference]].
 								  (k-time (garbage-collect))))))
 #+end_src
 
+** Statusline
+#+begin_src emacs-lisp :tangle no
+(use-package doom-modeline
+  :functions doom-modeline-mode
+  :custom
+  (doom-modeline-icon nil)
+  :init
+  (doom-modeline-mode 1))
+
+(use-package nerd-icons)
+#+end_src
+
+** Dashboard
+#+begin_src emacs-lisp
+(use-package dashboard
+  :functions dashboard-setup-startup-hook
+  :init
+  (dashboard-setup-startup-hook)
+  :custom
+  ;; (dashboard-center-content t)
+  (dashboard-banner-logo-title "Welcome Motherfucker!!!")
+  (dashboard-items '((recents . 5)
+					 (bookmarks . 5)
+					 (agenda . 5)))
+  (dashboard-startupify-list '(dashboard-insert-banner
+							   dashboard-insert-items
+							   dashboard-insert-newline
+							   dashboard-insert-navigator
+							   dashboard-insert-init-info
+							   dashboard-insert-newline)))
+#+end_src
+
 ** Init footer
 Auto-generated convent footer for ~init.el~.
 #+begin_src emacs-lisp
-;; Local Variables:
-;; byte-compile-warnings: (not unresolved free-vars)
-;; End:
 ;;; init.el ends here
 #+end_src
