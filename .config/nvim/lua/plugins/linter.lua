@@ -3,12 +3,23 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     opts = {
         linters_by_ft = {
+            -- https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.jsonc
             markdown = { "markdownlint" },
             -- lua = { "selene" },
         },
     },
     config = function(_, opts)
-        require("lint").linters_by_ft = opts.linters_by_ft
+        local lint = require("lint")
+        lint.linters_by_ft = opts.linters_by_ft
+
+        lint.linters.markdownlint.args = {
+            "--disable",
+            "MD013",
+            "MD004",
+            "MD007",
+            "MD030",
+            "--",
+        }
 
         local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
