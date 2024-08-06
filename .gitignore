@@ -60,6 +60,7 @@
 .local/downloads/
 .local/drafts/
 .local/orgdata/
+.local/review/
 .local/screenshot/
 .local/share/cargo/
 .local/share/gnupg/crls.d/
