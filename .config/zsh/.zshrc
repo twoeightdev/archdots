@@ -5,11 +5,11 @@ autoload -U add-zsh-hook
 add-zsh-hook precmd vcs_info
 
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%F{blue} %f %F{red}%b%u %c%f'
-# zstyle ':vcs_info:git:*' actionformats '%F{red}%b|%a%u%c%f'
-zstyle ':vcs_info:*' unstagedstr ' *'
-zstyle ':vcs_info:*' stagedstr ' +'
-PROMPT='%B%F{magenta}%~%f ${vcs_info_msg_0_}>%b '
+zstyle ':vcs_info:git:*' formats '%F{magenta} %f %F{yellow}%b%f%F{red}%u%f%F{green}%c%f '
+zstyle ':vcs_info:*' unstagedstr ' [!]'
+zstyle ':vcs_info:*' stagedstr ' [+]'
+
+PROMPT='%F{blue}%B%~%b%f %B${vcs_info_msg_0_}%b> '
 
 # Install fzf
 if [ ! -d ~/.config/fzf ]; then
@@ -100,7 +100,7 @@ cd() {
     builtin cd "${new_directory}" && ls -AhN --color=auto --group-directories-first
 }
 
-# Use lf to jump in directories with ctrl-o
+# Use lf to jump in directories with ctrl-m
 # shellcheck disable=SC2164
 lfcd() {
     tmp="$(mktemp -uq)"
@@ -114,15 +114,17 @@ lfcd() {
 }
 bindkey -s "^o" "^ulfcd\n"
 
-# Search $HOME directory with fzf and open with $EDITOR
-e() {
+# Search $HOME with fzf and open in $EDITOR with alt-e
+editfile() {
     rg "$HOME" --files | sort -u | fzf -m | xargs -r "$EDITOR"
 }
+bindkey -s "^[e" "^ueditfile\n"
 
-# Search directory in $HOME and cd to that directory with fzf
-j() {
+# Search in $HOME with fzf and cd to that directory with alt-m
+jumptodirectory() {
     cd "$(rg "$HOME" -0 --files | xargs -0 dirname | sort -u | fzf)" || exit
 }
+bindkey -s "^[j" "^ujumptodirectory\n"
 
 # Source fzf
 if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ]]; then
