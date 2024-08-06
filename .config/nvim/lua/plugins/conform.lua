@@ -34,7 +34,19 @@ return {
                 lua = { "stylua" },
                 sh = { "shfmt", "shellcheck" },
                 zsh = { "shellcheck" },
-                markdown = { "mdformat" },
+                markdown = { "prettier", "markdown-toc" },
+            },
+            formatters = {
+                prettier = {
+                    prepend_args = {
+                        "--tab-width",
+                        "2",
+                        "--print-width",
+                        "80",
+                        "--prose-wrap",
+                        "always",
+                    },
+                },
             },
             log_level = vim.log.levels.ERROR,
         }
