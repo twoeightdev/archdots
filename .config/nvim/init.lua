@@ -3,10 +3,10 @@ vim.loader.enable()
 
 -- Use pcall to load modules
 local function safereq(module)
-	local success, loaded = pcall(require, module)
-	if success then
-		return loaded
-	end
+    local success, loaded = pcall(require, module)
+    if success then
+        return loaded
+    end
 end
 
 -- Load modules
