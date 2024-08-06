@@ -25,6 +25,7 @@
 .config/emacs/init.el
 .config/emacs/logo/
 .config/emacs/places
+.config/emacs/recentf
 .config/emacs/transient/
 .config/emacs/tree-sitter/
 .config/emacs/var/
