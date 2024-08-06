@@ -50,6 +50,8 @@ local defaults = {
     confirm = true,
     -- Hide markup for bold and italics, but not markers with substitutions
     conceallevel = 2,
+    -- Enabled for orgmode-nvim
+    concealcursor = "nc",
     -- Use ripgrep as grep program for neovim
     grepprg = "rg --vimgrep",
     grepformat = "%f:%l:%c:%m",
