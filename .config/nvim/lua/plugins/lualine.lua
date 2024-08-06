@@ -148,22 +148,6 @@ return {
             color = { fg = colors.sapphire, gui = "italic,bold" },
         }
 
-        local location = {
-            function()
-                local current_line = vim.fn.line(".")
-                local total_line = vim.fn.line("$")
-                if current_line == 1 then
-                    return " Top "
-                elseif current_line == vim.fn.line("$") then
-                    return " Bot "
-                end
-                local result, _ = math.modf((current_line / total_line) * 100)
-                return " " .. result .. "%% "
-            end,
-            color = { bg = colors.lavender, fg = colors.surface0, gui = "italic,bold" },
-            separator = { left = "", right = "" },
-        }
-
         local linter = {
             function()
                 local linters = require("lint").linters_by_ft[vim.bo.filetype] or {}
@@ -198,6 +182,43 @@ return {
             color = { fg = colors.green, gui = "italic,bold" },
             -- color = { bg = colors.green, fg = colors.surface0, gui = "italic,bold" },
             -- separator = { left = "", right = "" },
+        }
+
+        ---@diagnostic disable-next-line: unused-local
+        local location = {
+            function()
+                local current_line = vim.fn.line(".")
+                local total_line = vim.fn.line("$")
+                if current_line == 1 then
+                    return " Top "
+                elseif current_line == vim.fn.line("$") then
+                    return " Bot "
+                end
+                local result, _ = math.modf((current_line / total_line) * 100)
+                return " " .. result .. "%% "
+            end,
+            color = { bg = colors.lavender, fg = colors.surface0, gui = "italic,bold" },
+            separator = { left = "", right = "" },
+        }
+
+        local locline = {
+            function()
+                local line = vim.fn.line(".")
+                local line_cnt = vim.fn.line("$")
+                return string.format("%1d:%d", line, line_cnt)
+            end,
+            color = { bg = colors.lavender, fg = colors.surface0, gui = "bold" },
+            separator = { left = "" },
+        }
+
+        local loccol = {
+            function()
+                local col = vim.fn.virtcol(".")
+                local col_cnt = vim.fn.virtcol("$") - 1
+                return string.format("%d:%d", col, col_cnt)
+            end,
+            color = { bg = colors.lavender, fg = colors.surface0, gui = "bold" },
+            separator = { left = "", right = "" },
         }
 
         return {
@@ -238,7 +259,7 @@ return {
                     linter,
                     lsp,
                 },
-                lualine_z = { location },
+                lualine_z = { locline, loccol },
             },
             extensions = {
                 "man",
