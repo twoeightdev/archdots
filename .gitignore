@@ -40,6 +40,7 @@
 .config/mpd/state
 .config/mpd/sticker.sql
 .config/ncmpcpp/error.log
+.config/newsboat/error.log
 .config/nvim/lazy-lock.json
 .config/pulse/
 .config/qtile/__pycache__/
@@ -71,6 +72,7 @@
 .local/share/icons/
 .local/share/lf/
 .local/share/man/
+.local/share/newsboat/
 .local/share/nvim/
 .local/share/qtile/
 .local/share/qutebrowser/
