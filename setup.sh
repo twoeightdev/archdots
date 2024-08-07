@@ -53,9 +53,9 @@ archpkg() {
         python-dbus-next python-iwlib python-mpd2 python-pip python-psutil
         # programs
         firefox firefox-dark-reader firefox-tridactyl firefox-ublock-origin
-        firefox-extension-enhancer-for-youtube-bin emacs alacritty lf dunst
-        mpc mpd mpv ncmpcpp nsxiv newsboat gimp qtile steam gucharmap
-        spotify-launcher transmission-cli zathura zathura-pdf-mupdf
+        emacs alacritty lf dunst mpc mpd mpv ncmpcpp nsxiv newsboat gimp
+        qtile steam gucharmap spotify-launcher transmission-cli zathura
+        zathura-pdf-mupdf
     )
     # install all listed pkgs
     yay --needed --noconfirm -Syu "${pkgs[@]}"
@@ -73,6 +73,7 @@ aurpkg() {
         tremc-git
         catppuccin-gtk-theme-mocha
         firefox-tridactyl-native
+        firefox-extension-enhancer-for-youtube-bin
         python-pulsectl-asyncio
     )
     # install all aur packages
