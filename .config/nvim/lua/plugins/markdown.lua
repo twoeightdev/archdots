@@ -3,6 +3,15 @@ return {
     main = "render-markdown",
     dependencies = "nvim-treesitter/nvim-treesitter",
     ft = { "md", "markdown" },
+    keys = {
+        {
+            "<leader>am",
+            function()
+                return require("render-markdown").toggle()
+            end,
+            desc = "Markdown render toggle",
+        },
+    },
     opts = {
         heading = {
             sign = false,
@@ -15,13 +24,13 @@ return {
                 "Ⓔ  ",
                 "Ⓕ  ",
             },
-            width = "block",
+            width = "full",
         },
         code = {
             sign = false,
-            style = "normal",
+            style = "language",
             width = "block",
-            border = "thick",
+            border = "thin",
         },
         bullet = {
             right_pad = 1,
