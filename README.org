@@ -25,7 +25,7 @@ My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qti
 ** 🚀 Dotfiles Installation
 I use *git bare* repository to manage my dotfiles and use a wrapper script
 [[./.local/bin/dot][dot]] after initial configuration below.
-#+begin_src shell
+#+begin_src bash
 - mkdir ~/script
 - cd ~/script
 - curl -LO https://raw.githubusercontent.com/twoeightdev/archdots/main/setup.sh
