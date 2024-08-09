@@ -48,8 +48,8 @@ export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/rgrc"
 export NIMBLE_DIR="$HOME/.config/nimble"
 
 # Npm path
-export PATH="$HOME/.config/node_modules/bin:$PATH"
-export NPM_CONFIG_PREFIX="$HOME/.config/node_modules"
+export PATH="$HOME/.local/share/node_modules/bin:$PATH"
+export NPM_CONFIG_PREFIX="$HOME/.local/share/node_modules"
 export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
 export NPM_CONFIG_CACHE="$HOME/.cache/npm"
 export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
