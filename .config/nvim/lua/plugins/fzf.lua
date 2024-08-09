@@ -92,28 +92,28 @@ return {
         --     desc = "TODO comments",
         -- },
         {
-            "<leader>ds",
+            "<leader>ls",
             function()
                 return require("fzf-lua").lsp_document_symbols()
             end,
             desc = "Symbol lsp document",
         },
         {
-            "<leader>da",
+            "<leader>la",
             function()
                 return require("fzf-lua").lsp_code_actions()
             end,
             desc = "Actions",
         },
         {
-            "<leader>dd",
+            "<leader>ld",
             function()
                 return require("fzf-lua").diagnostics_document()
             end,
             desc = "Document diagnostics",
         },
         {
-            "<leader>dw",
+            "<leader>lw",
             function()
                 return require("fzf-lua").diagnostics_workspace()
             end,
