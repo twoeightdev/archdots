@@ -9,7 +9,7 @@ return {
             light = "latte",
             dark = "mocha",
         },
-        transparent_background = true,
+        transparent_background = false,
         no_italic = false,
         no_bold = false,
         no_underline = false,
