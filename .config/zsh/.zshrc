@@ -101,7 +101,7 @@ cd() {
 }
 
 # Use lf to jump in directories with ctrl-m
-# shellcheck disable=SC2164
+# shellcheck disable=2164
 lfcd() {
     tmp="$(mktemp -uq)"
     trap 'rm -f $tmp >/dev/null 2>&1 &&
