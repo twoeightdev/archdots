@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 # Open web page via dmenu and open on $BROWSER
-TEXT="duckduckgo\ngithub\ntorrent\n9901\nshopee\nshopee-wish\nfoodpanda\nludeon\nsuckless\narch\nwallhaven\nunixporn\nbilibili\nmangafire\nyewtu\nyoutube\ngmail"
+TEXT="duckduckgo\ngithub\nudemy\ntorrent\n9901\nshopee\nshopee-wish\nfoodpanda\nludeon\nsuckless\narch\nwallhaven\nunixporn\nbilibili\nmangafire\nyewtu\nyoutube\ngmail"
 
 DMENU="$( echo -e $TEXT | dmenu -l 16 -p web )"
 
@@ -9,6 +9,7 @@ BROWSER="/usr/bin/firefox" #Change this to your preference
 case "$DMENU" in
     duckduckgo)     $BROWSER https://duckduckgo.com                     ;;
     github)         $BROWSER https://github.com                         ;;
+    udemy)          $BROWSER https://www.udemy.com/                     ;;
     torrent)        $BROWSER https://1337x.to/home/                     ;;
     9901)           $BROWSER http://localhost:9091/transmission/web/    ;;
     shopee)         $BROWSER https://shopee.ph/                         ;;
