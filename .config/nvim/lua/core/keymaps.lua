@@ -92,6 +92,6 @@ map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Previous warning" })
 
 -- Inlay hints
-map("n", "<leader>di", function()
+map("n", "<leader>li", function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
 end, { desc = "Inlay hints" })
