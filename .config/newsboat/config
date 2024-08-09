@@ -43,14 +43,14 @@ highlight feedlist "(Webtoon|Tech News)" red black bold
 
 # Colors
 color listnormal color244 default
-color listnormal_unread yellow default
-color listfocus blue default
-color listfocus_unread blue default bold
-color info cyan black bold
+color listnormal_unread white default
+color listfocus red default
+color listfocus_unread red default bold
+color info blue default bold
 color article white default bold
 
 highlight all "---.*---" yellow
-highlight feedlist ".*(0/0))" red black bold
+highlight feedlist ".*(0/0))" black green bold
 highlight article "(^Feed:.*|^Title:.*|^Author:.*)" cyan default bold
 highlight article "(^Link:.*|^Date:.*)" default default underline
 highlight article "https?://[^ ]+" green default
