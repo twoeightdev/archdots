@@ -21,11 +21,15 @@ return {
         return {
             options = {
                 themable = true,
-                diagnostics = "nvim_lsp",
+                diagnostics = false,
+                show_buffer_close_icons = false,
             },
             highlights = require("catppuccin.groups.integrations.bufferline").get({
                 custom = {
                     all = {
+                        fill = { bg = mocha.base },
+                        background = { bg = mocha.base },
+                        separator = { bg = mocha.base },
                         indicator_selected = { fg = mocha.lavender },
                         indicator_visible = { fg = mocha.mantle, bg = mocha.mantle },
                         buffer_selected = { fg = mocha.lavender }, -- current
