@@ -1,6 +1,0 @@
-#+title: Notes
-#+author: twoeightdev
-
-* Linux                                                                  :linux:
-** [[~/.local/org/linux/install_arch.org][Arch Linux installation guide]] :linux:
-** [[~/.local/org/linux/postinstall_arch.org][Arch Linux post installation guide]] :linux:
