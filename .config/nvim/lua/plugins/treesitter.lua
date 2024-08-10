@@ -34,7 +34,11 @@ return {
         ignore_install = { "org" },
         auto_install = true,
         sync_install = false,
-        highlight = { enable = true },
+        highlight = {
+            enable = true,
+            disable = { "org" },
+            additional_vim_regex_highlighting = { "org" },
+        },
         indent = { enable = true },
         matchup = {
             enable = true,
