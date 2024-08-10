@@ -1,12 +1,9 @@
 #!/bin/sh
 # Take screenshot
-type="$(printf "Screen\nWindow/Area\n" | dmenu -l 2 -p 'Type')"
-[ "$type" ] || exit
-time="$(printf "0.5\n5\n10\n" | dmenu -p 'Seconds to wait')"
-[ "$time" ] || exit
-[ "$type" = 'Window/Area' ] && type='-s -u' || type='-u'
-dir="$HOME/.local/screenshot"
-mkdir -p "$dir"
-sleep "$time"
-maim $type | tee "$dir/$(date +%G-%m-%d_%s.png)" | xclip -sel clip -t image/png
-notify-send "Screenshot taken."
+output="$HOME/.local/screenshot/$(date '+%G-%d-%b-%I:%M%p').png"
+
+case "$(printf "Selected area\\nCurrent window\\nFullscreen" | dmenu -l 3 -i -p "Screenshot")" in
+"Selected area") maim -u -s "${output}" && notify-send "📸 Screenshot taken." ;;
+"Current window") maim -B -q -d 0.2 -i "$(xdotool getactivewindow)" "${output}" && notify-send "📸 Screenshot taken." ;;
+"Fullscreen") maim -q -d 0.2 "${output}" && notify-send "📸 Screenshot taken." ;;
+esac

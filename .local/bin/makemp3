@@ -1,3 +1,4 @@
 #!/usr/bin/bash
 
-ffmpeg -i $1 `date +"%m-%d-%y"`.mp3
+# shellcheck disable=2046
+ffmpeg -i "$1" $(date +"%m-%d-%y").mp3 >/dev/null 2>&1

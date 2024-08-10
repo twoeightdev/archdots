@@ -1,13 +1,16 @@
 #!/bin/sh
 # Open link in proper application
+# shellcheck disable=2015,2086
 [ "$1" ] || exit
 exec >/dev/null 2>&1
 case "$1" in
-    *mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*)
-        setsid mpv -quiet "$1" >/dev/null 2>&1 ;;
-    *png|*jpg|*jpe|*jpeg|*gif)
-        file=$(echo "$1" | sed "s/.*\///")
-        curl -sL "$1" > "/tmp/$file" && nsxiv -ab "/tmp/$file" >/dev/null 2>&1 &;;
-    *mp3|*flac|*opus|*mp3?source*) cd ~/.local/downloads && setsid curl -LO "$1" &;;
-    *) [ -f "$1" ] && $TERMINAL -e $EDITOR "$1" >/dev/null 2>&1 || setsid $BROWSER "$1" >/dev/null 2>&1;;
+*mkv | *webm | *mp4 | *youtube.com/watch* | *youtube.com/playlist* | *youtu.be*)
+    setsid mpv -quiet "$1" >/dev/null 2>&1
+    ;;
+*png | *jpg | *jpe | *jpeg | *gif)
+    file=$(echo "$1" | sed "s/.*\///")
+    curl -sL "$1" >"/tmp/$file" && nsxiv -ab "/tmp/$file" >/dev/null 2>&1 &
+    ;;
+*mp3 | *flac | *opus | *mp3?source*) cd ~/.local/downloads && setsid curl -LO "$1" & ;;
+*) [ -f "$1" ] && $TERMINAL -e $EDITOR "$1" >/dev/null 2>&1 || setsid $BROWSER "$1" >/dev/null 2>&1 ;;
 esac

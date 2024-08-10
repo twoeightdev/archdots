@@ -1,5 +1,6 @@
 #!/bin/sh
 # Wrapper for dotfiles
+# shellcheck disable=2086,2048
 dotfiles() { git --git-dir=$HOME/.config/.dots --work-tree=$HOME "$@"; }
 if [ $1 = 'out' ]; then
     dotfiles pull &&

@@ -1,3 +1,4 @@
 #!/bin/sh
 
-ffmpeg -hide_banner -i $1 -c copy `date +"%m-%d-%y"`.mp4 >/dev/null 2>&1
+# shellcheck disable=2046
+ffmpeg -hide_banner -i "$1" -c copy $(date +"%m-%d-%y").mp4 >/dev/null 2>&1
