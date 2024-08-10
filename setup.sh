@@ -48,7 +48,7 @@ archpkg() {
         ffmpeg ffmpegthumbnailer highlight imagemagick maim gnome-keyring
         libnotify man-db mediainfo moreutils ntfs-3g picom poppler psutils
         unrar unzip yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd
-        wget tree ripgrep fd unclutter polkit cpupower pacutils npm
+        wget tree ripgrep fd unclutter polkit xdg-utils pacutils npm
         # python
         python-dbus-next python-iwlib python-mpd2 python-pip python-psutil
         # programs
