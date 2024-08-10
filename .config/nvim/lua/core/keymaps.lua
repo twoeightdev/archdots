@@ -95,3 +95,6 @@ map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Previous warning" })
 map("n", "<leader>li", function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
 end, { desc = "Inlay hints" })
+
+-- Better gf to open markdown local link
+map("n", "gf", "^f/gf")
