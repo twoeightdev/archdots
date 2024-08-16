@@ -1,5 +1,6 @@
-#+title: Archlinux Dotfiles
-#+author: twoeightdev
+#+TITLE:     Arch Linux Dotfiles
+#+AUTHOR:    twoeightdev
+#+DATE:      2024-08-16
 
 * 📔 Overview
 My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]] as default window manager.
@@ -21,6 +22,8 @@ My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qti
 [[./.local/wallpapers/screen01.png]]
 
 [[./.local/wallpapers/screen02.png]]
+
+[[./.local/wallpapers/screen03.png]]
 
 ** 🚀 Dotfiles Installation
 I use *git bare* repository to manage my dotfiles and use a wrapper script
