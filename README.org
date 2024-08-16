@@ -23,8 +23,6 @@ My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qti
 
 [[./.local/wallpapers/screen02.png]]
 
-[[./.local/wallpapers/screen03.png]]
-
 ** 🚀 Dotfiles Installation
 I use *git bare* repository to manage my dotfiles and use a wrapper script
 [[./.local/bin/dot][dot]] after initial configuration below.
