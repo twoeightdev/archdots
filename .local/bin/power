@@ -1,6 +1,6 @@
 #!/bin/bash
 
-opts=$(echo -e "⏻  Poweroff\n󰊳  Restart\n⚡  Suspend\n⏼  Logout")
+opts=$(echo -e "⏻  Poweroff\n󰊳  Restart\n󱑚  Suspend\n  Logout")
 
 sel_opts=$(echo -e "$opts" | dmenu -p "Bye ""$USER""!")
 
@@ -8,7 +8,7 @@ case $sel_opts in
 "⏻  Poweroff") systemctl poweroff -i ;;
 # "━ Lock") slock & mpc pause;;
 "󰊳  Restart") systemctl reboot -i ;;
-"⚡  Suspend") systemctl suspend -i ;;
-"⏼  Logout") pkill -KILL -u "$USER" ;;
+"󱑚  Suspend") systemctl suspend -i ;;
+"  Logout") pkill -KILL -u "$USER" ;;
 *) exit 1 ;;
 esac
