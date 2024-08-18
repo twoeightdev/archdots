@@ -21,7 +21,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         os.exit(1)
     end
 end
-
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
@@ -32,18 +31,42 @@ require("lazy").setup({
         colorscheme = { "catppuccin" },
     },
     ui = {
+        icons = {
+            cmd = "  ",
+            config = "  ",
+            event = "  ",
+            ft = "  ",
+            init = "  ",
+            imports = "  ",
+            keys = "  ",
+            lazy = " ",
+            loaded = " ",
+            not_loaded = " ",
+            plugin = "  ",
+            runtime = "  ",
+            require = "  ",
+            source = " ",
+            start = "",
+            task = "  ",
+        },
+        title = "💤 Lazy.nvim",
         custom_keys = { false },
         border = "single",
         backdrop = 100,
-    },
-    git = {
-        log = { "--since=3 days ago", timeout = 60 },
+        wrap = false,
+        size = {
+            width = 0.9,
+            height = 0.9,
+        },
     },
     checker = {
-        enable = true,
+        enabled = true,
         notify = false,
     },
     change_detection = { notify = false },
+    git = {
+        log = { "--since=3 days ago", timeout = 60 },
+    },
     diff = { cmd = "terminal_git" },
     performance = {
         rtp = {
