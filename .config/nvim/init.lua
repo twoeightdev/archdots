@@ -11,6 +11,7 @@ end
 
 -- Load modules
 safereq("core.options")
+safereq("core.statusline")
 safereq("core.keymaps")
 safereq("core.autocmds")
 safereq("core.bootstrap")
