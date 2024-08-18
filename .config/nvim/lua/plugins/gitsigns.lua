@@ -118,12 +118,12 @@ return {
         -- signcolumn = false,
         signs = {
             add = { text = "+" },
-            change = { text = "~" },
-            delete = { text = "-" },
+            change = { text = "┃" },
+            delete = { text = "_" },
             topdelete = { text = "-" },
             changedelete = { text = "~" },
         },
         attach_to_untracked = true,
-        numhl = true,
+        numhl = false,
     },
 }
