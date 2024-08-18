@@ -44,11 +44,11 @@ archpkg() {
         ttc-iosevka ttc-iosevka-aile ttf-iosevka-nerd ttf-joypixels
         ttf-inconsolata ttf-inconsolata-nerd ttf-roboto-mono
         # utilities
-        evtest exfat-utils brightnessctl dosfstools bc btop htop nvtop
-        ffmpeg ffmpegthumbnailer highlight imagemagick maim gnome-keyring
-        libnotify man-db mediainfo moreutils ntfs-3g picom poppler psutils
+        evtest exfat-utils brightnessctl dosfstools bc btop htop nvtop maim
+        ffmpeg ffmpegthumbnailer highlight imagemagick gnome-keyring libnotify
+        man-db mediainfo moreutils ntfs-3g picom poppler psutils git-delta
         unrar unzip yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd
-        wget tree ripgrep fd unclutter polkit xdg-utils pacutils npm
+        wget tree ripgrep fd unclutter polkit xdg-utils pacutils acpi npm
         # python
         python-dbus-next python-iwlib python-mpd2 python-pip python-psutil
         # programs
