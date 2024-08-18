@@ -1,0 +1,67 @@
+{
+    "bash code block": {
+        "prefix": "bash",
+        "body": [
+            "```bash",
+            "$1",
+            "```"
+        ],
+        "description": "Insert a bash code block"
+    },
+    "yaml code block": {
+        "prefix": "yaml",
+        "body": [
+            "```yaml",
+            "$1",
+            "```"
+        ],
+        "description": "Insert a yaml code block"
+    },
+    "python code block": {
+        "prefix": "python",
+        "body": [
+            "```python",
+            "$1",
+            "```"
+        ],
+        "description": "Insert a python code block"
+    },
+    "markdownlint": {
+        "prefix": "markdownlint",
+        "body": [
+            " ",
+            "<!-- markdownlint-disable -->",
+            " ",
+            "> $1",
+            " ",
+            "<!-- markdownlint-restore -->"
+        ],
+        "description": "Markdownlint disable range"
+    },
+    "prettier ignore": {
+        "prefix": "prettier-ignore",
+        "body": [
+            " ",
+            "<!-- prettier-ignore-start -->",
+            " ",
+            "> $1",
+            " ",
+            "<!-- prettier-ignore-end -->"
+        ],
+        "description": "Prettier ignore range"
+    },
+    "regular link": {
+        "prefix": "link",
+        "body": [
+            "[$1]($2)"
+        ],
+        "description": "Create a new link"
+    },
+    "todo item": {
+        "prefix": "todo",
+        "body": [
+            "<!-- TODO: $1 -->"
+        ],
+        "description": "Create a todo item"
+    },
+}
