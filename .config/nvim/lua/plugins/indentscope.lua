@@ -5,16 +5,13 @@ return {
             pattern = {
                 "help",
                 "dashboard",
-                "Trouble",
                 "fzf",
-                "trouble",
                 "lazy",
                 "mason",
                 "toggleterm",
                 "lazyterm",
             },
             callback = function()
-                ---@diagnostic disable-next-line: inject-field
                 vim.b.miniindentscope_disable = true
             end,
         })
