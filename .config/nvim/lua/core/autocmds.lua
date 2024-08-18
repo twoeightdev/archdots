@@ -5,47 +5,18 @@ local function augroup(name)
     })
 end
 
-autocmd("BufWritePre", {
-    group = augroup("whitespaces"),
-    command = "%s/\\s\\+$//e",
-    desc = "Remove trailing white spaces",
-})
-
-autocmd("TextYankPost", {
-    group = augroup("yankhighlight"),
-    callback = function()
-        vim.highlight.on_yank({
-            higroup = "IncSearch",
-            timeout = "700",
-        })
-    end,
-    desc = "Highlight text on yank",
-})
-
-autocmd("BufWinEnter", {
-    group = augroup("no_comment_on_o"),
-    command = "setlocal formatoptions-=o",
-    desc = "Never insert comment when using 'o' to enter insert mode",
-})
-
-autocmd("BufWinEnter", {
-    group = augroup("save_cursorpos"),
-    pattern = "*",
-    command = 'silent! normal! g`"zv',
-    desc = "Auto save cursor position on save or exit",
-})
-
 autocmd({ "BufEnter", "InsertLeave", "CmdlineLeave", "WinEnter" }, {
+    desc = "Auto toggle on relative number",
     group = augroup("auto_relative_number_on"),
     callback = function()
         if vim.o.number and vim.api.nvim_get_mode() ~= "i" then
             vim.opt.relativenumber = true
         end
     end,
-    desc = "Auto toggle on relative number",
 })
 
 autocmd({ "BufLeave", "InsertEnter", "CmdlineEnter", "WinLeave" }, {
+    desc = "Auto toggle off relative number",
     group = augroup("auto_relative_number_off"),
     callback = function()
         if vim.o.number then
@@ -53,63 +24,48 @@ autocmd({ "BufLeave", "InsertEnter", "CmdlineEnter", "WinLeave" }, {
             vim.cmd.redraw()
         end
     end,
-    desc = "Auto toggle off relative number",
-})
-
-autocmd("VimResized", {
-    group = augroup("auto_balance_resize"),
-    command = "tabdo wincmd =",
-    desc = "Automatically rebalance windows in resize",
-})
-
-autocmd("FileType", {
-    group = augroup("wrap_and_spell"),
-    pattern = {
-        "gitcommit",
-        "markdown",
-        "text",
-        "NeogitCommitMessage",
-    },
-    callback = function()
-        vim.opt_local.spell = true
-        vim.opt_local.wrap = true
-        vim.opt_local.conceallevel = 0
-    end,
-    desc = "Check for spelling of specific filetypes and enable wrapping",
-})
-
-autocmd("FileType", {
-    group = augroup("json_conceal"),
-    pattern = { "json", "jsonc", "json5" },
-    callback = function()
-        vim.opt_local.conceallevel = 0
-    end,
-    desc = "Disable conceallevel for json filetypes",
 })
 
 autocmd("BufWritePre", {
-    group = augroup("auto_create_dir"),
-    callback = function(event)
-        if event.match:match("^%w%w+://") then
-            return
-        end
-        local file = vim.loop.fs_realpath(event.match) or event.match
-        vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-    end,
-    desc = "Auto create dir if nonexistent after save",
+    desc = "Remove trailing white spaces",
+    group = augroup("whitespaces"),
+    command = "%s/\\s\\+$//e",
 })
 
-autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-    group = augroup("checktime"),
+autocmd("TextYankPost", {
+    desc = "Highlight text on yank",
+    group = augroup("yankhighlight"),
     callback = function()
-        if vim.opt.buftype:get() ~= "nofile" then
-            vim.cmd.checktime()
+        vim.highlight.on_yank({
+            higroup = "IncSearch",
+            timeout = "700",
+        })
+    end,
+})
+
+autocmd("BufWinEnter", {
+    desc = "Never insert comment when using 'o' to enter insert mode",
+    group = augroup("no_comment_on_o"),
+    callback = function()
+        vim.opt.formatoptions:remove({ "o" })
+    end,
+})
+
+autocmd("BufReadPost", {
+    desc = "Auto save cursor position",
+    group = augroup("save_cursor_position"),
+    pattern = "*",
+    callback = function()
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local lcount = vim.api.nvim_buf_line_count(0)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
         end
     end,
-    desc = "Check if file needs to reload when changed",
 })
 
 autocmd("FileType", {
+    desc = "Close with just letter q",
     group = augroup("close_with_q"),
     pattern = {
         "help",
@@ -125,50 +81,94 @@ autocmd("FileType", {
             silent = true,
         })
     end,
-    desc = "Close with just letter q",
+})
+
+autocmd("BufWritePre", {
+    desc = "Auto create dir if nonexistent after save",
+    group = augroup("auto_create_dir"),
+    callback = function(event)
+        if event.match:match("^%w%w+://") then
+            return
+        end
+        local file = vim.loop.fs_realpath(event.match) or event.match
+        vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
+    end,
 })
 
 autocmd("FileType", {
+    desc = "Fix manpage bugs",
     group = augroup("man_bugfixes"),
     pattern = { "man" },
     callback = function(event)
         vim.opt_local.signcolumn = "no"
         vim.bo[event.buf].buflisted = false
     end,
-    desc = "Fix manpage bugs",
 })
 
 autocmd("FileType", {
+    desc = "Org files defaults",
+    group = augroup("orgmode_defaults"),
+    pattern = "org",
+    callback = function()
+        vim.opt_local.spell = true
+        vim.opt_local.wrap = false
+        vim.opt_local.conceallevel = 2
+        vim.opt_local.concealcursor = "nc"
+        -- vim.opt_local.foldenable = false
+    end,
+})
+
+autocmd("FileType", {
+    desc = "Check for spelling of specific filetypes and enable wrapping",
+    group = augroup("wrap_and_spell"),
+    pattern = {
+        "gitcommit",
+        "markdown",
+        "text",
+        "NeogitCommitMessage",
+    },
+    callback = function()
+        vim.opt_local.spell = true
+        vim.opt_local.wrap = true
+        vim.opt_local.conceallevel = 0
+    end,
+})
+
+autocmd("FileType", {
+    desc = "Disable conceallevel for json filetypes",
+    group = augroup("json_conceal"),
+    pattern = { "json", "jsonc", "json5" },
+    callback = function()
+        vim.opt_local.conceallevel = 0
+    end,
+})
+
+autocmd("FileType", {
+    desc = "Remove statusline on dashboard",
     group = augroup("no_status_dashboard"),
     pattern = { "dashboard" },
-    command = "set cmdheight=0",
-    desc = "Remove statusline on dashboard",
+    callback = function()
+        vim.opt_local.cmdheight = 0
+    end,
 })
 
 autocmd("BufWritePost", {
+    desc = "Auto reload bin script shortcuts when configuration is updated",
     group = augroup("reload_shortcuts"),
     pattern = { "bm-files", "bm-dirs" },
     command = "silent! !shortcuts",
-    desc = "Auto reload bin script shortcuts when configuration is updated",
 })
 
 autocmd("BufWritePost", {
+    desc = "Auto reload xdefaults when configuraton is updated",
     group = augroup("reload_xdefaults"),
     pattern = { "xdefaults" },
     command = "silent! !xrdb %",
-    desc = "Auto reload xdefaults when configuraton is updated",
 })
 
 autocmd("BufWritePost", {
+    desc = "Auto reload dunstrc when configuration is updated",
     group = augroup("reload_dunst"),
     pattern = { "dunstrc" },
     command = "silent! !pkill dunst; dunst &",
-    desc = "Auto reload dunstrc when configuration is updated",
-})
-
-autocmd("FileType", {
-    group = augroup("unfold_orgmode"),
-    pattern = "org",
-    command = "setlocal nofoldenable",
-    desc = "Start org files unfolded",
 })
