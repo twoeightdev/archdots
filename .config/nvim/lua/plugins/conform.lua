@@ -15,10 +15,7 @@ return {
             if is_global then
                 vim.g.disable_autoformat = not vim.g.disable_autoformat
             end
-        end, {
-            desc = "Toggle autoformat-on-save",
-            bang = true,
-        })
+        end, { desc = "Toggle autoformat-on-save", bang = true })
 
         return {
             format_on_save = function(bufnr)
