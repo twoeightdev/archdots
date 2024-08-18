@@ -1,23 +1,17 @@
 local map = vim.keymap.set
-local del = vim.keymap.del
+local g = vim.g
 local opts = { expr = true, silent = true }
 local noremaps = { noremap = true, silent = true }
-local g = vim.g
 
 g.mapleader = " "
 g.maplocalleader = " "
-
--- Disable Ex mode
-map("", "Q", "<nop>")
--- Disable record
-map("", "q", "<nop>")
 
 -- Basic
 map("n", "<leader>an", "<cmd>enew<cr>", { desc = "New file" })
 map("n", "<leader>w", "<cmd>w<cr><esc>", { desc = "Write" })
 map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit" })
-map({ "n", "o" }, "<c-'>", "gcc", { remap = true, desc = "Line comment" })
-map({ "n", "x" }, "<c-;>", "gc", { remap = true, desc = "Block comment" })
+-- map({ "n", "o" }, "<c-'>", "gcc", { remap = true, desc = "Line comment" })
+-- map({ "n", "x" }, "<c-;>", "gc", { remap = true, desc = "Block comment" })
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlseach" })
 
 -- Window/Buffers/Splits
@@ -32,6 +26,8 @@ map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
 map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
 map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
 map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+map("n", "<Tab>", "<cmd>bnext<cr>", { desc = "Got to next buffer" })
+map("n", "<Tab>", "<cmd>bprev<cr>", { desc = "Got to previous buffer" })
 
 -- Move lines
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
@@ -66,14 +62,6 @@ map("n", "dd", function()
     end
     return "dd"
 end, { expr = true })
-
--- Toggleterm navigation
-map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter normal mode" })
-map("t", "<c-h>", "<cmd>wincmd h<cr>", { desc = "Navigate left window" })
-map("t", "<c-j>", "<cmd>wincmd j<cr>", { desc = "Navigate lower window" })
-map("t", "<c-k>", "<cmd>wincmd k<cr>", { desc = "Navigate upper window" })
-map("t", "<c-l>", "<cmd>wincmd l<cr>", { desc = "Navigate right window" })
-del("t", "<c-l>", { desc = "Clear toggleterm" })
 
 -- Jump to diagnostics
 local function diagnostic_goto(next, severity)
