@@ -1,6 +1,5 @@
 return {
     "folke/which-key.nvim",
-    -- lazy = true,
     event = "VeryLazy",
     opts = {
         spec = {
@@ -33,8 +32,7 @@ return {
         icons = {
             rules = false,
             breadcrumb = "»",
-            -- separator = "▶",
-            separator = "🌑",
+            separator = "•",
             group = "+",
             keys = {
                 Tab = "⭳",
