@@ -1,7 +1,5 @@
 return {
     "brenoprata10/nvim-highlight-colors",
-    -- cmd = "HighlightColors",
-    -- event = "VeryLazy",
     keys = {
         {
             "<leader>ac",
