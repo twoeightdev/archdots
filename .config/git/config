@@ -1,9 +1,59 @@
 [user]
 	email = twoeightdev@gmail.com
 	name = twoeightdev
+    useConfigOnly = true
 [pager]
 	branch = false
 [credential]
 	helper = cache --timeout=86400
 [init]
 	defaultBranch = main
+[core]
+	editor = nvim
+	pager = delta
+[log]
+    date = local
+    abbrevCommit = true
+[include]
+    path = catppuccin.gitconfig
+[delta]
+    features = catppuccin-mocha
+    file-added-label = 
+    file-copied-label = 
+    file-modified-label = 
+    file-removed-label = 
+    file-renamed-label = 
+    hunk-label = 
+    max-line-length = 0
+    max-syntax-highlighting-length = 0
+    navigate = true
+    tabs = 4
+[interactive]
+    diffFilter = delta --color-only
+    singleKey = true
+[diff]
+    algorithm = histogram
+    colorMoved = default
+    mnemonicPrefix = true
+    renames = copies
+[grep]
+    lineNumber = true
+[help]
+    autoCorrect = immediate
+[feature]
+    experimental = true
+    manyFiles = true
+[alias]
+    st = status -sb
+    cl = clone
+    l = log --oneline
+    last = log -1 HEAD --stat
+    graph = log --decorate --oneline --graph
+    graphall = log --decorate --all --oneline --graph
+    c = commit
+    ca = commit -a
+    d = diff
+    ds = diff --staged
+    ps = push
+    pl = pull
+    co = checkout
