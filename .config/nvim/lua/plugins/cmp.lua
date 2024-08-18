@@ -5,7 +5,10 @@ return {
     dependencies = {
         "onsails/lspkind.nvim",
         "hrsh7th/cmp-nvim-lsp",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
+        "hrsh7th/cmp-nvim-lua",
         "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-cmdline",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-buffer",
         "windwp/nvim-autopairs",
@@ -82,10 +85,10 @@ return {
             }),
             sources = cmp.config.sources({
                 { name = "nvim_lsp", priority = 100 },
-                { name = "luasnip", priority = 30 },
-                { name = "orgmode", priority = 25 },
-                { name = "buffer", priority = 20 },
-                { name = "path", priority = 10 },
+                { name = "luasnip", priority = 60 },
+                { name = "buffer", priority = 40 },
+                { name = "path", priority = 30 },
+                { name = "treesitter" },
             }),
             formatting = {
                 fields = { "kind", "abbr", "menu" },
@@ -106,6 +109,7 @@ return {
                     local strings = vim.split(kind.kind, "%s", { trimempty = true })
                     kind.kind = " " .. (strings[1] or "") .. " "
                     kind.menu = "    [" .. kind.menu .. "]"
+                    -- kind.menu = "    (" .. (strings[2] or "") .. ")"
 
                     return kind
                 end,
