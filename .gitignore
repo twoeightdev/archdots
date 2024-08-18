@@ -31,6 +31,7 @@
 .config/emacs/var/
 .config/fzf/
 .config/GIMP/
+.config/go/
 .config/htop/
 .config/ibus/
 .config/lf/shrc
@@ -55,6 +56,7 @@
 .config/transmission-daemon/stats.json
 .config/transmission-daemon/torrents/
 .config/tremc/history.json
+.config/tmux/plugins/
 .config/zsh/zplug/
 .config/zsh/.history
 .config/zsh/.zcompdump
@@ -64,11 +66,13 @@
 .local/review/
 .local/screenshot/
 .local/share/cargo/
+.local/share/delta/
 .local/share/gnupg/crls.d/
 .local/share/gnupg/private-keys-v1.d/
 .local/share/gnupg/pubring.kbx
 .local/share/gnupg/pubring.kbx~
 .local/share/gnupg/trustdb.gpg
+.local/share/go/
 .local/share/icons/
 .local/share/lf/
 .local/share/man/
@@ -80,6 +84,7 @@
 .local/share/spotify-launcher/
 .local/share/Steam/
 .local/share/Terraria/
+.local/share/tmux/
 .local/share/vulkan/
 .local/share/xorg/
 .local/share/recently-used.xbel
