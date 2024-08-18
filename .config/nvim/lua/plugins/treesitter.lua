@@ -12,6 +12,7 @@ return {
             "vimdoc",
             "bash",
             "toml",
+            "commonlisp",
             "zathurarc",
             "json",
             "javascript",
@@ -26,6 +27,7 @@ return {
             "gitcommit",
             "gitignore",
             "diff",
+            "tmux",
             "printf",
             "ini",
             "query",
@@ -47,7 +49,6 @@ return {
         },
     },
     config = function(_, opts)
-        -- PREF: Use git instead of curl
         require("nvim-treesitter.install").prefer_git = true
         require("nvim-treesitter.configs").setup(opts)
         vim.treesitter.language.register("bash", "zsh")
