@@ -81,16 +81,23 @@ return {
             end,
             desc = "Man pages",
         },
-        -- {
-        --     "<leader>ft",
-        --     function()
-        --         return require("fzf-lua").grep({
-        --             search = "TODO|HACK|PERF|NOTE|FIX|FIXME",
-        --             no_esc = true,
-        --         })
-        --     end,
-        --     desc = "TODO comments",
-        -- },
+        {
+            "<leader>ft",
+            function()
+                return require("fzf-lua").tmux_buffers()
+            end,
+            desc = "Tmux buffers",
+        },
+        {
+            "<leader>fT",
+            function()
+                return require("fzf-lua").grep({
+                    search = "TODO|HACK|PERF|NOTE|FIX|FIXME",
+                    no_esc = true,
+                })
+            end,
+            desc = "TODO comments",
+        },
         {
             "<leader>ls",
             function()
