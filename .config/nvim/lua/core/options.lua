@@ -6,6 +6,14 @@ local g = vim.g
 opt.showbreak = "↪ "
 opt.listchars =
     { tab = "│ ", lead = "·", trail = "·", precedes = "«", extends = "»" }
+opt.fillchars = {
+    foldopen = "",
+    foldclose = "",
+    fold = " ",
+    foldsep = " ",
+    diff = "╱",
+    eob = " ",
+}
 opt.laststatus = 3
 opt.spelllang = { "en" }
 -- Line numbers
