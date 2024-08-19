@@ -50,7 +50,7 @@ archpkg() {
         # utilities
         evtest exfat-utils brightnessctl dosfstools bc btop htop nvtop maim
         ffmpeg ffmpegthumbnailer highlight imagemagick gnome-keyring libnotify
-        man-db mediainfo moreutils ntfs-3g picom poppler psutils git-delta
+        man-db mediainfo moreutils ntfs-3g picom poppler psutils tmux git-delta
         unrar unzip yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd
         wget tree ripgrep fd unclutter polkit xdg-utils pacutils acpi npm
         # python
