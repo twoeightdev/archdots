@@ -5,15 +5,15 @@
 * 📔 Overview
 Personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]].
 
-| Dependencies   |           |
-|----------------+-----------|
-| Window Manager | Qtile     |
-|----------------+-----------|
-| Editor         | Neovim    |
-|----------------+-----------|
-| Terminal       | Alacritty |
-|----------------+-----------|
-| Font           | Dank Mono |
+| Dependencies | Description    |
+|--------------+----------------|
+| Qtile        | Window manager |
+|--------------+----------------|
+| Neovim       | Editor         |
+|--------------+----------------|
+| Alacritty    | Terminal       |
+|--------------+----------------|
+| Dank Mono    | System font    |
 
 [[./.local/wallpapers/archlinux-logo.svg]]
 
