@@ -54,6 +54,6 @@
     ca = commit -a
     d = diff
     ds = diff --staged
-    ps = push
+    pm = push -u origin main
     pl = pull
     co = checkout
