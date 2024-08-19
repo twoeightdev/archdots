@@ -29,6 +29,7 @@
 .config/emacs/transient/
 .config/emacs/tree-sitter/
 .config/emacs/var/
+.config/fontforge/
 .config/fzf/
 .config/GIMP/
 .config/go/
