@@ -68,6 +68,7 @@
 .local/screenshot/
 .local/share/cargo/
 .local/share/delta/
+.local/share/fonts/
 .local/share/gnupg/crls.d/
 .local/share/gnupg/private-keys-v1.d/
 .local/share/gnupg/pubring.kbx
