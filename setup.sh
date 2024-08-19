@@ -54,8 +54,7 @@ archpkg() {
         # programs
         firefox firefox-dark-reader firefox-tridactyl firefox-ublock-origin
         emacs alacritty lf dunst mpc mpd mpv ncmpcpp nsxiv newsboat gimp
-        qtile steam gucharmap spotify-launcher transmission-cli zathura
-        zathura-pdf-mupdf
+        qtile steam spotify-launcher transmission-cli zathura zathura-pdf-mupdf
     )
     # install all listed pkgs
     yay --needed --noconfirm -Syu "${pkgs[@]}"
