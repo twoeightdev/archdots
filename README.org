@@ -5,7 +5,9 @@
 * 📔 Overview
 Personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]].
 
-| Window Manager | qtile     |
+| Dependencies   |           |
+|----------------+-----------|
+| Window Manager | Qtile     |
 |----------------+-----------|
 | Editor         | Neovim    |
 |----------------+-----------|
