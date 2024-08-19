@@ -2,6 +2,8 @@
 #+AUTHOR:    twoeightdev
 #+DATE:      2024-08-16
 
+[[./.local/wallpapers/archlinux-logo.svg]]
+
 * 📔 Overview
 Personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]].
 
@@ -14,8 +16,6 @@ Personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.
 | Alacritty    | Terminal       |
 |--------------+----------------|
 | Dank Mono    | System font    |
-
-[[./.local/wallpapers/archlinux-logo.svg]]
 
 * 📸 Screenshots
 [[./.local/wallpapers/screenshot01.png]]
