@@ -4,8 +4,13 @@ local g = vim.g
 -- New
 -- opt.showcmdloc = "statusline"
 opt.showbreak = "↪ "
-opt.listchars =
-    { tab = "│ ", lead = "·", trail = "·", precedes = "«", extends = "»" }
+opt.listchars = {
+    tab = "│ ",
+    lead = "·",
+    trail = "·",
+    precedes = "«",
+    extends = "»",
+}
 opt.fillchars = {
     foldopen = "",
     foldclose = "",
@@ -47,12 +52,12 @@ opt.undolevels = 10000
 opt.splitright = true
 opt.splitbelow = true
 -- Folds
-opt.foldcolumn = "3"
+opt.foldcolumn = "4"
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 -- Scrolloff
 opt.scrolloff = 15
-opt.sidescrolloff = 15
+opt.sidescrolloff = 0
 -- Show invisible characters
 opt.list = true
 -- Hide markup for bold and italics, but not markers with substitutions

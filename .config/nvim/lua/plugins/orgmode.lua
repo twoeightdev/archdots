@@ -39,7 +39,7 @@ return {
         org_ellipsis = "󱞣",
         org_hide_emphasis_markers = false,
         org_startup_indented = true,
-        org_startup_folded = "showeverything",
+        org_startup_folded = "content",
         win_split_mode = "horizontal",
         org_agenda_span = "week",
         org_agenda_min_height = 16,

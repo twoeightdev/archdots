@@ -65,13 +65,21 @@ local function ModeColor()
     elseif current_mode == "i" or current_mode == "ic" then
         return "%#StatuslineModeInsert#"
         -- higroup = "%#StatuslineModeInsert#"
-    elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
+    elseif
+        current_mode == "v"
+        or current_mode == "V"
+        or current_mode == ""
+    then
         return "%#StatuslineModeVisual#"
         -- higroup = "%#StatuslineModeVisual#"
     elseif current_mode == "R" or current_mode == "Rv" then
         return "%#StatuslineModeReplace#"
         -- higroup = "%#StatuslineModeReplace#"
-    elseif current_mode == "s" or current_mode == "S" or current_mode == "" then
+    elseif
+        current_mode == "s"
+        or current_mode == "S"
+        or current_mode == ""
+    then
         return "%#StatuslineModeSelect#"
         -- higroup = "%#StatuslineModeSelect#"
     elseif current_mode == "c" then
@@ -136,11 +144,11 @@ local function Modified()
     local hi_notsaved = "%#StatuslineNotSaved#"
     local hi_readonly = "%#StatuslineReadOnly#"
     if buf_modified then
-        return _Spacer(1) .. hi_notsaved .. "✘ " .. _Spacer(0)
+        return _Spacer(1) .. hi_notsaved .. " " .. _Spacer(0)
     elseif buf_modifiable == false or buf_readonly == true then
         return _Spacer(1) .. hi_readonly .. " • " .. _Spacer(0)
     else
-        return _Spacer(1) .. hi_saved .. "✔ " .. _Spacer(0)
+        return _Spacer(1) .. hi_saved .. " " .. _Spacer(0)
     end
 end
 
@@ -179,8 +187,10 @@ local function Diagnostics()
         #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     local count_warning =
         #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-    local count_info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
-    local count_hint = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+    local count_info =
+        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+    local count_hint =
+        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
     local diag_count = 0
     local icon_error = " "
     local icon_warning = " "
@@ -199,7 +209,10 @@ local function Diagnostics()
     if count_warning == 0 then
         warning = ""
     else
-        warning = higroup_warning .. icon_warning .. count_warning .. _Spacer(1)
+        warning = higroup_warning
+            .. icon_warning
+            .. count_warning
+            .. _Spacer(1)
     end
     if count_info == 0 then
         info = ""

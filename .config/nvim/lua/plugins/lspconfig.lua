@@ -10,7 +10,7 @@ return {
                     icons = {
                         package_pending = " ",
                         package_installed = "󰄳 ",
-                        package_uninstalled = " 󰚌",
+                        package_uninstalled = "󰚌 ",
                     },
                 },
                 log_level = vim.log.levels.OFF,
@@ -62,10 +62,14 @@ return {
         local mason_lspconfig = require("mason-lspconfig")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
+        local signs =
+            { Error = " ", Warn = " ", Hint = "", Info = " " }
         for type, icon in pairs(signs) do
             local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = "", linehl = "", numhl = "" })
+            vim.fn.sign_define(
+                hl,
+                { text = icon, texthl = "", linehl = "", numhl = "" }
+            )
         end
 
         vim.diagnostic.config({
