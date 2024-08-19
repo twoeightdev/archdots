@@ -6,6 +6,8 @@ me="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
 srcdir="$HOME/.local/src"
 dmenudir="$HOME/.local/src/archdmenu"
 startdir="$HOME/.local/src/startpage"
+fontloc="$HOME/.local/share/fonts/"
+fontsource="$HOME/.local/src/pycourse/fonts/DankMonoNerdFont"
 name="$USER"
 
 menu() {
@@ -20,6 +22,8 @@ menu() {
     echo -e "\e[1;92mstartpage:\e[0m ............ \e[37mstartpage for qutebrowser.\e[0m"
     echo -e "\e[1;92mgenkey:\e[0m ............... \e[37mgenerate ssh-key.\e[0m"
     echo -e "\e[1;92mremoteurl:\e[0m ............ \e[37mchange src remote urls.\e[0m"
+    echo -e "\e[1;92mprivaterepo:\e[0m .......... \e[37mclone private repo.\e[0m"
+    echo -e "\e[1;92mpaidfont:\e[0m ............. \e[37mcopy paid font.\e[0m"
 }
 
 aurhelper() {
@@ -119,6 +123,22 @@ remoteurl() {
     git remote set-url origin git@github.com:twoeightdev/startpage.git
     cd ~/ || exit
     git --git-dir="$HOME"/.config/.dots --work-tree="$HOME" remote set-url origin git@github.com:twoeightdev/archdots.git
+    echo -e "\e[1;31mdone! reboot then run privaterepo and paidfont.\e[0m"
+}
+
+privaterepo() {
+    cd "$srcdir" || exit
+    git clone git@github.com:twoeightdev/mdnotes.git
+    cd "$srcdir" || exit
+    git clone git@github.com:twoeightdev/orgnotes.git
+    cd "$srcdir" || exit
+    git clone git@github.com:twoeightdev/pycourse.git
+    echo -e "\e[1;31mdone!\e[0m"
+}
+
+paidfont() {
+    mkdir -p /home/"$name"/.local/share/fonts
+    cp -r "$fontsource" "$fontloc"
     echo -e "\e[1;31mdone!\e[0m"
 }
 
