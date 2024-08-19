@@ -3,27 +3,24 @@
 #+DATE:      2024-08-16
 
 * 📔 Overview
-My personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]] as default window manager.
+Personal dotfiles for [[https://archlinux.org/][archlinux]] and [[https://qtile.org/][qtile]].
+
+| Window Manager | qtile     |
+|----------------+-----------|
+| Editor         | Neovim    |
+|----------------+-----------|
+| Terminal       | Alacritty |
+|----------------+-----------|
+| Font           | Dank Mono |
 
 [[./.local/wallpapers/archlinux-logo.svg]]
 
-* Table Of Contents
-:properties:
-:TOC: :include all :ignore this
-:end:
-
-:CONTENTS:
-- [[#-overview][📔 Overview]]
-  - [[#-screenshots][📸 Screenshots]]
-  - [[#-dotfiles-installation][🚀 Dotfiles Installation]]
-:END:
-
-** 📸 Screenshots
+* 📸 Screenshots
 [[./.local/wallpapers/screenshot01.png]]
 
 [[./.local/wallpapers/screenshot02.png]]
 
-** 🚀 Dotfiles Installation
+* 🚀 Dotfiles Installation
 I use *git bare* repository to manage my dotfiles and use a wrapper script
 [[./.local/bin/dot][dot]] after initial configuration below.
 #+begin_src bash
