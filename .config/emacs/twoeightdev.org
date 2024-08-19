@@ -97,7 +97,7 @@ This is loaded before the package system and GUI is initialized.
 			  site-run-file nil
 			  warning-suppress-log-types '((comp) (bytecomp)))
 
-(modify-all-frames-parameters '((font . "Iosevka Nerd Font-14")
+(modify-all-frames-parameters '((font . "Dank Mono-14")
 								(alpha . 98)
 								(menu-bar-lines . nil)
 								(tool-bar-lines . nil)
@@ -306,7 +306,7 @@ Org mode.
   :custom
   (org-edit-src-content-indentation 0)
   (org-src-preserve-indentation nil)
-  (org-directory "~/.local/org/agenda")
+  (org-directory "~/.local/src/orgnotes/agenda")
   (org-default-notes-file twoeightdev/notes-path)
   (org-src-window-setup 'current-window)
   (org-return-follows-link t)
