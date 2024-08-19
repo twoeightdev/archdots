@@ -101,14 +101,14 @@ x=0
 y=0
 
 # For Iosevka Font
-# [font.offset]
-# x=0
-# y=0
+[font.offset]
+x=0
+y=0
 
 # For Dank Mono Font
-[font.offset]
-x=-1
-y=4
+# [font.offset]
+# x=-1
+# y=4
 
 [font.normal]
 family = "monospace"
