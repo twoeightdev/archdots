@@ -26,6 +26,7 @@ return {
             "git_rebase",
             "gitcommit",
             "gitignore",
+            "ssh_config",
             "diff",
             "tmux",
             "printf",
