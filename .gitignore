@@ -63,6 +63,7 @@
 .config/zsh/.zcompdump
 .local/downloads/
 .local/drafts/
+.local/notes/
 .local/orgdata/
 .local/review/
 .local/screenshot/
