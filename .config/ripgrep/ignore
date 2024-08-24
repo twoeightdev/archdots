@@ -7,6 +7,7 @@ backups
 elpa
 transient
 fzf
+.git
 GIMP
 htop
 pulse
@@ -18,6 +19,7 @@ review
 screenshot
 share
 torrent
+mnt
 src
 state
 .mozilla
@@ -26,4 +28,5 @@ state
 .steampath
 .steampid
 .venv
+var
 ibus
