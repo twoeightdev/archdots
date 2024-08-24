@@ -1,8 +1,5 @@
-from qutebrowser.config.config import ConfigContainer  # noqa:
-from qutebrowser.config.configfiles import ConfigAPI  # noqa:
-
-config = config  # type: ConfigAPI # noqa
-c = c  # tpye: ConfigContainer # noqa
+config = config
+c = c
 
 config.load_autoconfig()
 config.source("gruvbox.py")
