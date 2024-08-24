@@ -5,6 +5,7 @@ return {
         linters_by_ft = {
             -- https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.jsonc
             markdown = { "markdownlint" },
+            -- python = { "ruff" },
             -- lua = { "selene" },
         },
     },
@@ -18,8 +19,7 @@ return {
             "--",
         }
 
-        local lint_augroup =
-            vim.api.nvim_create_augroup("lint", { clear = true })
+        local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
         vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
             desc = "Linters",

@@ -87,10 +87,10 @@ return {
                         dapui.open()
                     end
                     dap.listeners.before.event_terminated["dapui_config"] = function()
-                        -- dapui.close()
+                        dapui.close()
                     end
                     dap.listeners.before.event_exited["dapui_config"] = function()
-                        -- dapui.close()
+                        dapui.close()
                     end
                 end,
             },
@@ -228,11 +228,7 @@ return {
             },
         },
         config = function()
-            vim.api.nvim_set_hl(
-                0,
-                "DapStoppedLine",
-                { default = true, link = "Visual" }
-            )
+            vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
         end,
     },
 }

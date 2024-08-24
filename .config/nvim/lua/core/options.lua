@@ -1,16 +1,15 @@
 local opt = vim.opt
 local g = vim.g
 
--- New
--- opt.showcmdloc = "statusline"
+opt.signcolumn = "yes"
 opt.showbreak = "↪ "
-opt.listchars = {
-    tab = "│ ",
-    lead = "·",
-    trail = "·",
-    precedes = "«",
-    extends = "»",
-}
+-- opt.listchars = {
+--     tab = "│ ",
+--     lead = "·",
+--     trail = "·",
+--     precedes = "«",
+--     extends = "»",
+-- }
 opt.fillchars = {
     foldopen = "",
     foldclose = "",

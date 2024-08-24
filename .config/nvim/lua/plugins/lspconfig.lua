@@ -20,6 +20,7 @@ return {
                     "shellcheck",
                     "markdown-toc",
                     "prettier",
+                    "ruff",
                     "markdownlint",
                 },
             },
@@ -51,10 +52,21 @@ return {
                     "yamlls",
                     "jsonls",
                     "marksman",
-                    "basedpyright",
-                    "ruff_lsp",
+                    "pyright",
                 },
             },
+        },
+    },
+    keys = {
+        {
+            "gd",
+            vim.lsp.buf.hover,
+            desc = "Goto definition",
+        },
+        {
+            "gy",
+            vim.lsp.buf.type_definition,
+            desc = "Goto type definition",
         },
     },
     config = function()
@@ -62,14 +74,10 @@ return {
         local mason_lspconfig = require("mason-lspconfig")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        local signs =
-            { Error = " ", Warn = " ", Hint = "", Info = " " }
+        local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
         for type, icon in pairs(signs) do
             local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(
-                hl,
-                { text = icon, texthl = "", linehl = "", numhl = "" }
-            )
+            vim.fn.sign_define(hl, { text = icon, texthl = "", linehl = "", numhl = "" })
         end
 
         vim.diagnostic.config({
@@ -113,30 +121,46 @@ return {
             },
         })
 
-        lspconfig.ruff_lsp.setup({})
-        lspconfig.basedpyright.setup({
+        lspconfig.pyright.setup({
             settings = {
-                basedpyright = {
+                pyright = {
+                    disableOrganizeImports = true,
+                },
+                python = {
                     analysis = {
                         typeCheckingMode = "standard",
-                        autoSearchPaths = true,
-                        useLibraryCodeForTypes = true,
-                        autoImportCompletions = true,
-                        diagnosticsMode = "openFilesOnly",
                         diagnosticSeverityOverrides = {
-                            reportMissingImports = false,
-                            reportUnusedImport = false,
-                            reportTypeCommentUsage = false,
                             reportPrivateImportUsage = false,
                             reportArgumentType = false,
-                            reportUnknownMemberType = false,
-                            reportUnknownArgumentType = false,
-                            reportUndefinedVariable = false,
                         },
                     },
                 },
             },
         })
+
+        -- lspconfig.basedpyright.setup({
+        --     settings = {
+        --         basedpyright = {
+        --             analysis = {
+        --                 typeCheckingMode = "standard",
+        --                 autoSearchPaths = true,
+        --                 useLibraryCodeForTypes = true,
+        --                 autoImportCompletions = true,
+        --                 diagnosticsMode = "openFilesOnly",
+        --                 diagnosticSeverityOverrides = {
+        --                     reportMissingImports = false,
+        --                     reportUnusedImport = false,
+        --                     reportTypeCommentUsage = false,
+        --                     reportPrivateImportUsage = false,
+        --                     reportArgumentType = false,
+        --                     reportUnknownMemberType = false,
+        --                     reportUnknownArgumentType = false,
+        --                     reportUndefinedVariable = false,
+        --                 },
+        --             },
+        --         },
+        --     },
+        -- })
 
         lspconfig.bashls.setup({
             filetypes = { "sh", "zsh", "bash" },

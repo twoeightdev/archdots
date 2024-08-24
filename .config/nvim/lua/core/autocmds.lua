@@ -114,6 +114,9 @@ autocmd("FileType", {
         vim.opt_local.wrap = false
         vim.opt_local.conceallevel = 2
         vim.opt_local.concealcursor = "nc"
+        vim.opt.formatoptions:remove({ "r" })
+        -- vim.opt.relativenumber = false
+        -- vim.opt.number = false
         -- vim.opt_local.foldenable = false
     end,
 })
@@ -123,14 +126,26 @@ autocmd("FileType", {
     group = augroup("wrap_and_spell"),
     pattern = {
         "gitcommit",
-        "markdown",
         "text",
         "NeogitCommitMessage",
     },
     callback = function()
         vim.opt_local.spell = true
         vim.opt_local.wrap = true
+    end,
+})
+
+autocmd("FileType", {
+    desc = "Markdown defaults",
+    group = augroup("markdown_default"),
+    pattern = "markdown",
+    callback = function()
+        vim.opt_local.spell = true
+        vim.opt_local.wrap = true
         vim.opt_local.conceallevel = 0
+        -- vim.opt.foldmethod = "expr"
+        -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+        vim.opt_local.foldenable = true
     end,
 })
 

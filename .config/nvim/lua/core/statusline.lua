@@ -37,7 +37,7 @@ local highlights = {
     { "StatuslineSaved", { fg = "#a6e3a1", gui = "bold" } },
     { "StatuslineNotSaved", { fg = "#f38ba8", gui = "bold" } },
     { "StatuslineReadOnly", { fg = "#fab387", gui = "bold" } },
-    { "GsHeadSign", { fg = "#b4befe", gui = "bold" } },
+    { "GsHeadSign", { fg = "#cba6f7", gui = "bold" } },
     { "GsAddSign", { fg = "#a6e3a1", gui = "bold" } },
     { "GsChangeSign", { fg = "#f9e2af", gui = "bold" } },
     { "GsDeleteSign", { fg = "#f38ba8", gui = "bold" } },
@@ -209,10 +209,7 @@ local function Diagnostics()
     if count_warning == 0 then
         warning = ""
     else
-        warning = higroup_warning
-            .. icon_warning
-            .. count_warning
-            .. _Spacer(1)
+        warning = higroup_warning .. icon_warning .. count_warning .. _Spacer(1)
     end
     if count_info == 0 then
         info = ""

@@ -24,11 +24,7 @@ return {
         },
     },
     opts = function()
-        vim.api.nvim_set_hl(
-            0,
-            "CmpGhostText",
-            { link = "Comment", default = true }
-        )
+        vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
         local luasnip = require("luasnip")
         local cmp = require("cmp")
         local function has_words_before()
@@ -92,6 +88,7 @@ return {
                 { name = "luasnip", priority = 60 },
                 { name = "buffer", priority = 40 },
                 { name = "path", priority = 30 },
+                { name = "orgmode" },
                 { name = "treesitter" },
             }),
             formatting = {
@@ -110,8 +107,7 @@ return {
                         },
                     })(entry, item)
 
-                    local strings =
-                        vim.split(kind.kind, "%s", { trimempty = true })
+                    local strings = vim.split(kind.kind, "%s", { trimempty = true })
                     kind.kind = " " .. (strings[1] or "") .. " "
                     kind.menu = "    [" .. kind.menu .. "]"
                     -- kind.menu = "    (" .. (strings[2] or "") .. ")"

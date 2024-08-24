@@ -18,6 +18,10 @@ return {
                 { "<leader>ol", group = "org links" },
                 { "<leader>on", group = "org notes" },
                 { "<leader>ox", group = "org clock" },
+                { "<leader>n", group = "org roam" },
+                { "<leader>na", group = "alias" },
+                { "<leader>nd", group = "navigate" },
+                { "<leader>no", group = "origin" },
             },
         },
         win = {

@@ -20,11 +20,35 @@ return {
                 },
             },
         },
+        {
+            "chipsenkbeil/org-roam.nvim",
+            tag = "0.1.0",
+            dependencies = {
+                {
+                    "nvim-orgmode/orgmode",
+                    tag = "0.3.4",
+                },
+            },
+            opts = {
+                directory = "~/.local/src/orgnotes",
+                org_files = {
+                    "~/.local/src/orgnotes/linux",
+                },
+                immediate = {
+                    target = "%[slug].org",
+                },
+                extensions = {
+                    dailies = {
+                        directory = "journal",
+                    },
+                },
+            },
+        },
     },
     opts = {
         ui = {
             folds = {
-                colored = false,
+                colored = true,
             },
         },
         org_agenda_files = "~/.local/src/orgnotes/agenda/**/*",

@@ -17,11 +17,12 @@ return {
             end
         end, { desc = "Toggle autoformat-on-save", bang = true })
 
+        require("conform").formatters.ruff_format =
+            { append_args = { "--line-length", "88" } }
+
         return {
             format_on_save = function(bufnr)
-                if
-                    vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat
-                then
+                if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
                     return
                 end
                 return {
@@ -33,6 +34,7 @@ return {
                 lua = { "stylua" },
                 sh = { "shfmt", "shellcheck" },
                 zsh = { "shellcheck" },
+                python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
                 markdown = { "prettier", "markdown-toc" },
             },
             formatters = {
