@@ -1,9 +1,9 @@
 #!/bin/sh -e
 # Unmount disk
-# shellcheck disable=2046
+# shellcheck disable=2046,2086
 fe() {
     while read -r l; do
-        set -- "$l"
+        set -- $l
         grep -iq "$2" /etc/fstab || echo "$1 $2"
     done
 }
