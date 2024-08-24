@@ -20,6 +20,7 @@ menu() {
     echo -e "\e[1;92mclean:\e[0m ................ \e[37mremove unwanted files and directory.\e[0m"
     echo -e "\e[1;92mdmenu:\e[0m ................ \e[37mdmenu personal build.\e[0m"
     echo -e "\e[1;92mstartpage:\e[0m ............ \e[37mstartpage for qutebrowser.\e[0m"
+    echo -e "\e[1;92mtmuxplug:\e[0m ............. \e[37mclone tmux-resurrect.\e[0m"
     echo -e "\e[1;92mgenkey:\e[0m ............... \e[37mgenerate ssh-key.\e[0m"
     echo -e "\e[1;92mremoteurl:\e[0m ............ \e[37mchange src remote urls.\e[0m"
     echo -e "\e[1;92mprivaterepo:\e[0m .......... \e[37mclone private repo.\e[0m"
@@ -50,11 +51,11 @@ archpkg() {
         # utilities
         evtest exfat-utils brightnessctl dosfstools bc btop htop nvtop maim
         ffmpeg ffmpegthumbnailer highlight imagemagick gnome-keyring libnotify
-        man-db mediainfo moreutils ntfs-3g picom poppler psutils tmux git-delta
+        man-db mediainfo moreutils ntfs-3g picom poppler psutils tmux ripgrep
         unrar unzip yt-dlp zip tesseract tesseract-data-eng tesseract-data-osd
-        wget tree ripgrep fd unclutter polkit xdg-utils pacutils acpi npm
+        wget tree fd unclutter polkit xdg-utils pacutils acpi npm
         # python
-        python-dbus-next python-iwlib python-mpd2 python-pip python-psutil
+        pyright python-dbus-next python-iwlib python-mpd2 python-pip python-psutil
         # programs
         firefox firefox-dark-reader firefox-tridactyl firefox-ublock-origin
         emacs alacritty lf dunst mpc mpd mpv ncmpcpp nsxiv newsboat gimp
@@ -109,6 +110,10 @@ dmenu() {
 startpage() {
     cd "$srcdir" || exit
     git clone https://github.com/twoeightdev/startpage.git
+}
+
+tmuxplug() {
+    git clone https://github.com/tmux-plugins/tmux-resurrect ~/.config/tmux/plugins/tmux-resurrect
 }
 
 genkey() {
