@@ -14,7 +14,7 @@ export LS_COLORS
 export EDITOR="nvim"
 export VISUAL="nvim"
 export TERMINAL="alacritty"
-export TERM="alacritty"
+export TERM="xterm-256color"
 # export MANPAGER="nvim +Man!"
 # export DIFFPROG="nvim -d"
 export BROWSER="firefox"
@@ -64,8 +64,6 @@ export SUDO_PROMPT=$'\e[1;31m'[$'\e[0m'sudo$'\e[1;31m']$'\e[0m'' password for '$
 export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [nyae]: "
 
 # Fzf
-#export PATH="$HOME/.config/fzf/bin:$PATH"
-
 export FZF_DEFAULT_OPTS='
 --color bg+:0
 --color gutter:-1,pointer:2,spinner:3
@@ -80,12 +78,6 @@ export FZF_DEFAULT_OPTS='
 --cycle
 --pointer=">"
 '
-
-# export FZF_DEFAULT_COMMAND="find . -mindepth 1 2>/dev/null"
-# export FZF_ALT_C_COMMAND="find . -mindepth 1 -type d 2>/dev/null"
-# export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS"
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS"
 
 # Less
 export GROFF_NO_SGR=1
