@@ -1,0 +1,34 @@
+#!/bin/sh
+# Package manager wrapper
+
+# pm_pacman() {
+#     cmd="$1"
+#     shift
+#     case "$cmd" in
+#     (install) sudo pacman -S "$@" ;;
+#     (update) sudo pacman -Syu "$@" ;;
+#     (remove) sudo pacman -Rns "$@" ;;
+#     (*) sudo pacman "$cmd" "$@" ;;
+#     esac
+# }
+
+pm_yay() {
+    cmd="$1"
+    shift
+    case "$cmd" in
+        (i) yay -S "$@" ;;
+        (u) yay -Syu "$@" ;;
+        (r) yay -Rns "$@" ;;
+        (s) yay -Ss "$@" ;;
+        (q) yay -Qi "$@" ;;
+        (*) yay "$cmd" "$@" ;;
+    esac
+}
+
+# shellcheck disable=2043,2145,2294
+for pm in yay; do
+    if [ -n "$(command -v $pm)" ]; then
+        eval "pm_${pm} $@"
+        break
+    fi
+done
