@@ -19,6 +19,7 @@
 .config/emacs/.org-id-locations
 .config/emacs/auto-saves/
 .config/emacs/backups/
+.config/emacs/abbrev_defs
 .config/emacs/custom.el
 .config/emacs/early-init.el
 .config/emacs/elpa/
