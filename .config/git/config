@@ -10,26 +10,12 @@
 	defaultBranch = main
 [core]
 	editor = nvim
-	pager = delta
+    pager = LESS='--raw-control-chars' less
 [log]
     date = local
     abbrevCommit = true
-[include]
-    path = catppuccin.gitconfig
-[delta]
-    features = catppuccin-mocha
-    file-added-label = 
-    file-copied-label = 
-    file-modified-label = 
-    file-removed-label = 
-    file-renamed-label = 
-    hunk-label = 
-    max-line-length = 0
-    max-syntax-highlighting-length = 0
-    navigate = true
-    tabs = 4
 [interactive]
-    diffFilter = delta --color-only
+    diffFilter = less
     singleKey = true
 [diff]
     algorithm = histogram
