@@ -31,22 +31,22 @@ The theme has to be reloaded after changing anything in this group."
   :type 'boolean
   :group 'catppuccin)
 
-(defcustom catppuccin-height-title-1 1.3
+(defcustom catppuccin-height-title-1 1.2
   "Header 1 font size."
   :type 'number
   :group 'catppuccin)
 
-(defcustom catppuccin-height-title-2 1.2
+(defcustom catppuccin-height-title-2 1.1
   "Header 2 font size."
   :type 'number
   :group 'catppuccin)
 
-(defcustom catppuccin-height-title-3 1.2
+(defcustom catppuccin-height-title-3 1.05
   "Header 3 font size."
   :type 'number
   :group 'catppuccin)
 
-(defcustom catppuccin-height-doc-title 1.44
+(defcustom catppuccin-height-doc-title 1.2
   "Documentation Title font size."
   :type 'number
   :group 'catppuccin)
