@@ -19,7 +19,7 @@ return {
                 "CANCELLED(c)",
             },
             org_ellipsis = "󱞣",
-            org_hide_emphasis_markers = false,
+            org_hide_emphasis_markers = true,
             org_startup_indented = true,
             org_startup_folded = "content",
             win_split_mode = "horizontal",
