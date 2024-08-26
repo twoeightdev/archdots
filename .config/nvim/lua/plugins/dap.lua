@@ -83,6 +83,7 @@ return {
                             },
                         },
                     })
+                    -- TODO: Fix getting stuck after test is done
                     dap.listeners.after.event_initialized["dapui_config"] = function()
                         dapui.open()
                     end
