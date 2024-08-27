@@ -968,7 +968,7 @@ If called non-interactively, the FLAVOR must be one of 'frappe, 'latte, 'macchia
                (org-block :extend t :background ,ctp-mantle :foreground ,ctp-green)
                (org-block-begin-line :inherit org-meta-line :extend t :background ,ctp-mantle)
                (org-block-end-line :inherit org-block-begin-line :extend t :background ,ctp-mantle)
-               (org-code :foreground ,ctp-green)
+               (org-code :foreground ,ctp-green :weight bold)
                (org-column :background ,ctp-surface0)
                (org-column-title :inherit org-column :weight bold :underline t)
                (org-date :inherit org-agenda-date)
@@ -1011,7 +1011,8 @@ If called non-interactively, the FLAVOR must be one of 'frappe, 'latte, 'macchia
                (org-tag :foreground ,ctp-mauve :weight bold)
                (org-todo :foreground ,ctp-peach)
                (org-upcoming-deadline :foreground ,ctp-maroon)
-               (org-verbatim :inherit org-quote)
+               ;; (org-verbatim :inherit org-quote)
+               (org-verbatim :foreground ,ctp-teal :weight bold)
                (org-warning :inherit warning)
                ;; calfw
                (cfw:face-title :foreground ,ctp-blue :weight bold :height 1.5)
