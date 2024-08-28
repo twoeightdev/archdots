@@ -1,5 +1,6 @@
-#+TITLE: Emacs configuration
+#+TITLE: Emacs Configuration
 #+AUTHOR: twoeightdev
+#+DATE: [2024-08-26 Mon]
 #+PROPERTY: header-args :comments org
 
 * Overview
@@ -7,41 +8,57 @@ This org document is a literate configuration for vanilla GNU Emacs.
 ~C-c C-v t~ to tangle this file and restart emacs. This file will
 automatically tangle on save after the packages are downloaded.
 
-* Table Of Contents
-:properties:
+* TOC
+:PROPERTIES:
 :TOC: :include all :ignore this
-:end:
+:END:
 
 :CONTENTS:
 - [[#overview][Overview]]
 - [[#convent-header][Convent Header]]
 - [[#early-init][Early Init]]
-  - [[#early-init-footer][Early-init footer]]
+  - [[#generate-early-header][Generate Early Header]]
+  - [[#initial-startup][Initial Startup]]
+  - [[#native-compile][Native Compile]]
+  - [[#suppress-warnings][Suppress Warnings]]
+  - [[#initial-frame][Initial Frame]]
+  - [[#theme][Theme]]
+  - [[#melpa][Melpa]]
+  - [[#footer][Footer]]
 - [[#init][Init]]
-  - [[#better-defaults][Better defaults]]
-  - [[#package][Package]]
+  - [[#generate-init-header][Generate Init Header]]
+  - [[#use-package][Use-Package]]
+  - [[#better-defaults][Better Defaults]]
+  - [[#keybinds][Keybinds]]
   - [[#organize][Organize]]
+  - [[#number-line][Number Line]]
   - [[#evil][Evil]]
+    - [[#evil-integration][Evil Integration]]
   - [[#general][General]]
-  - [[#rg][Rg]]
   - [[#org][Org]]
-  - [[#toc-generator][TOC Generator]]
-  - [[#treesit][Treesit]]
-  - [[#python][Python]]
-  - [[#treesit-old][Treesit Old]]
+    - [[#org-appear][Org-appear]]
+    - [[#org-bullets][Org-bullets]]
+    - [[#org-make-toc][Org-make-toc]]
   - [[#eglot][Eglot]]
+  - [[#lua][Lua]]
+  - [[#completions][Completions]]
+    - [[#vertico][Vertico]]
+    - [[#marginalia][Marginalia]]
+  - [[#git][Git]]
+    - [[#magit][Magit]]
   - [[#which-key][Which-key]]
-  - [[#garbage-collect][Garbage collect]]
-  - [[#statusline][Statusline]]
+  - [[#modeline][Modeline]]
+  - [[#garbage-collect][Garbage Collect]]
   - [[#dashboard][Dashboard]]
-  - [[#init-footer][Init footer]]
+  - [[#init-footer][Init Footer]]
 :END:
 
 * Convent Header
 Auto-generate a header on top of ~early-init.el~ and ~init.el~ using
 [[https://orgmode.org/manual/Noweb-Reference-Syntax.html][noweb]] syntax.
-#+name: autogen-header
-#+begin_src emacs-lisp
+
+#+NAME: autogen-header
+#+BEGIN_SRC emacs-lisp
 ;;; Auto-generated --- DO NOT EDIT -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2024 twoeightdev
@@ -54,16 +71,24 @@ Auto-generate a header on top of ~early-init.el~ and ~init.el~ using
 ;; `twoeightdev.org' org configuration file.
 
 ;;; Code:
-#+end_src
+#+END_SRC
 
 * Early Init
-:properties:
+:PROPERTIES:
 :header-args: :tangle early-init.el
-:end:
+:END:
 This is loaded before the package system and GUI is initialized.
-#+begin_src emacs-lisp :noweb yes :comments no
-<<autogen-header>>
 
+** Generate Early Header
+Generate header for ~early-init.el~.
+
+#+BEGIN_SRC emacs-lisp :noweb yes :comments no
+<<autogen-header>>
+#+END_SRC
+
+** Initial Startup
+
+#+BEGIN_SRC emacs-lisp
 (eval-after-load "startup"
   '(fset 'display-startup-echo-area-message 'ignore))
 
@@ -79,37 +104,6 @@ This is loaded before the package system and GUI is initialized.
       inhibit-x-resources t
       inhibit-compacting-font-caches t)
 
-(when (featurep 'native-compile)
-  (let ((path (expand-file-name "var/eln-cache/" user-emacs-directory)))
-    (setq-default native-compile-target-directory path
-                  native-comp-eln-load-path (list path)
-                  native-comp-async-report-warnings-errors nil
-                  native-comp-deferred-compilation t
-                  native-comp-speed 2
-                  nackage-native-compile t)
-    (when (fboundp 'startup-redirect-eln-cache)
-      (startup-redirect-eln-cache path))))
-
-(setq-default byte-compile-warnings '(not obsolete)
-              package-native-compile t
-              site-run-file nil
-              warning-suppress-log-types '((comp) (bytecomp)))
-
-(modify-all-frames-parameters '((font . "Iosevka Nerd Font-14")
-                                (alpha . 98)
-                                (menu-bar-lines . nil)
-                                (tool-bar-lines . nil)
-                                (vertical-scroll-bars . nil)
-                                (horizontal-scroll-bars . nil)))
-
-(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "themes/" user-emacs-directory))
-(load-theme 'catppuccin t)
-
-(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
-(set-face-attribute 'font-lock-function-name-face nil :weight 'bold)
-(set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
-
 (set-default-coding-systems 'utf-8)
 (blink-cursor-mode -1)
 (pixel-scroll-precision-mode 1)
@@ -118,33 +112,86 @@ This is loaded before the package system and GUI is initialized.
 (tooltip-mode -1)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+#+END_SRC
 
+** Native Compile
+
+#+BEGIN_SRC emacs-lisp
+(when (featurep 'native-compile)
+  (let ((path (expand-file-name "var/eln-cache/" user-emacs-directory)))
+    (setq-default native-compile-target-directory path
+                  native-comp-eln-load-path (list path)
+                  native-comp-async-report-warnings-errors nil
+                  native-comp-deferred-compilation t
+                  native-comp-speed 2
+                  package-native-compile t)
+    (when (fboundp 'startup-redirect-eln-cache)
+      (startup-redirect-eln-cache path))))
+#+END_SRC
+
+** Suppress Warnings
+Silence byte compile warnings.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default byte-compile-warnings '(not obsolete)
+              package-native-compile t
+              site-run-file nil
+              warning-suppress-log-types '((comp) (bytecomp)))
+#+END_SRC
+
+** Initial Frame
+
+#+BEGIN_SRC emacs-lisp
+(modify-all-frames-parameters '((font . "Iosevka Nerd Font-14")
+                                (alpha . 98)
+                                (menu-bar-lines . nil)
+                                (tool-bar-lines . nil)
+                                (vertical-scroll-bars . nil)
+                                (horizontal-scroll-bars . nil)))
+
+(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+(set-face-attribute 'font-lock-function-name-face nil :weight 'bold)
+(set-face-attribute 'font-lock-variable-name-face nil :slant 'italic)
+#+END_SRC
+
+** Theme
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'custom-theme-load-path (expand-file-name "themes/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "themes/" user-emacs-directory))
+(load-theme 'catppuccin t)
+#+END_SRC
+
+** Melpa
+
+#+BEGIN_SRC emacs-lisp
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") 'append)
+#+END_SRC
 
-;; (defun startup-echo-area-message ()
-  ;; (format "Emacs initialized in %.2fs with %d garbage collected."
-          ;; (float-time (time-subtract after-init-time before-init-time))
-          ;; gcs-done))
-#+end_src
+** Footer
 
-** Early-init footer
-Auto-generated convent footer for ~early-init.el~.
-#+begin_src emacs-lisp
+#+BEGIN_SRC emacs-lisp
 ;;; early-init.el ends here
-#+end_src
+#+END_SRC
 
 * Init
-:properties:
+:PROPERTIES:
 :header-args: :tangle init.el
-:end:
+:END:
 Main configuration file that will generate ~init.el~ on save.
 
-** Package
-Package.el with use-package.
+** Generate Init Header
+Generate header for ~init.el~.
+
 #+BEGIN_SRC emacs-lisp :noweb yes :comments no
 <<autogen-header>>
+#+END_SRC
 
+** Use-Package
+Package.el with use-package.
+
+#+BEGIN_SRC emacs-lisp
 (use-package use-package
   :ensure nil
   :no-require
@@ -155,11 +202,11 @@ Package.el with use-package.
 
 ** Better Defaults
 Preferred defaults.
-#+begin_src emacs-lisp
-(use-package defaults
+
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
   :ensure nil
-  :no-require
-  :preface
+  :init
   (setq-default read-process-output-max (* 1024 1024)
                 ad-redefinition-action 'accept
                 server-client-instructions nil
@@ -175,11 +222,43 @@ Preferred defaults.
                 scroll-step 1
                 scroll-margin 1
                 scroll-conservatively 101
-                indent-tabs-mode nil)
-  (provide 'defaults))
-#+end_src
+                indent-tabs-mode nil))
+#+END_SRC
+
+** Keybinds
+
+#+BEGIN_SRC emacs-lisp
+(use-package face-remap
+  :ensure nil
+  :preface
+  (defun twoeightdev/reset-font-size ()
+    "Reset to default font size."
+    (interactive)
+    (text-scale-set 0))
+
+  (defun twoeightdev/increase-font-size ()
+    "Increase font size."
+    (interactive)
+    (text-scale-increase 1))
+
+  (defun twoeightdev/decrease-font-size ()
+    "Decrease font size."
+    (interactive)
+    (text-scale-decrease 1))
+  :bind
+  (("C-=" . twoeightdev/increase-font-size)
+   ("C--" . twoeightdev/decrease-font-size)
+   ("C-0" . twoeightdev/reset-font-size)))
+
+(use-package simple
+  :ensure nil
+  :bind
+  (("<escape>" . keyboard-escape-quit)))
+#+END_SRC
 
 ** Organize
+Keeps emacs directory clean.
+
 #+BEGIN_SRC emacs-lisp
 (use-package files
   :ensure nil
@@ -212,9 +291,11 @@ Preferred defaults.
     (make-directory auto-save-dir t)))
 #+END_SRC
 
-** Line Numbers
+** Number Line
+
 #+BEGIN_SRC emacs-lisp
 (use-package display-line-numbers
+  :ensure nil
   :preface
   (defun twoeightdev/prog-mode ()
     "Initial configuration for `prog-mode'."
@@ -229,7 +310,8 @@ Preferred defaults.
 
 ** Evil
 Extensible vi layer Emacs.
-#+begin_src emacs-lisp
+
+#+BEGIN_SRC emacs-lisp
 (use-package evil
   :demand t
   :functions evil-mode
@@ -244,11 +326,15 @@ Extensible vi layer Emacs.
   (evil-mode 1)
   ;; Conflict with corfu
   (define-key evil-insert-state-map (kbd "C-k") nil))
+#+END_SRC
 
+*** Evil Integration
+
+#+BEGIN_SRC emacs-lisp
 (use-package evil-collection
   :after evil
   :functions evil-collection-init
-  :config
+  :init
   (evil-collection-init))
 
 (use-package evil-org
@@ -262,15 +348,17 @@ Extensible vi layer Emacs.
   (evil-org-set-key-theme
    '(navigation todo insert textobjects additional))
   (evil-org-agenda-set-keys))
-#+end_src
+#+END_SRC
 
 ** General
 More convenient key definitions.
-#+begin_src emacs-lisp
+
+#+BEGIN_SRC emacs-lisp
 (use-package general
   :demand t
   :defines twoeightdev/leader-keys
-  :functions general-evil-setup general-create-definer twoeightdev/leader-keys general-unbind
+  :functions general-evil-setup general-create-definer general-unbind
+  :functions twoeightdev/leader-keys
   :config
   (general-evil-setup)
   (general-create-definer twoeightdev/leader-keys
@@ -300,11 +388,12 @@ More convenient key definitions.
     "bb" '(switch-to-buffer :wk "switch buffer")
     "bk" '(kill-this-buffer :wk "kill this buffer")
     "br" '(revert-buffer :wk "revert buffer")))
-#+end_src
+#+END_SRC
 
 ** Org
-Org mode.
-#+begin_src emacs-lisp
+Manage schedules, notes and planning projects.
+
+#+BEGIN_SRC emacs-lisp
 (use-package org
   :ensure nil
   :preface
@@ -332,6 +421,9 @@ Org mode.
     (when (string-equal (buffer-file-name)
                         (expand-file-name "twoeightdev.org" user-emacs-directory))
       (org-babel-tangle)))
+  :hook
+  (org-mode . twoeightdev/org-setup)
+  (after-save . twoeightdev/org-tangle-config)
   :general
   (twoeightdev/leader-keys
     "fc" '(twoeightdev/org-config :wk "org configuration file")
@@ -339,7 +431,7 @@ Org mode.
   :custom
   (org-edit-src-content-indentation 0)
   (org-src-preserve-indentation nil)
-  (org-directory "~/.local/src/orgnotes/agenda")
+  (org-directory "~/.local/src/orgnotes")
   (org-default-notes-file twoeightdev/notes-path)
   (org-src-window-setup 'current-window)
   (org-return-follows-link t)
@@ -347,7 +439,6 @@ Org mode.
   (org-hide-emphasis-markers t)
   (org-hide-leading-stars t)
   (org-catch-invisible-edits 'show-and-error)
-  ;; Start new
   (org-ellipsis " 󱨉")
   (org-src-fontify-natively t)
   (org-fontify-quote-and-verse-blocks t)
@@ -358,365 +449,230 @@ Org mode.
    '(("#+BEGIN_SRC" . "")
      ("#+END_SRC" . "")
      ("#+begin_src" . "")
-     ("#+end_src" . "")))
-  (org-agenda-files (list "gtd.org" "purge.org"))
+     ("#+end_src" . "")
+     ("#+TITLE:" . "")
+     ("#+title:" . "")
+     ("[ ]" . "")
+     ("[X]" . "")
+     ("[-]" . "")))
+     ;; ("[ ]" . "☐")
+     ;; ("[X]" . "☑")
+     ;; ("[-]" . "❍")))
+  (org-agenda-files
+   (directory-files-recursively "~/.local/src/orgnotes" "\\.org$"))
   (org-agenda-start-on-weekday 1)
   (org-agenda-timegrid-use-ampm 1)
   (org-agenda-show-all-dates nil)
-  (org-agenda-window-setup 'current-window)
-  :hook
-  (org-mode . twoeightdev/org-setup)
-  (after-save . twoeightdev/org-tangle-config))
+  (org-agenda-window-setup 'current-window))
+#+END_SRC
 
+*** Org-appear
+Make /invisible/ parts of *Org elements* appear /visible/.
+
+#+BEGIN_SRC emacs-lisp
 (use-package org-appear
-  :custom
-  (org-appear-autolinks t)
   :hook
-  (org-mode . org-appear-mode))
+  (org-mode . org-appear-mode)
+  :custom
+  (org-appear-autolinks t))
+#+END_SRC
 
+*** Org-bullets
+Show ~org-mode~ bullets as *UTF-8* characters.
+
+#+BEGIN_SRC emacs-lisp
 (use-package org-bullets
   :defines org-bullets-bullet-list
   :hook
   (org-mode . org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("󰪥" "󰻃" "✿" "✱" "❖" "🞆" "✸")))
-#+end_src
-
-** TOC Generator
-#+begin_src emacs-lisp
-(use-package org-make-toc)
-#+end_src
-
-** Treesit Old
-Treesitter
-#+begin_src emacs-lisp :tangle no
-(use-package treesit
-  :ensure nil
-  :defines c-ts-mode-indent-offset
-  :commands (treesit-install-language-grammar twoeightdev/treesit-install-all)
-  :preface
-  (defun twoeightdev/treesit-install-all ()
-    "Install all languages specified by `treesit-language-source-alist'."
-    (interactive)
-    (let ((languages (mapcar 'car treesit-language-source-alist)))
-      (dolist (lang languages)
-        (treesit-install-language-grammar lang)
-        (message "`%s' parser was installed." lang)
-        (sit-for 0.75))))
-  :config
-  (setq-default c-ts-mode-indent-offset 4)
-  (setq-default treesit-language-source-alist
-                '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
-                  (css . ("https://github.com/tree-sitter/tree-sitter-css"))
-                  (html . ("https://github.com/tree-sitter/tree-sitter-html"))
-                  (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-                  (json . ("https://github.com/tree-sitter/tree-sitter-json"))
-                  (lua . ("https://github.com/Azganoth/tree-sitter-lua"))
-                  (markdown . ("https://github.com/ikatyang/tree-sitter-markdown"))
-                  (python . ("https://github.com/tree-sitter/tree-sitter-python"))
-                  (toml . ("https://github.com/tree-sitter/tree-sitter-toml"))
-                  (yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))))
-  (setq-default major-mode-remap-alist
-                '((sh-mode . bash-ts-mode)
-                  (python-mode . python-ts-mode)))
-                  ;; (lua-mode . lua-ts-mode)
-                  ;; (markdown-mode . markdown-ts-mode)))
-  :custom
-  (treesit-font-lock-level 2))
-#+end_src
-
-** Python Old
-#+BEGIN_SRC emacs-lisp :tangle no
-(use-package python-ts-mode
-  :ensure nil
-  :after python
-  :init
-  (setq-default major-mode-remap-alist
-                '((python-mode . python-ts-mode))))
 #+END_SRC
 
-** Treesit
-#+BEGIN_SRC  emacs-lisp
-(use-package treesit
-  :ensure nil
-  :when (treesit-p)
-  :preface
-  (defun treesit-p ()
-    "Check if Emacs was built with treesiter in a protable way."
-    (and (fboundp 'treesit-available-p)
-         (treesit-available-p)))
+*** Org-make-toc
+Generate /table of contents/ for *Org* files.
 
-  (cl-defun treesit-install-and-remap
-      (lang url &key revision source-dir modes remap org-src)
-    "Convenience function for installing and enabling a ts-* mode.
-
-LANG is the language symbol.  URL is the Git repository URL for the
-grammar.  REVISION is the Git tag or branch of the desired version,
-defaulting to the latest default branch.  SOURCE-DIR is the relative
-subdirectory in the repository in which the grammar’s parser.c file
-resides, defaulting to \"src\".  MODES is a list of modes to remap to a
-symbol REMAP.  ORG-SRC is a cons specifying a source code block language
-name and a corresponding major mode."
-    (when (and (fboundp 'treesit-available-p)
-               (treesit-available-p))
-      (unless (treesit-language-available-p lang)
-        (add-to-list
-         'treesit-language-source-alist
-         (list lang url revision source-dir))
-        (treesit-install-language-grammar lang))
-      (when (and remap (treesit-ready-p lang))
-        (dolist (mode modes)
-          (add-to-list
-           'major-mode-remap-alist
-           (cons mode remap))))
-      (when (and org-src (treesit-ready-p lang))
-        (eval-after-load 'org
-          (lambda ()
-            (add-to-list 'org-src-lang-modes org-src))))))
-  :custom
-  (treesit-font-lock-level 2))
-#+END_SRC
-
-** Python
-#+BEGIN_SRC  emacs-lisp
-(use-package python-ts-mode
-  :ensure nil
-  :after python
-  :when (treesit-p)
-  :init
-  (treesit-install-and-remap
-   'python "https://github.com/tree-sitter/tree-sitter-python"
-   :modes '(python-mode)
-   :remap 'python-ts-mode
-   :org-src '("python" . python-ts)))
-#+END_SRC
-
-** Lua
 #+BEGIN_SRC emacs-lisp
-(use-package lua-mode
-  :custom
-  (lua-indent-level 4)
-  :config
-  (add-to-list 'auto-mode-alist '("\\.lua$'" . lua-mode))
-  (add-to-list 'interpreter-mode-alist '("lua" . lua-mode)))
-
-(use-package lua-ts-mode
-  :ensure nil
-  :when (and (treesit-p)
-             (package-installed-p 'lua-ts-mode))
-  :mode "\\.lua\\'"
-  :custom
-  (lua-ts-indent-offset 4)
-  :init
-  (treesit-install-and-remap
-   'lua "https://github.com/MunifTanjim/tree-sitter-lua"
-   :org-src '("lua" . lua-ts)))
-
-(use-package lua-prettify
-  :ensure nil
-  :hook ((lua-mode lua-ts-mode) . lua-prettify-mode)
-  :delight lua-prettify-mode
-  :preface
-  (defgroup lua-prettify ()
-    "Lua prettification and ease of writing enchancements."
-    :prefix "lua-prettify-"
-    :group 'languages)
-  (defcustom lua-prettify-syntax-expansions
-    '(("def" "local function")
-      ("unless" "if not")
-      ("fn"  "function")
-      ("let" "local")
-      ("<-" "return"))
-    "List of abbreviarions and expansions for Lua"
-    :type '(repeat (list string string))
-    :group 'lua-prettify)
-  (defvar lua-prettify--original-syntax-table nil
-    "Original Lua syntax table.
-
-Syntax table is modified for abbreviation expansion to work on
-characters not considiered as word characters in original Lua table.
-This variable holds the original value to be restored once the mode is
-disabled.")
-  (defun lua-prettify--expand-abbrev-maybe ()
-    "Special advise for expanding abbreviations.
-
-Abbrevs that normally don't expand via abbrev-mode are handled manually."
-    (when (looking-back "<-" 1)
-      (delete-char -2)
-      (abbrev-insert (abbrev-symbol "<-"))))
-  (defun lua-prettify--cleanup ()
-    "Disable Lua prettification."
-    (setq prettify-symbols-alist nil)
-    (prettify-symbols-mode -1)
-    (abbrev-mode -1)
-    (remove-function
-     (local 'abbrev-expand-function)
-     #'lua-prettify--expand-abbrev-maybe)
-    (when lua-prettify--original-syntax-table
-      (set-syntax-table lua-prettify--original-syntax-table)
-      (setq lua-prettify--original-syntax-table nil)))
-  (defun lua-prettify--setup ()
-    "Setup Lua prettification."
-    (setq prettify-symbols-alist
-          (mapcar (lambda (abbrev-exp)
-                    (let ((abbrev (car abbrev-exp))
-                          (exp (cadr abbrev-exp)))
-                      `(,exp . ,(thread-last
-                                  abbrev
-                                  (mapcan
-                                   (lambda (ch)
-                                     (list '(Br . Bl) ch)))
-                                  cdr
-                                  vconcat))))
-                  lua-prettify-syntax-expansions))
-    (prettify-symbols-mode 1)
-    (let ((at (eval (intern (format "%s-abbrev-table" major-mode)))))
-      (dolist (abbrev-exp lua-prettify-syntax-expansions)
-        (apply #'define-abbrev at abbrev-exp)))
-    (setq lua-prettify--original-syntax-table (syntax-table))
-    (modify-syntax-entry ?- "w 12")
-    (abbrev-mode 1)
-    (add-function
-     :before (local 'abbrev-expand-function)
-     #'lua-prettify--expand-abbrev-maybe))
-  (define-minor-mode lua-prettify-mode
-    "Lua prettification and ease of writing enchancements."
-    :lighter " Lua Pretty"
-    :init-value nil
-    (if (and lua-prettify-mode
-             (not current-prefix-arg))
-        (lua-prettify--setup)
-      (lua-prettify--cleanup)))
-  (provide 'lua-prettify))
-
+(use-package org-make-toc)
 #+END_SRC
 
 ** Eglot
-Eglot
-#+begin_src emacs-lisp
+
+#+BEGIN_SRC emacs-lisp
 (use-package eglot
   :ensure nil
   :hook
-  (prog-mode . eglot-ensure)
-  ;; (python-mode . eglot-ensure)
-  ;; (sh-mode . eglot-ensure)
-  ;; (bash-mode . eglot-ensure)
+  (python-mode . eglot-ensure)
+  (sh-mode . eglot-ensure)
   :init
   (setq eglot-stay-out-of '(flymake eldoc)))
-#+end_src
+#+END_SRC
 
-** Vertico
+** Lua
+
+#+BEGIN_SRC emacs-lisp
+(use-package lua-mode
+  :hook
+  (lua-mode . eglot-ensure)
+  :mode "\\.lua$\\'"
+  :interpreter "lua"
+  :custom
+  (lua-indent-level 4))
+#+END_SRC
+
+** Completions
+Completion setup wtih =vertico=, =consult=, =corfu=, =orderless= and =marginalia=.
+
+*** Vertico
+*Vertico* helps to rapidly complete file names, buffer names, or any other
+*Emacs* interactions.
+
 #+BEGIN_SRC emacs-lisp
 (use-package vertico
-  :bind
-  (:map vertico-map
-        ("M-RET" . vertico-exit-input))
-  :hook
-  (after-init . vertico-mode))
-
-(use-package vertico-directory
-  :ensure nil
-  :after vertico
-  :bind
-  (:map vertico-map
-        ("RET" . vertico-directory-enter)
-        ("DEL" . vertico-directory-delete-char)
-        ("M-DEL" . vertico-directory-delete-word))
-  :hook
-  (rfn-eshadow-update-overlay . vertico-directory-tidy))
+  :demand t
+  :bind (:map vertico-map
+              ("C-j" . vertico-next)
+              ("C-k" . vertico-previous)
+              ("C-f" . vertico-exit-input)
+              :map minibuffer-local-map
+              ("M-h" . vertico-directory-up))
+  :custom
+  (vertico-cycle t)
+  :config
+  (require 'vertico-directory)
+  (vertico-mode))
 #+END_SRC
 
-** Marginalia
+*** Marginalia
+Helpful colorful annotations in minibuffer.
+
 #+BEGIN_SRC emacs-lisp
 (use-package marginalia
-  :hook
-  (after-init . marginalia-mode))
+  :after vertico
+  :demand t
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy
+                           marginalia-annotators-light
+                           nil))
+  :config
+  (marginalia-mode))
 #+END_SRC
 
-** Orderless
+** Git
+Git tools
+
+*** Magit
+*Version control interface* for =Git=. The /function/
+=twoeightdev/magit-process-environment= detects and set =Git-bare= repo
+for managing my =dotfiles=. Source: [[https://github.com/magit/magit/issues/460]]
+
 #+BEGIN_SRC emacs-lisp
-(use-package orderless
-  :custom
-  (completion-category-overrides
-   '((buffer (styles basic orderless))
-     (file (styles basic orderless))
-     (project-file (styles basic orderless)))))
+(use-package magit
+  :preface
+  (defun twoeightdev/magit-process-environment (env)
+    "Detect and set git -bare repo env vars when in tracked dotfile directories."
+    (let* ((default (file-name-as-directory (expand-file-name default-directory)))
+           (git-dir (expand-file-name "~/.config/.dots/"))
+           (work-tree (expand-file-name "~/"))
+           (dotfile-dirs
+            (-map (apply-partially 'concat work-tree)
+                  (-uniq (-keep #'file-name-directory (split-string (shell-command-to-string
+                  (format "/usr/bin/git --git-dir=%s --work-tree=%s ls-tree --full-tree --name-only -r HEAD"
+                          git-dir work-tree))))))))
+      (push work-tree dotfile-dirs)
+      (when (member default dotfile-dirs)
+        (push (format "GIT_WORK_TREE=%s" work-tree) env)
+        (push (format "GIT_DIR=%s" git-dir) env)))
+    env)
+  :general
+  (twoeightdev/leader-keys
+    "gg" '(magit :wk "magit"))
+  :config
+  (advice-add 'magit-process-environment
+              :filter-return #'twoeightdev/magit-process-environment))
 #+END_SRC
 
-** Corfu
+*** Diffs
+Highlights uncommited changed on the gutter.
+
 #+BEGIN_SRC emacs-lisp
-(use-package corfu
-  :bind
-  (:map corfu-map
-        ("TAB" . corfu-next)
-        ([tab] . corfu-next)
-        ("S-TAB" . corfu-previous)
-        ([backtab] . corfu-previous)
-        ([remap completion-at-point] . corfu-complete)
-        ("RET" . corfu-complete-and-quit)
-        ("<return>" . corfu-complete-and-quit))
-  :commands (corfu-quit)
-  :custom
-  (corfu-cycle t)
-  (corfu-preselect-first t)
-  (corfu-scroll-margin 4)
-  (corfu-quit-no-match t)
-  (corfu-quit-at-boundary t)
-  ;; (corfu-max-width 100)
-  ;; (corfu-min-width 42)
-  (corfu-count 9)
-  (corfu-popupinfo-delay 0.2)
-  (corfu-auto t)
-  (corfu-auto-prefix 2)
-  (corfu-auto-delay 0.2)
-  (tab-always-indent 'complete)
-  :config
-  (defun corfu-complete-and-quit ()
-    (interactive)
-    (corfu-complete)
-    (corfu-quit))
-  :hook
-  (after-init . global-corfu-mode))
-
-(use-package corfu-popupinfo
-  :ensure nil
-  :bind
-  (:map corfu-popupinfo-map
-        ("M-p" . corfu-popupinfo-scroll-down)
-        ("M-n" . corfu-popupinfo-scroll-up))
-  :hook
-  (corfu-mode . corfu-popupinfo-mode)
-  :custom-face
-  (corfu-popupinfo ((t :height 1.0))))
-
-(use-package cape
-  :after corfu
-  :config
-  (setq completion-at-point-functions '(cape-file)))
+(use-package diff-hl)
 #+END_SRC
 
 ** Which-key
-Display key bindings following your currently entered incomplete command
-in a popup.
-#+begin_src emacs-lisp
-(use-package which-key
-  :functions which-key-setup-minibuffer
-  :config
-  (which-key-setup-minibuffer)
-  :hook
-  (after-init . which-key-mode))
-#+end_src
+Display key bindings following your currently entered incomplete command.
 
-** Garbage collect
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :demand t
+  :config
+  (which-key-mode)
+  (setq which-key-idle 0.3
+        which-key-idle-delay 50)
+  (which-key-setup-minibuffer))
+#+END_SRC
+
+** Modeline
+
+#+BEGIN_SRC emacs-lisp
+(defun evil-state-symbol ()
+  "Return a symbol representing the current Evil state."
+  (cond
+   ((evil-normal-state-p)   "NORMAL")
+   ((evil-insert-state-p)   "INSERT")
+   ((evil-visual-state-p)   "VISUAL")
+   ((evil-replace-state-p)  "REPLACE")
+   (t                       "󰻃 ")))
+
+(defun evil-state-color ()
+  "Return the color for the current Evil state."
+  (cond
+   ((evil-normal-state-p)   "#f5c2e7")
+   ((evil-insert-state-p)   "#a6e3a1")
+   ((evil-visual-state-p)   "#f9e2af")
+   ((evil-replace-state-p)  "#f5c2e7")
+   (t                       "#cba6f7")))
+
+(defun custom-modified-status ()
+  "Return a string representing the buffer modification status."
+  (propertize
+   (if (buffer-modified-p)
+       ""
+     "")
+   'face `(:foreground ,(if (buffer-modified-p) "#f38ba8" "#a6e3a1"))))
+
+(defun custom-mode-line ()
+  "Construct a custom mode line."
+  (list
+   " "
+   '(:eval (propertize ( evil-state-symbol)
+                       'face `(:foreground ,(evil-state-color) :weight bold)))
+   " "
+   "%b "
+
+   " "
+   '(:eval (custom-modified-status))
+
+   " "
+
+   " %l:%c "
+
+   " %m "))
+
+(setq-default mode-line-format
+              '((:eval (custom-mode-line))))
+#+END_SRC
+
+** Garbage Collect
 Emacs garbage collection. [[https://akrl.sdf.org/#orgc15a10d][reference]].
-#+begin_src emacs-lisp
+
+#+BEGIN_SRC emacs-lisp
 (defmacro k-time (&rest body)
   "Measure and return the time it takes evaluating BODY."
   `(let ((time (current-time)))
      ,@body
      (float-time (time-since time))))
 
-;; (setq gc-cons-threshold (* 16 1024 1024))
 (setq gc-cons-percentage .6)
 
 (defvar k-gc-timer
@@ -724,41 +680,41 @@ Emacs garbage collection. [[https://akrl.sdf.org/#orgc15a10d][reference]].
                        (lambda ()
                          (message "Garbage Collector has run for %.06fsec"
                                   (k-time (garbage-collect))))))
-#+end_src
-
-** Statusline
-#+begin_src emacs-lisp :tangle no
-(use-package doom-modeline
-  :functions doom-modeline-mode
-  :custom
-  (doom-modeline-icon nil)
-  :init
-  (doom-modeline-mode 1))
-
-(use-package nerd-icons)
-#+end_src
+#+END_SRC
 
 ** Dashboard
-#+begin_src emacs-lisp
+
+#+BEGIN_SRC emacs-lisp
 (use-package dashboard
   :functions dashboard-setup-startup-hook
   :init
   (dashboard-setup-startup-hook)
   :custom
-  ;; (dashboard-center-content t)
   (dashboard-banner-logo-title "Welcome Motherfucker!!!")
   (dashboard-items '((recents . 5)
                      (bookmarks . 5)
                      (agenda . 5)))
-  (dashboard-startupify-list '(dashboard-insert-items
-                               dashboard-insert-newline
-                               dashboard-insert-navigator
-                               dashboard-insert-init-info
-                               dashboard-insert-newline)))
-#+end_src
+  (dashboard-startupify-list
+   '(dashboard-insert-items
+     dashboard-insert-newline
+     dashboard-insert-navigator
+     dashboard-insert-init-info
+     dashboard-insert-newline)))
+#+END_SRC
 
-** Init footer
+** Init Footer
 Auto-generated convent footer for ~init.el~.
-#+begin_src emacs-lisp
+
+#+BEGIN_SRC emacs-lisp
 ;;; init.el ends here
-#+end_src
+#+END_SRC
+
+
+
+
+
+
+
+
+
+
