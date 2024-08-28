@@ -781,7 +781,7 @@ Display key bindings following your currently entered incomplete command.
    (t                       "󰻃 ")))
 
 (defun evil-state-color ()
-  "Return the color for the current Evil state."
+  "Return the color of the current Evil state."
   (cond
    ((evil-normal-state-p)   "#f5c2e7")
    ((evil-insert-state-p)   "#a6e3a1")
