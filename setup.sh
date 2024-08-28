@@ -1,5 +1,5 @@
 #!/bin/bash
-# https://github.com/twoeightdev
+# URL: https://github.com/twoeightdev
 # Author: twoeightdev
 
 me="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
@@ -8,6 +8,7 @@ dmenudir="$HOME/.local/src/archdmenu"
 startdir="$HOME/.local/src/startpage"
 fontloc="$HOME/.local/share/fonts/"
 fontsource="$HOME/.local/src/pycourse/fonts/DankMonoNerdFont"
+orgfile="$HOME/.config/emacs/twoeightdev.org"
 name="$USER"
 
 menu() {
@@ -21,6 +22,7 @@ menu() {
     echo -e "\e[1;92mdmenu:\e[0m ................ \e[37mdmenu personal build.\e[0m"
     echo -e "\e[1;92mstartpage:\e[0m ............ \e[37mstartpage for qutebrowser.\e[0m"
     echo -e "\e[1;92mtmuxplug:\e[0m ............. \e[37mclone tmux-resurrect.\e[0m"
+    echo -e "\e[1;92morgtangle:\e[0m ............ \e[37mtangle org configuration.\e[0m"
     echo -e "\e[1;92mgenkey:\e[0m ............... \e[37mgenerate ssh-key.\e[0m"
     echo -e "\e[1;92mremoteurl:\e[0m ............ \e[37mchange src remote urls.\e[0m"
     echo -e "\e[1;92mprivaterepo:\e[0m .......... \e[37mclone private repo.\e[0m"
@@ -114,6 +116,11 @@ startpage() {
 
 tmuxplug() {
     git clone https://github.com/tmux-plugins/tmux-resurrect ~/.config/tmux/plugins/tmux-resurrect
+}
+
+orgtangle() {
+    # emacs --batch -l org --eval "(org-babel-tangle-file $orgfile)"
+    emacs --batch -l org "$orgfile" -f org-babel-tangle >/dev/null 2>&1
 }
 
 genkey() {
