@@ -225,37 +225,6 @@ Preferred defaults.
                 indent-tabs-mode nil))
 #+END_SRC
 
-** Keybinds
-
-#+BEGIN_SRC emacs-lisp
-(use-package face-remap
-  :ensure nil
-  :preface
-  (defun twoeightdev/reset-font-size ()
-    "Reset to default font size."
-    (interactive)
-    (text-scale-set 0))
-
-  (defun twoeightdev/increase-font-size ()
-    "Increase font size."
-    (interactive)
-    (text-scale-increase 1))
-
-  (defun twoeightdev/decrease-font-size ()
-    "Decrease font size."
-    (interactive)
-    (text-scale-decrease 1))
-  :bind
-  (("C-=" . twoeightdev/increase-font-size)
-   ("C--" . twoeightdev/decrease-font-size)
-   ("C-0" . twoeightdev/reset-font-size)))
-
-(use-package simple
-  :ensure nil
-  :bind
-  (("<escape>" . keyboard-escape-quit)))
-#+END_SRC
-
 ** Organize
 Keeps emacs directory clean.
 
@@ -390,6 +359,37 @@ More convenient key definitions.
     "br" '(revert-buffer :wk "revert buffer")))
 #+END_SRC
 
+** Keybinds
+
+#+BEGIN_SRC emacs-lisp
+(use-package face-remap
+  :ensure nil
+  :preface
+  (defun twoeightdev/reset-font-size ()
+    "Reset to default font size."
+    (interactive)
+    (text-scale-set 0))
+
+  (defun twoeightdev/increase-font-size ()
+    "Increase font size."
+    (interactive)
+    (text-scale-increase 1))
+
+  (defun twoeightdev/decrease-font-size ()
+    "Decrease font size."
+    (interactive)
+    (text-scale-decrease 1))
+  :general
+  ("C-=" 'twoeightdev/increase-font-size)
+  ("C--" 'twoeightdev/decrease-font-size)
+  ("C-0" 'twoeightdev/reset-font-size))
+
+(use-package simple
+  :ensure nil
+  :general
+  ("<escape>" 'keyboard-escape-quit))
+#+END_SRC
+
 ** Org
 Manage schedules, notes and planning projects.
 
@@ -508,7 +508,9 @@ Generate /table of contents/ for *Org* files.
   (setq eglot-stay-out-of '(flymake eldoc)))
 #+END_SRC
 
-** Lua
+** Languages
+
+*** Lua
 
 #+BEGIN_SRC emacs-lisp
 (use-package lua-mode
@@ -518,6 +520,58 @@ Generate /table of contents/ for *Org* files.
   :interpreter "lua"
   :custom
   (lua-indent-level 4))
+#+END_SRC
+
+*** Markdown
+
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :custom
+  (markdown-fontify-code-blocks-natively t)
+  (markdown-hr-display-char nil)
+  (markdown-list-item-bullets '("-")))
+#+END_SRC
+
+*** CSS
+
+#+BEGIN_SRC emacs-lisp
+(use-package css-mode
+  :ensure nil
+  :defer t
+  :custom
+  (css-indent-offset 4))
+#+END_SRC
+
+*** Js
+
+#+BEGIN_SRC emacs-lisp
+(use-package js
+  :defer t
+  :custom
+  (js-indent-level 4))
+#+END_SRC
+
+*** Yaml
+
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+  :defer t
+  :custom
+  (yaml-indent-offset 4))
+#+END_SRC
+
+*** Conf
+
+#+BEGIN_SRC emacs-lisp
+(use-package conf-mode
+  :ensure nil
+  :mode "\\.list\\'"
+  :mode "\\dunstrc\\'"
+  :mode "\\lfrc\\'"
+  :mode "\\tridactylrc\\'"
+  :mode "\\xdefaults\\'")
 #+END_SRC
 
 ** Completions
@@ -543,6 +597,81 @@ Completion setup wtih =vertico=, =consult=, =corfu=, =orderless= and =marginalia
   (vertico-mode))
 #+END_SRC
 
+*** Corfu
+Enhances in-buffer completion with a small completion popup.
+
+#+BEGIN_SRC emacs-lisp
+(use-package corfu
+  :demand t
+  :preface
+  (defun corfu-complete-and-quit ()
+    (interactive)
+    (corfu-complete)
+    (corfu-quit))
+  :bind
+  (:map corfu-map
+        ([remap completion-at-point] . corfu-complete))
+  :general
+  (general-def corfu-map
+    "TAB" 'corfu-next
+    "[tab]" 'corfu-next
+    "S-TAB" 'corfu-previous
+    "<backtab>" 'corfu-previous
+    ;; "[remap completion-at-point]" 'corfu-complete
+    "RET" 'corfu-complete-and-quit
+    "<return>" 'corfu-complete-and-quit)
+  :commands (corfu-quit)
+  :custom
+  (corfu-cycle t)
+  (corfu-preselect-first t)
+  (corfu-scroll-margin 4)
+  (corfu-quit-no-match t)
+  (corfu-quit-at-boundary t)
+  (corfu-count 9)
+  (corfu-popupinfo-delay 0.2)
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.2)
+  (tab-always-indent 'complete)
+  :config
+  (global-corfu-mode))
+#+END_SRC
+
+**** Corfu Popup
+
+#+BEGIN_SRC emacs-lisp
+(use-package corfu-popupinfo
+  :ensure nil
+  :hook
+  (corfu-mode . corfu-popupinfo-mode)
+  :general
+  (general-def corfu-popupinfo-map
+    "M-p" 'corfu-popupinfo-scroll-down
+    "M-n" 'corfu-popupinfo-scroll-up)
+  :custom-face
+  (corfu-popupinfo ((t :height 1.0))))
+#+END_SRC
+
+**** Cape
+
+#+BEGIN_SRC emacs-lisp
+(use-package cape
+  :after corfu
+  :config
+  (setq completion-at-point-functions '(cape-file)))
+#+END_SRC
+
+**** Kind
+
+#+BEGIN_SRC emacs-lisp
+(use-package kind-icon
+  :after corfu
+  :demand t
+  :custom (kind-icon-default-face 'corfu-default)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+#+END_SRC
+
 *** Marginalia
 Helpful colorful annotations in minibuffer.
 
@@ -556,6 +685,33 @@ Helpful colorful annotations in minibuffer.
                            nil))
   :config
   (marginalia-mode))
+#+END_SRC
+
+*** Orderless
+/Completion style/ that divides the pattern into space-separated
+components, and matches candidates that match all the components
+in any order.
+
+#+BEGIN_SRC emacs-lisp
+(use-package orderless
+  :demand t
+  :config
+  (orderless-define-completion-style orderless+initialism
+                                     (orderless-matching-styles '(orderless-initialism
+                                                                  orderless-literal
+                                                                  orderless-regexp)))
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        orderless-matching-styles '(orderless-literal orderless-regexp)
+        completion-category-overrides
+        '((file (styles partial-completion)))))
+#+END_SRC
+
+** Snippets
+
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :delight yas-minor-mode)
 #+END_SRC
 
 ** Git
@@ -641,6 +797,17 @@ Display key bindings following your currently entered incomplete command.
      "")
    'face `(:foreground ,(if (buffer-modified-p) "#f38ba8" "#a6e3a1"))))
 
+(defun filename-color ()
+  "Return a mode line component that shows the buffer name with appropriate color."
+  (let* ((file-name (buffer-file-name))
+         (modified (buffer-modified-p))
+         (color (if modified
+                    "#f38ba8"
+                  "#a6e3a1")))
+    (propertize (or (and file-name (file-name-nondirectory file-name))
+                    (buffer-name))
+                'face `(:foreground ,color))))
+
 (defun custom-mode-line ()
   "Construct a custom mode line."
   (list
@@ -648,10 +815,8 @@ Display key bindings following your currently entered incomplete command.
    '(:eval (propertize ( evil-state-symbol)
                        'face `(:foreground ,(evil-state-color) :weight bold)))
    " "
-   "%b "
-
-   " "
-   '(:eval (custom-modified-status))
+   ;; "%b "
+   '(:eval (filename-color))
 
    " "
 
