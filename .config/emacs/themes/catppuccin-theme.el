@@ -46,7 +46,7 @@ The theme has to be reloaded after changing anything in this group."
   :type 'number
   :group 'catppuccin)
 
-(defcustom catppuccin-height-doc-title 1.2
+(defcustom catppuccin-height-doc-title 2.5
   "Documentation Title font size."
   :type 'number
   :group 'catppuccin)
@@ -973,7 +973,8 @@ If called non-interactively, the FLAVOR must be one of 'frappe, 'latte, 'macchia
                (org-column-title :inherit org-column :weight bold :underline t)
                (org-date :inherit org-agenda-date)
                (org-document-info :foreground ,ctp-sapphire)
-               (org-document-info-keyword :inherit font-lock-comment-face)
+               ;; (org-document-info-keyword :inherit font-lock-comment-face) ;; ORIG
+               (org-document-info-keyword :inherit shadow) ;; NOW
                (org-document-title :weight bold :foreground ,ctp-blue
                                    ,@(when catppuccin-enlarge-headings
                                        (list :height catppuccin-height-doc-title)))
@@ -999,7 +1000,8 @@ If called non-interactively, the FLAVOR must be one of 'frappe, 'latte, 'macchia
                (org-level-7 :weight normal :foreground ,ctp-mauve)
                (org-level-8 :weight normal :foreground ,ctp-maroon)
                (org-link :inherit link)
-               (org-meta-line :inherit font-lock-comment-face)
+               ;; (org-meta-line :inherit font-lock-comment-face) ;; ORIG
+               (org-meta-line :inherit org-document-info-keyword) ;; NOW
                (org-priority :foreground ,ctp-yellow)
                (org-quote :inherit markdown-blockquote-face)
                (org-scheduled :foreground ,ctp-green)
