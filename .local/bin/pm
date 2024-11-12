@@ -19,6 +19,7 @@ pm_yay() {
         (i) yay -S "$@" ;;
         (u) yay -Syu "$@" ;;
         (r) yay -Rns "$@" ;;
+        (c) yay -Sc "$@" ;;
         (s) yay -Ss "$@" ;;
         (q) yay -Qi "$@" ;;
         (*) yay "$cmd" "$@" ;;
