@@ -1,9 +1,10 @@
+[general]
 import = ["~/.config/alacritty/themes/catppuccin.toml"]
 live_config_reload = true
 
-[shell]
-program = "/usr/bin/zsh"
-args = ["--login", "-c", "tmux a -t main || tmux new -s main"]
+# [shell]
+# program = "/usr/bin/zsh"
+# args = ["--login", "-c", "tmux a -t main || tmux new -s main"]
 
 # [env]
 # TERM = "xterm-256color"
