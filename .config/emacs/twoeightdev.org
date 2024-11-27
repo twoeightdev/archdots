@@ -770,7 +770,7 @@ Display key bindings following your currently entered incomplete command.
 
 ** Modeline
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
 (defun evil-state-symbol ()
   "Return a symbol representing the current Evil state."
   (cond
@@ -822,10 +822,105 @@ Display key bindings following your currently entered incomplete command.
 
    " %l:%c "
 
-   " %m "))
+   "["mode-name"]" ))
+
+   ;; " %m "))
 
 (setq-default mode-line-format
               '((:eval (custom-mode-line))))
+#+END_SRC
+
+** Modes
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(defun ntf/mode-line-format (left right)
+  "Return a string of `window-width' length.
+Containing LEFT, and RIGHT aligned respectively."
+  (let ((available-width (- (window-width) (length left) 1)))
+    (format (format "%%s %%%ds " available-width) left right)))
+
+(defface evil-mode-line-face '((t (:foreground  "black"
+                                                  :background "orange")))
+    "Face for evil mode-line colors.")
+
+(setq-default
+   mode-line-format
+   '((:eval (ntf/mode-line-format
+             ;; left portion
+             (format-mode-line
+              (quote ("%e"
+                      (:eval
+                       (when (bound-and-true-p evil-local-mode)
+                         (propertize
+                          (concat
+                           " "
+                           (upcase
+                            (substring (symbol-name evil-state) 0 1))
+                           (substring (symbol-name evil-state) 1)
+                           " ") 'face 'evil-mode-line-face)))
+                      " " (:eval (when (buffer-modified-p) "[+]"))
+                      " " mode-line-buffer-identification
+                      " %l:%c")))
+             ;; right portion
+             (format-mode-line (quote ("%m " (vc-mode vc-mode))))))))
+#+END_SRC
+
+** Mode2
+
+#+BEGIN_SRC emacs-lisp
+(defun twoeightdev/mode-line-format (left right)
+  "Return a string of `window-width' length.
+Containing LEFT, and RIGHT aligned respectively."
+  (let ((available-width (- (window-width) (length left) 1)))
+    (format (format "%%s %%%ds " available-width) left right)))
+
+(defun evil-state-symbol ()
+  "Return a symbol representing the current Evil state."
+  (cond
+   ((evil-normal-state-p)   "NORMAL")
+   ((evil-insert-state-p)   "INSERT")
+   ((evil-visual-state-p)   "VISUAL")
+   ((evil-replace-state-p)  "REPLACE")
+   (t                       "󰻃 ")))
+
+(defun evil-state-color ()
+  "Return the color of the current Evil state."
+  (cond
+   ((evil-normal-state-p)   "#f5c2e7")
+   ((evil-insert-state-p)   "#a6e3a1")
+   ((evil-visual-state-p)   "#f9e2af")
+   ((evil-replace-state-p)  "#f5c2e7")
+   (t                       "#cba6f7")))
+
+(defun filename-color ()
+  "Return a mode line component that shows the buffer
+name with appropriate color."
+  (let* ((file-name (buffer-file-name))
+         (modified (buffer-modified-p))
+         (color (if modified
+                    "#f38ba8"
+                  "#a6e3a1")))
+    (propertize (or (and file-name (file-name-nondirectory file-name))
+                    (buffer-name))
+                'face `(:foreground ,color))))
+
+(setq-default
+ mode-line-format
+ '((:eval (twoeightdev/mode-line-format
+           (format-mode-line
+            (quote ("%e"
+                    " "
+                    (:eval
+                     (propertize
+                      (evil-state-symbol)
+                      'face `(:foreground
+                              ,(evil-state-color)
+                              :weight bold)))
+                    " "
+                    (:eval (filename-color))
+                    " %l:%c")))
+           (format-mode-line
+            (quote ("%m " (vc-mode vc-mode))))))))
 #+END_SRC
 
 ** Garbage Collect
