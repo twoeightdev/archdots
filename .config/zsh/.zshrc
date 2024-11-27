@@ -124,7 +124,7 @@ bindkey -s "^[e" "^ueditfile\n"
 jumptodirectory() {
     cd "$(rg "$HOME" -0 --files | xargs -0 dirname | sort -u | fzf)" || exit
 }
-bindkey -s "^[j" "^ujumptodirectory\n"
+bindkey -s "^[d" "^ujumptodirectory\n"
 
 # Source fzf
 if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ]]; then
