@@ -23,4 +23,4 @@ Personal _dotfiles_ for [archlinux](https://archlinux.org/) and
 ## 🚀 Dotfiles Installation
 
 I use **Git Bare** repository to manage my dotfiles and use a wrapper script
-[dot](./local/bin/dot) after initial configuration below.
+[dot](.local/bin/dot) after initial configuration below.
