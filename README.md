@@ -1,3 +1,3 @@
 # 🍚 Arch Linux Dotfiles
 
-![archlinux_logo](~/.local/wallpapers/archlinux-logo.svg)
+![archlinux_logo](.local/wallpapers/archlinux-logo.svg)
