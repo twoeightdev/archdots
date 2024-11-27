@@ -9,6 +9,7 @@ return {
                 { "<leader>g", group = "git" },
                 { "<leader>f", group = "find" },
                 { "<leader>l", group = "lsp" },
+                { "<leader>m", group = "markdown" },
                 { "<leader>d", group = "debugger" },
                 { "<leader><tab>", group = "buffers" },
                 { "<leader>o", group = "orgmode" },
