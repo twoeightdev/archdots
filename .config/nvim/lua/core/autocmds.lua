@@ -141,11 +141,15 @@ autocmd("FileType", {
     pattern = "markdown",
     callback = function()
         vim.opt_local.spell = true
-        vim.opt_local.wrap = true
-        vim.opt_local.conceallevel = 0
+        --WARNING: wrap enable is having issue with OXY2DEV/markview.nvim
+        -- vim.opt_local.wrap = true
+        --NOTE: let OXY2DEV/markview.nvim handle conceals
+        -- vim.opt_local.conceallevel = 2
+        vim.opt_local.concealcursor = "nvc"
+        --NOTE: enable folding for OXY2DEV/markview.nvim
         -- vim.opt.foldmethod = "expr"
         -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-        vim.opt_local.foldenable = true
+        -- vim.opt_local.foldenable = true
     end,
 })
 
