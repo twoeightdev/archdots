@@ -13,7 +13,6 @@ from libqtile.config import (
     Screen,
 )
 from libqtile.lazy import lazy
-
 from spotify import Spotify
 
 mod = "mod4"
@@ -461,7 +460,8 @@ def core_widget():
         widget.PulseVolume(fmt="󰕾 {}", foreground=color[4]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
-            format="{char} {percent:2.0%}",
+            # format="{char} {percent:2.0%}",
+            format="{char} {percent:2.0%} {hour:d}:{min:02d} {watt:.2f}W",
             show_short_text=False,
             charge_char="",
             full_char="",
