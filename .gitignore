@@ -68,6 +68,7 @@
 .local/orgdata/
 .local/review/
 .local/screenshot/
+.local/share/calcurse/
 .local/share/cargo/
 .local/share/delta/
 .local/share/fonts/
