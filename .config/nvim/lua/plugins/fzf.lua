@@ -26,6 +26,13 @@ return {
             desc = "Recent files",
         },
         {
+            "<leader>fn",
+            function()
+                return require("fzf-lua").files({ cwd = "~/.local/src/mdnotes/" })
+            end,
+            desc = "Notes in markdown",
+        },
+        {
             "<leader>fx",
             function()
                 return require("fzf-lua").files({ cwd = "~/" })
