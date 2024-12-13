@@ -3,7 +3,7 @@
     monitor = 0
     follow = none
     width = 300
-    height = 300
+    height = 70
     origin = top-right
     offset = 10x50
     scale = 0
@@ -26,7 +26,7 @@
     separator_color = frame
     sort = yes
 
-    font = Monospace 14
+    font = Monospace 16
     line_height = 0
     markup = full
     format = "<b>%s</b>\n%b"
