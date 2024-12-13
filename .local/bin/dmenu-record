@@ -55,8 +55,8 @@ webcam() {
 audio() {
     ffmpeg \
         -f alsa -i default \
-        -c:a flac \
-        "$HOME/audio-$(date '+%y%m%d-%H%M-%S').flac" &
+        -c:a mp3 \
+        "$HOME/audio-$(date '+%y%m%d-%H%M-%S').mp3" &
     echo $! >/tmp/recordingpid
 }
 
