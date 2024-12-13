@@ -1,3 +1,5 @@
+# Last Modified: Thu, 12 Dec 2024 11:52:35 AM
+
 import re
 
 from libqtile import bar, layout, qtile, widget
@@ -13,6 +15,7 @@ from libqtile.config import (
     Screen,
 )
 from libqtile.lazy import lazy
+
 from spotify import Spotify
 
 mod = "mod4"
@@ -97,6 +100,7 @@ keys = [
     Key([mod, "shift"], "F12", lazy.spawn("torrclear"), desc="Remove finished torrent"),
     Key([mod], "c", lazy.spawn("camtoggle"), desc="Webcam"),
     Key([mod, "shift"], "c", lazy.spawn(camkill), desc="Webcam"),
+    Key([mod], "F8", lazy.spawn("dmenu-record"), desc="Record screen"),
 ]
 
 # Groups
@@ -378,7 +382,8 @@ floating_layout = layout.Floating(
 # Widgets
 widget_defaults = dict(
     font="monospace Bold",
-    fontsize=16,
+    # fontsize=16,
+    fontsize=20,
     background=color[0],
     padding=5,
 )
