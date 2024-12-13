@@ -1,4 +1,6 @@
-Xcursor*theme: Adwaita
+! Xorg configuration
+*.font: xft:Iosevka:pixelsize=24
+Xcursor.theme: Adwaita
 Xcursor.size: 32
 
 #define bg #1e1e2e
@@ -61,7 +63,7 @@ Xcursor.size: 32
 *color14: c14
 *color15: c15
 
-dmenu.font: monospace-14
+dmenu.font: monospace-16
 dmenu.foreground: fg
 dmenu.background: bg
 dmenu.selforeground: bg
