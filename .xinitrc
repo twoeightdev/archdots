@@ -14,4 +14,6 @@ done >/dev/null 2>&1
 
 dbus-update-activation-environment --all
 
-ssh-agent qtile start
+dbus-launch ssh-agent qtile start
+
+# Last Modified: Sat, 14 Dec 2024 05:16:50 AM
