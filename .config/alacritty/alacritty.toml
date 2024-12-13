@@ -6,44 +6,43 @@ live_config_reload = true
 # program = "/usr/bin/zsh"
 # args = ["--login", "-c", "tmux a -t main || tmux new -s main"]
 
-# [env]
-# TERM = "xterm-256color"
+[env]
+TERM = "xterm-256color"
 
 [font]
-size=9.4
-
-[font.glyph_offset]
-x=0
-y=0
-
-# For Iosevka Font
-[font.offset]
-x=0
-y=0
-
-# For Dank Mono Font
-# [font.offset]
-# x=-1
-# y=4
+size = 11
+offset.x = 0
+offset.y = 0
+glyph_offset.x = 0
+glyph_offset.y = 0
 
 [font.normal]
 family = "monospace"
-style = "Regular"
+# style = "Regular"
+style = "SemiBold"
 
-# [font.italic]
-# family = "monospace"
-# style = "Italic"
-#
-# [font.bold]
-# family = "monospace"
-# style = "Bold"
-#
-# [font.bold_italic]
-# family = "monospace"
-# style = "Bold Italic"
+[font.bold]
+family = "monospace"
+style = "ExtraBold"
+
+[font.italic]
+family = "monospace"
+style = "SemiBold Italic"
+
+[font.bold_italic]
+family = "monospace"
+style = "ExtraBold Italic"
 
 [window]
-opacity = 0.98
+opacity = 1
+dynamic_padding = false
+padding.x = 2
+padding.y = 2
+decorations = "none"
+
+# [scrolling]
+# history = 10000
+# multiplier = 3
 
 [cursor]
 # vi_mode_style = "Beam"
@@ -52,10 +51,6 @@ thickness = 0.16
 
 [mouse]
 hide_when_typing = true
-
-[window.padding]
-x = 4
-y = 2
 
 [keyboard]
 bindings = [
