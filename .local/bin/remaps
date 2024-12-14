@@ -3,3 +3,5 @@ xset r rate 300 50            # increase key speed via a rate change
 setxkbmap -option caps:escape # map the caps lock key to escape
 # xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/xorg/xresources
 xrdb -merge ~/.config/xorg/xdefaults
+
+# Last Modified: Thu, 12 Dec 2024 03:32:05 PM
