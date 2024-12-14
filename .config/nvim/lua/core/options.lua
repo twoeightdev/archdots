@@ -1,6 +1,8 @@
 local opt = vim.opt
 local g = vim.g
 
+-- g.nomore = true
+opt.background = "dark"
 opt.signcolumn = "yes"
 opt.showbreak = "↪ "
 -- opt.listchars = {
@@ -66,6 +68,7 @@ opt.grepprg = "rg --vimgrep"
 opt.grepformat = "%f:%l:%c:%m"
 -- Key timeout to 300ms
 opt.timeoutlen = 300
+-- opt.ttimeoutlen = 10
 -- Update time
 opt.updatetime = 200
 -- Confirm save changed on exit
@@ -86,8 +89,23 @@ opt.pumheight = 10
 opt.virtualedit = "block"
 -- Partial command letters bellow statusline
 opt.showcmd = false
+-- Disable text that shows INSERT, VISUAL
+opt.showmode = false
+-- Cmdheight
+opt.cmdheight = 2
+-- opt.display:append("uhex")
+-- opt.hidden = false
 -- Shortmess
-opt.shortmess:append({ W = true, I = true, c = true, C = true })
+opt.shortmess:append({
+    S = true,
+    s = true,
+    W = true,
+    I = true,
+    c = true,
+    C = true,
+    A = true,
+    F = true,
+})
 -- Session save options
 opt.sessionoptions = {
     "buffers",
@@ -111,3 +129,5 @@ g.loaded_node_provider = 0
 g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
+
+-- Last Modified: Sun, 15 Dec 2024 12:04:22 AM

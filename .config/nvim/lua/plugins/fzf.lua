@@ -1,7 +1,6 @@
 return {
     "ibhagwan/fzf-lua",
     cmd = "FzfLua",
-    event = "VeryLazy",
     dependencies = "nvim-tree/nvim-web-devicons",
     keys = {
         {
@@ -155,7 +154,7 @@ return {
             desc = "Branches",
         },
         {
-            "<leader>gc",
+            "<leader>gt",
             function()
                 return require("fzf-lua").git_commits()
             end,
@@ -365,3 +364,5 @@ return {
         },
     },
 }
+
+-- Last Modified: Fri, 13 Dec 2024 08:40:15 AM

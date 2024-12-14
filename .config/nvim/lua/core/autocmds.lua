@@ -68,6 +68,7 @@ autocmd("FileType", {
     desc = "Close with just letter q",
     group = augroup("close_with_q"),
     pattern = {
+        "",
         "help",
         "lspinfo",
         "checkhealth",
@@ -106,22 +107,6 @@ autocmd("FileType", {
 })
 
 autocmd("FileType", {
-    desc = "Org files defaults",
-    group = augroup("orgmode_defaults"),
-    pattern = "org",
-    callback = function()
-        vim.opt_local.spell = true
-        vim.opt_local.wrap = false
-        vim.opt_local.conceallevel = 2
-        vim.opt_local.concealcursor = "nc"
-        vim.opt.formatoptions:remove({ "r" })
-        -- vim.opt.relativenumber = false
-        -- vim.opt.number = false
-        -- vim.opt_local.foldenable = false
-    end,
-})
-
-autocmd("FileType", {
     desc = "Check for spelling of specific filetypes and enable wrapping",
     group = augroup("wrap_and_spell"),
     pattern = {
@@ -136,38 +121,11 @@ autocmd("FileType", {
 })
 
 autocmd("FileType", {
-    desc = "Markdown defaults",
-    group = augroup("markdown_default"),
-    pattern = "markdown",
-    callback = function()
-        vim.opt_local.spell = true
-        --WARNING: wrap enable is having issue with OXY2DEV/markview.nvim
-        -- vim.opt_local.wrap = true
-        --NOTE: let OXY2DEV/markview.nvim handle conceals
-        -- vim.opt_local.conceallevel = 2
-        vim.opt_local.concealcursor = "nvc"
-        --NOTE: enable folding for OXY2DEV/markview.nvim
-        -- vim.opt.foldmethod = "expr"
-        -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-        -- vim.opt_local.foldenable = true
-    end,
-})
-
-autocmd("FileType", {
     desc = "Disable conceallevel for json filetypes",
     group = augroup("json_conceal"),
     pattern = { "json", "jsonc", "json5" },
     callback = function()
         vim.opt_local.conceallevel = 0
-    end,
-})
-
-autocmd("FileType", {
-    desc = "Remove statusline on dashboard",
-    group = augroup("no_status_dashboard"),
-    pattern = { "dashboard" },
-    callback = function()
-        vim.opt_local.cmdheight = 0
     end,
 })
 
@@ -191,3 +149,68 @@ autocmd("BufWritePost", {
     pattern = { "dunstrc" },
     command = "silent! !pkill dunst; dunst &",
 })
+
+autocmd("BufWritePre", {
+    desc = "Auto timestamp at the end of the file if modified",
+    group = augroup("modified_time"),
+    pattern = "*",
+    callback = function()
+        local bufnr = vim.api.nvim_get_current_buf()
+
+        if not vim.api.nvim_buf_get_option(bufnr, "modifiable") then
+            vim.notify("Current file is not modifiable!", vim.log.levels.WARN)
+            return
+        end
+
+        if not vim.api.nvim_buf_get_option(bufnr, "modified") then
+            return
+        end
+
+        local filetype = vim.bo.filetype
+        local comment_prefix = {
+            lua = "--",
+            python = "#",
+            sh = "#",
+            bash = "#",
+            javascript = "//",
+            c = "//",
+            cpp = "//",
+            java = "//",
+            go = "//",
+            html = "<!--",
+            css = "/*",
+            zsh = "#",
+            toml = "#",
+            tmux = "#",
+        }
+
+        if not comment_prefix[filetype] then
+            return
+        end
+
+        local suffix = (filetype == "html" and " -->")
+            or (filetype == "css" and " */")
+            or ""
+        local prefix = comment_prefix[filetype] or "#"
+        local time = os.date("%a, %d %b %Y %I:%M:%S %p")
+        local comment_line = string.format("%s Last Modified: %s%s", prefix, time, suffix)
+        local last_line_number = vim.fn.line("$")
+        local last_line = vim.fn.getline(last_line_number)
+
+        if last_line:match(vim.pesc(prefix) .. " Last Modified:") then
+            vim.fn.setline(last_line_number, comment_line)
+            vim.notify("Updated 'Last Modified' timestamp at the end of the file!")
+        else
+            vim.api.nvim_buf_set_lines(
+                bufnr,
+                last_line_number,
+                last_line_number,
+                false,
+                { "", comment_line }
+            )
+            vim.notify("Added 'Last Modified' timestamp at the end of the file!")
+        end
+    end,
+})
+
+-- Last Modified: Fri, 13 Dec 2024 08:37:44 AM

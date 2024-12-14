@@ -86,3 +86,22 @@ end, { desc = "Inlay hints" })
 
 -- Better gf to open markdown local link
 map("n", "gf", "^f/gf")
+
+-- Input date and time for due.nvim
+map("n", "<leader>at", function()
+    vim.ui.input(
+        { prompt = "Enter date and time (YYYY-MM-DD HH:MM AM/PM): " },
+        function(input)
+            if input then
+                -- Enclose the input inside square brackets
+                local enclosed_input = "[" .. input .. "]"
+                -- Insert the enclosed input at the cursor position
+                vim.api.nvim_put({ enclosed_input }, "c", true, true)
+            else
+                print("No input provided.")
+            end
+        end
+    )
+end, { desc = "Input date and time for due" })
+
+-- Last Modified: Sun, 15 Dec 2024 01:58:01 AM

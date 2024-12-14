@@ -6,16 +6,16 @@ return {
                 "theHamsta/nvim-dap-virtual-text",
                 opts = { highlight_new_as_changed = true },
             },
-            {
-                "jay-babu/mason-nvim-dap.nvim",
-                cmd = { "DapInstall", "DapUninstall" },
-                dependencies = "williamboman/mason.nvim",
-                opts = {
-                    automatic_installation = true,
-                    handlers = {},
-                    ensure_installed = { "python" },
-                },
-            },
+            -- {
+            --     "jay-babu/mason-nvim-dap.nvim",
+            --     cmd = { "DapInstall", "DapUninstall" },
+            --     dependencies = "williamboman/mason.nvim",
+            --     opts = {
+            --         automatic_installation = true,
+            --         handlers = {},
+            --         ensure_installed = { "python" },
+            --     },
+            -- },
             {
                 "ofirgall/goto-breakpoints.nvim",
                 keys = {

@@ -1,191 +1,159 @@
 return {
-    "neovim/nvim-lspconfig",
-    event = "VeryLazy",
-    dependencies = {
-        {
+    {
+        "williamboman/mason.nvim",
+        opts = {
+            ui = {
+                icons = {
+                    package_pending = " ",
+                    package_installed = "󰄳 ",
+                    package_uninstalled = "󰚌 ",
+                },
+            },
+            log_level = vim.log.levels.OFF,
+        },
+    },
+    {
+        "WhoIsSethDaniel/mason-tool-installer.nvim",
+        dependencies = "williamboman/mason.nvim",
+        opts = {
+            ensure_installed = {
+                "lua-language-server",
+                "marksman",
+                "bash-language-server",
+                "stylua",
+                "markdownlint",
+                "shfmt",
+                "shellcheck",
+                "markdown-toc",
+                "prettier",
+                "ruff",
+                "pyright",
+                "yaml-language-server",
+                "json-lsp",
+                "debugpy",
+            },
+            run_on_start = true,
+        },
+    },
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
             "williamboman/mason.nvim",
-            cmd = "Mason",
-            opts = {
-                ui = {
-                    icons = {
-                        package_pending = " ",
-                        package_installed = "󰄳 ",
-                        package_uninstalled = "󰚌 ",
+        },
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {
+            diagnostics = {
+                underline = false,
+                severity_sort = true,
+                signs = false,
+                -- signs = {
+                --     Error = " ",
+                --     Warn = " ",
+                --     Hint = "",
+                --     Info = " ",
+                -- },
+                virtual_text = {
+                    prefix = "",
+                    -- source = false,
+                    format = function()
+                        return "◾"
+                    end,
+                },
+                float = {
+                    border = "single",
+                    source = true,
+                    header = "",
+                    format = function(diagnostic) -- prefix
+                        return diagnostic.message
+                    end,
+                },
+            },
+            servers = {
+                lua_ls = {
+                    log_level = 0,
+                    settings = {
+                        Lua = {
+                            diagnostics = {
+                                globals = { "vim" },
+                            },
+                            workspace = { checkThirdParty = false },
+                            completion = { callSnippet = "Replace" },
+                            doc = {
+                                privateName = { "^_" },
+                            },
+                            hint = {
+                                enable = true,
+                                arrayIndex = "Disable",
+                            },
+                        },
                     },
                 },
-                log_level = vim.log.levels.OFF,
-                ensure_installed = {
-                    "stylua",
-                    "shfmt",
-                    "shellcheck",
-                    "markdown-toc",
-                    "prettier",
-                    "ruff",
-                    "markdownlint",
+                marksman = {},
+                bashls = {
+                    filetypes = {
+                        "sh",
+                        "zsh",
+                        "bash",
+                    },
                 },
-            },
-            config = function(_, opts)
-                require("mason").setup(opts)
-                local masonreg = require("mason-registry")
-                local function ensure_installed()
-                    for _, tool in ipairs(opts.ensure_installed) do
-                        local p = masonreg.get_package(tool)
-                        if not p:is_installed() then
-                            p:install()
-                        end
-                    end
-                end
-                if masonreg.refresh then
-                    masonreg.refresh(ensure_installed)
-                else
-                    ensure_installed()
-                end
-            end,
-        },
-        {
-            "williamboman/mason-lspconfig.nvim",
-            cmd = { "LspInstall", "LspUninstall" },
-            opts = {
-                ensure_installed = {
-                    "bashls",
-                    "lua_ls",
-                    "yamlls",
-                    "jsonls",
-                    "marksman",
-                    "pyright",
-                },
-            },
-        },
-    },
-    keys = {
-        {
-            "gd",
-            vim.lsp.buf.hover,
-            desc = "Goto definition",
-        },
-        {
-            "gy",
-            vim.lsp.buf.type_definition,
-            desc = "Goto type definition",
-        },
-    },
-    config = function()
-        local lspconfig = require("lspconfig")
-        local mason_lspconfig = require("mason-lspconfig")
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-        local signs = { Error = " ", Warn = " ", Hint = "", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = "", linehl = "", numhl = "" })
-        end
-
-        vim.diagnostic.config({
-            signs = false,
-            underline = false,
-            update_in_insert = false,
-            severity_sort = true,
-            float = {
-                style = "minimal",
-                border = "single",
-                source = true,
-                header = "",
-                prefix = "",
-            },
-            virtual_text = {
-                prefix = "",
-                source = false,
-                format = function()
-                    return "◾"
-                end,
-            },
-        })
-
-        mason_lspconfig.setup_handlers({
-            function(server_name)
-                lspconfig[server_name].setup({
-                    capabilities = capabilities,
-                })
-            end,
-        })
-
-        lspconfig.lua_ls.setup({
-            log_level = 0,
-            settings = {
-                Lua = {
-                    diagnostics = { globals = { "vim" } },
-                    -- diagnostics = { enable = false },
-                    workspace = { checkThirdParty = false },
-                    completion = { callSnippet = "Replace" },
-                },
-            },
-        })
-
-        lspconfig.pyright.setup({
-            settings = {
                 pyright = {
-                    disableOrganizeImports = true,
+                    settings = {
+                        pyright = {
+                            disableOrganizeImports = true,
+                        },
+                        python = {
+                            analysis = {
+                                typeCheckingMode = "standard",
+                                diagnosticSeverityOverrides = {
+                                    reportPrivateImportUsage = false,
+                                    reportArgumentType = false,
+                                },
+                            },
+                        },
+                    },
                 },
-                python = {
-                    analysis = {
-                        typeCheckingMode = "standard",
-                        diagnosticSeverityOverrides = {
-                            reportPrivateImportUsage = false,
-                            reportArgumentType = false,
+                yamlls = {
+                    settings = {
+                        yaml = {
+                            format = {
+                                enable = true,
+                            },
+                        },
+                    },
+                },
+                jsonls = {
+                    settings = {
+                        json = {
+                            format = {
+                                enable = true,
+                            },
                         },
                     },
                 },
             },
-        })
+        },
+        config = function(_, opts)
+            local lspconfig = require("lspconfig")
 
-        -- lspconfig.basedpyright.setup({
-        --     settings = {
-        --         basedpyright = {
-        --             analysis = {
-        --                 typeCheckingMode = "standard",
-        --                 autoSearchPaths = true,
-        --                 useLibraryCodeForTypes = true,
-        --                 autoImportCompletions = true,
-        --                 diagnosticsMode = "openFilesOnly",
-        --                 diagnosticSeverityOverrides = {
-        --                     reportMissingImports = false,
-        --                     reportUnusedImport = false,
-        --                     reportTypeCommentUsage = false,
-        --                     reportPrivateImportUsage = false,
-        --                     reportArgumentType = false,
-        --                     reportUnknownMemberType = false,
-        --                     reportUnknownArgumentType = false,
-        --                     reportUndefinedVariable = false,
-        --                 },
-        --             },
-        --         },
-        --     },
-        -- })
+            --NOTE: Uncomment this if using diagnostics.signs
+            -- for type, icon in pairs(opts.diagnostics.signs) do
+            --     local hl = "DiagnosticSign" .. type
+            --     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+            -- end
 
-        lspconfig.bashls.setup({
-            filetypes = { "sh", "zsh", "bash" },
-        })
+            vim.diagnostic.config({
+                virtual_text = opts.diagnostics.virtual_text,
+                severity_sort = opts.diagnostics.severity_sort,
+                float = opts.diagnostics.float,
+                underline = opts.diagnostics.underline,
+                signs = opts.diagnostics.signs,
+            })
 
-        lspconfig.yamlls.setup({
-            settings = {
-                yaml = {
-                    format = {
-                        enable = true,
-                    },
-                },
-            },
-        })
-
-        lspconfig.jsonls.setup({
-            settings = {
-                json = {
-                    format = {
-                        enable = true,
-                    },
-                },
-            },
-        })
-
-        lspconfig.marksman.setup({})
-    end,
+            for server, config in pairs(opts.servers) do
+                lspconfig[server].setup(config)
+            end
+        end,
+    },
 }
+
+-- Last Modified: Fri, 13 Dec 2024 02:19:47 AM

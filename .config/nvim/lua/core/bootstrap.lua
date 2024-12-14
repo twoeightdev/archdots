@@ -49,7 +49,7 @@ require("lazy").setup({
             start = "",
             task = "  ",
         },
-        title = "💤 Lazy.nvim",
+        title = "󰒲 Lazy.nvim",
         custom_keys = { false },
         border = "single",
         backdrop = 100,
@@ -64,8 +64,11 @@ require("lazy").setup({
         notify = false,
     },
     change_detection = { notify = false },
+    rocks = {
+        enabled = false,
+    },
     git = {
-        log = { "--since=3 days ago", timeout = 60 },
+        log = { "--since=3 days ago", timeout = 120 },
     },
     diff = { cmd = "terminal_git" },
     performance = {
@@ -84,3 +87,5 @@ require("lazy").setup({
         },
     },
 })
+
+-- Last Modified: Sun, 15 Dec 2024 12:04:07 AM

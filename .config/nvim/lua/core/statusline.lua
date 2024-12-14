@@ -1,3 +1,5 @@
+-- Last Modified: Thu, 12 Dec 2024 12:11:39 PM
+
 local function _Spacer(n)
     local spaces = string.rep(" ", n)
     return "%#StatuslineTextMain#" .. spaces
@@ -65,21 +67,13 @@ local function ModeColor()
     elseif current_mode == "i" or current_mode == "ic" then
         return "%#StatuslineModeInsert#"
         -- higroup = "%#StatuslineModeInsert#"
-    elseif
-        current_mode == "v"
-        or current_mode == "V"
-        or current_mode == ""
-    then
+    elseif current_mode == "v" or current_mode == "V" or current_mode == "" then
         return "%#StatuslineModeVisual#"
         -- higroup = "%#StatuslineModeVisual#"
     elseif current_mode == "R" or current_mode == "Rv" then
         return "%#StatuslineModeReplace#"
         -- higroup = "%#StatuslineModeReplace#"
-    elseif
-        current_mode == "s"
-        or current_mode == "S"
-        or current_mode == ""
-    then
+    elseif current_mode == "s" or current_mode == "S" or current_mode == "" then
         return "%#StatuslineModeSelect#"
         -- higroup = "%#StatuslineModeSelect#"
     elseif current_mode == "c" then
@@ -187,10 +181,8 @@ local function Diagnostics()
         #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     local count_warning =
         #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-    local count_info =
-        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
-    local count_hint =
-        #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
+    local count_info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
+    local count_hint = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
     local diag_count = 0
     local icon_error = " "
     local icon_warning = " "

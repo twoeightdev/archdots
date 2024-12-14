@@ -4,7 +4,7 @@ return {
     name = "catppuccin",
     priority = 1000,
     opts = {
-        flavour = "mocha",
+        flavour = "auto",
         background = {
             light = "latte",
             dark = "mocha",
@@ -43,18 +43,20 @@ return {
                 DiagnosticVirtualTextHint = { bg = "none" },
                 DiagnosticVirtualTextInfo = { bg = "none" },
                 DiagnosticVirtualTextWarn = { bg = "none" },
+                -- WinBar = { fg = colors.red },
             }
         end,
         default_integrations = true,
         integrations = {
             cmp = true,
+            -- blink_cmp = true,
             dap = true,
             dashboard = true,
             dap_ui = true,
             fzf = true,
             gitsigns = true,
             indent_blankline = true,
-            illuminate = true,
+            -- illuminate = true,
             markdown = true,
             native_lsp = {
                 enabled = true,
@@ -81,3 +83,5 @@ return {
         catppuccin.load()
     end,
 }
+
+-- Last Modified: Fri, 13 Dec 2024 02:17:58 AM
