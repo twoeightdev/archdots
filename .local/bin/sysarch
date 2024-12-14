@@ -27,7 +27,7 @@ cpu=$(lscpu | grep "Model name" | cut -f 2 -d ":" | awk '{print $2,$3,$4}')
 gpu=$(lspci | grep VGA | cut -f 3 -d "[" | awk 'FNR == 1 {print $1, $2, $3}')
 pkg=$(pacman -Qqs | wc -l)
 getwm=$(xprop -id "$(xprop -root -notype | awk '$1=="_NET_SUPPORTING_WM_CHECK:"{print $5}')" -notype -f _NET_WM_NAME 8t | grep "WM_NAME" | cut -f2 -d \")
-mem=$(free --mega | awk 'NR == 2 { print $3" / "$2" MB" }')
+mem=$(free --mega | awk 'NR == 2 { print $3"|"$2" MB" }')
 # uptime=$(uptime -p | sed 's/up //')
 uptime=$(uptime -p | sed -e 's/hour/hr/' -e 's/hours/hrs/' -e 's/minutes/mins/' -e 's/minute/min/' -e 's/up //')
 
@@ -44,3 +44,5 @@ echo -e "${c2} [wm] ${c0}        ${c3}$getwm${c0}"
 echo -e "${c7} [packages] ${c0}  ${c3}$pkg${c0}"
 echo -e "${c1} [shell] ${c0}     ${c3}${SHELL##*/}${c0}"
 echo -e "${c4} [ram] ${c0}       ${c3}$mem${c0}"
+
+# Last Modified: Sat, 14 Dec 2024 05:50:37 AM
