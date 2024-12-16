@@ -89,7 +89,6 @@ return {
                 { name = "luasnip", priority = 60 },
                 { name = "buffer", priority = 40 },
                 { name = "path", priority = 30 },
-                { name = "orgmode" },
                 { name = "treesitter" },
             }),
             formatting = {
@@ -102,7 +101,6 @@ return {
                         menu = {
                             nvim_lsp = "LSP",
                             luasnip = "Snippet",
-                            orgmode = "orgmode",
                             buffer = "Buffer",
                             path = "Path",
                         },
@@ -160,4 +158,4 @@ return {
     end,
 }
 
--- Last Modified: Fri, 13 Dec 2024 01:12:17 AM
+-- Last Modified: Mon, 16 Dec 2024 11:04:57 PM
