@@ -16,9 +16,9 @@ Personal _dotfiles_ for [archlinux](https://archlinux.org/) and
 
 ## 📸 Screenshots
 
-![screenshot01](.local/wallpapers/screenshot01.png)
+![screenshot01](.local/wallpapers/screenshot001.png)
 
-![screenshot02](.local/wallpapers/screenshot02.png)
+![screenshot02](.local/wallpapers/screenshot002.png)
 
 ## 🚀 Dotfiles Installation
 
