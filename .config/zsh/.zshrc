@@ -100,7 +100,7 @@ cd() {
     builtin cd "${new_directory}" && ls -AhN --color=auto --group-directories-first
 }
 
-# Use lf to jump in directories with ctrl-m
+# Use lf to jump in directories with ctrl-o
 # shellcheck disable=2164
 lfcd() {
     tmp="$(mktemp -uq)"
@@ -120,7 +120,7 @@ editfile() {
 }
 bindkey -s "^[e" "^ueditfile\n"
 
-# Search in $HOME with fzf and cd to that directory with alt-m
+# Search in $HOME with fzf and cd to that directory with alt-d
 jumptodirectory() {
     cd "$(rg "$HOME" -0 --files | xargs -0 dirname | sort -u | fzf)" || exit
 }
@@ -139,3 +139,5 @@ source "$ZPLUG"/system-clipboard/zsh-system-clipboard.zsh
 
 # Source zsh-fast-syntax-highlighting
 source "$ZPLUG"/fasthl/fast-syntax-highlighting.plugin.zsh
+
+# Last Modified: Mon, 16 Dec 2024 10:57:25 PM
