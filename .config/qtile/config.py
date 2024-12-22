@@ -455,14 +455,15 @@ def core_widget():
             foreground=color[12],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Wttr(
-            location={"Philippines": "Home"},
-            format="%m%t",
-            foreground=color[10],
-            update_interval=3600,
-        ),
-        widget.Sep(**widget_defaults, size_percent=60),
-        widget.PulseVolume(fmt="󰕾 {}", foreground=color[4]),
+        # widget.Wttr(
+        #     location={"Philippines": "Home"},
+        #     format="%m%t",
+        #     foreground=color[10],
+        #     update_interval=3600,
+        # ),
+        # widget.Sep(**widget_defaults, size_percent=60),
+        # widget.PulseVolume(fmt="󰕾 {}", foreground=color[4]),
+        widget.Volume(fmt="󰕾 {}", foreground=color[4]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
             # format="{char} {percent:2.0%}",
@@ -498,3 +499,5 @@ dgroups_app_rules = [
     Rule(Match(wm_class=re.compile(r"^(Steam|steam)$")), group="4"),
     Rule(Match(title=re.compile(r"^(Steam\ setup|Steam|steam)$")), group="4"),
 ]
+
+# Last Modified: Mon, 23 Dec 2024 02:45:40 AM
