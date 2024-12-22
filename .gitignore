@@ -44,6 +44,7 @@
 .config/mpd/sticker.sql
 .config/ncmpcpp/error.log
 .config/newsboat/error.log
+.config/nimble/
 .config/nvim/lazy-lock.json
 .config/pulse/
 .config/qtile/__pycache__/
