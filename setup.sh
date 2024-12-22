@@ -45,7 +45,7 @@ archpkg() {
         # amd
         lib32-vulkan-radeon mesa-utils mesa-vdpau vulkan-tools
         # audio
-        pipewire pipewire-alsa pipewire-pulse pulsemixer
+        pipewire pipewire-alsa pipewire-pulse pulsemixer alsa-utils
         # fonts
         libertinus-font noto-fonts noto-fonts-emoji ttf-dejavu ttf-liberation
         ttc-iosevka ttc-iosevka-aile ttf-iosevka-nerd ttf-joypixels
@@ -80,7 +80,7 @@ aurpkg() {
         catppuccin-gtk-theme-mocha
         firefox-tridactyl-native
         firefox-extension-enhancer-for-youtube-bin
-        python-pulsectl-asyncio
+        # python-pulsectl-asyncio
     )
     # install all aur packages
     yay --needed --noconfirm --answerclean None --answerdiff None --removemake -S "${aurpkgs[@]}"
@@ -159,3 +159,5 @@ if [ -n "$1" ]; then
 else
     menu
 fi
+
+# Last Modified: Mon, 23 Dec 2024 04:45:18 AM
