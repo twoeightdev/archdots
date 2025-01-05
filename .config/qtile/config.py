@@ -462,8 +462,8 @@ def core_widget():
         #     update_interval=3600,
         # ),
         # widget.Sep(**widget_defaults, size_percent=60),
-        # widget.PulseVolume(fmt="󰕾 {}", foreground=color[4]),
-        widget.Volume(fmt="󰕾 {}", foreground=color[4]),
+        widget.PulseVolume(fmt="󰕾 {}", foreground=color[4]),
+        # widget.Volume(fmt="󰕾 {}", foreground=color[4]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
             # format="{char} {percent:2.0%}",
@@ -500,4 +500,4 @@ dgroups_app_rules = [
     Rule(Match(title=re.compile(r"^(Steam\ setup|Steam|steam)$")), group="4"),
 ]
 
-# Last Modified: Mon, 23 Dec 2024 02:45:40 AM
+# Last Modified: Mon, 06 Jan 2025 12:40:08 AM
