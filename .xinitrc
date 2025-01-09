@@ -6,7 +6,7 @@ setbg &
 # /usr/bin/emacs --daemon &
 # emacs --daemon &
 
-autostart="picom dunst pipewire unclutter mpd"
+autostart="picom dunst unclutter mpd"
 
 for program in $autostart; do
     pidof -s "$program" || setsid -f "$program"
@@ -16,4 +16,4 @@ dbus-update-activation-environment --all
 
 dbus-launch ssh-agent qtile start
 
-# Last Modified: Mon, 23 Dec 2024 04:25:25 AM
+# Last Modified: Mon, 06 Jan 2025 12:40:18 AM
