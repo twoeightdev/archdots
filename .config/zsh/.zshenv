@@ -64,20 +64,36 @@ export SUDO_PROMPT=$'\e[1;31m'[$'\e[0m'sudo$'\e[1;31m']$'\e[0m'' password for '$
 export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [nyae]: "
 
 # Fzf
-export FZF_DEFAULT_OPTS='
---color bg+:0
---color gutter:-1,pointer:2,spinner:3
--e
+# export FZF_DEFAULT_OPTS='
+# --color bg+:0
+# --color gutter:-1,pointer:2,spinner:3
+# -e
+# --reverse
+# --no-border
+# --height 20%
+# --header-first
+# --no-bold
+# --no-scrollbar
+# --no-separator
+# --cycle
+# --pointer=">"
+# '
+
+export FZF_DEFAULT_OPTS="
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8
+--color=selected-bg:#45475a
+--multi
+--exact
 --reverse
 --no-border
---height 20%
+--height 40%
 --header-first
---no-bold
 --no-scrollbar
 --no-separator
---cycle
---pointer=">"
-'
+--pointer='>'
+--cycle"
 
 # Less
 export GROFF_NO_SGR=1
@@ -104,3 +120,5 @@ export MOZ_USE_XINPUT2=1
 
 # Shortcuts
 [ ! -f "$XDG_CONFIG_HOME"/shell/shrc ] && shortcuts >/dev/null 2>&1 &
+
+# Last Modified: Thu, 09 Jan 2025 11:20:53 AM
