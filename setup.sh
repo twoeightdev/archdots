@@ -25,6 +25,7 @@ menu() {
     echo -e "\e[1;92morgtangle:\e[0m ............ \e[37mtangle org configuration.\e[0m"
     echo -e "\e[1;92mgenkey:\e[0m ............... \e[37mgenerate ssh-key.\e[0m"
     echo -e "\e[1;92mremoteurl:\e[0m ............ \e[37mchange src remote urls.\e[0m"
+    echo -e "\e[1;92musersrv:\e[0m .............. \e[37menable user service.\e[0m"
     echo -e "\e[1;92mprivaterepo:\e[0m .......... \e[37mclone private repo.\e[0m"
     echo -e "\e[1;92mpaidfont:\e[0m ............. \e[37mcopy paid font.\e[0m"
 }
@@ -138,6 +139,11 @@ remoteurl() {
     echo -e "\e[1;31mdone! reboot then run privaterepo and paidfont.\e[0m"
 }
 
+usersrv() {
+    systemctl --user enable pipewire-pulse
+    echo -e "\e[1;31mdone!\e[0m"
+}
+
 privaterepo() {
     cd "$srcdir" || exit
     git clone git@github.com:twoeightdev/mdnotes.git
@@ -160,4 +166,4 @@ else
     menu
 fi
 
-# Last Modified: Tue, 24 Dec 2024 01:38:53 AM
+# Last Modified: Thu, 09 Jan 2025 11:33:01 AM
