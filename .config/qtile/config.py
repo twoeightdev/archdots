@@ -68,6 +68,7 @@ keys = [
     Key([], "XF86MonBrightnessDown", lazy.spawn(brightdown), desc="Brightness up"),
     Key([], "XF86TouchpadToggle", lazy.spawn("padtoggle"), desc="Toggle touchpad"),
     # System
+    Key([altmod], "b", lazy.hide_show_bar(), desc="Toggle qtile bar"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focus window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload configuration"),
     Key([mod], "escape", lazy.spawn(powermenu), desc="Power menu"),
@@ -451,7 +452,7 @@ def core_widget():
             # format="󱚽  {essid}",
             format="󱚽 ",
             disconnected_message="󰖪 ",
-            interface="wlp6s0",
+            interface="wlan0",
             foreground=color[12],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
@@ -500,4 +501,4 @@ dgroups_app_rules = [
     Rule(Match(title=re.compile(r"^(Steam\ setup|Steam|steam)$")), group="4"),
 ]
 
-# Last Modified: Mon, 06 Jan 2025 12:40:08 AM
+# Last Modified: Tue, 07 Jan 2025 02:57:16 PM
