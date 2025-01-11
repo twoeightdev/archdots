@@ -1,7 +1,10 @@
 #!/bin/sh
-xset r rate 300 50            # increase key speed via a rate change
-setxkbmap -option caps:escape # map the caps lock key to escape
-# xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/xorg/xresources
-xrdb -merge ~/.config/xorg/xdefaults
+xset s off -dpms
+# increase key speed via a rate change
+xset r rate 300 50
+# map the caps lock key to escape
+setxkbmap -option caps:escape
+# Turn off caps lock if on since there is no longer a key for it.
+xset -q | grep -q "Caps Lock:\s*on" && xdotool key Caps_Lock
 
-# Last Modified: Thu, 12 Dec 2024 03:32:05 PM
+# Last Modified: Sat, 11 Jan 2025 07:05:00 PM
