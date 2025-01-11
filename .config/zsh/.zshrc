@@ -1,3 +1,4 @@
+# shellcheck disable=2034,2016,1091
 # Prompt with git branch and git changes
 setopt prompt_subst
 autoload -Uz vcs_info
@@ -140,4 +141,4 @@ source "$ZPLUG"/system-clipboard/zsh-system-clipboard.zsh
 # Source zsh-fast-syntax-highlighting
 source "$ZPLUG"/fasthl/fast-syntax-highlighting.plugin.zsh
 
-# Last Modified: Mon, 16 Dec 2024 10:57:25 PM
+# Last Modified: Fri, 10 Jan 2025 02:35:16 AM
