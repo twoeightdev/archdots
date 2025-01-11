@@ -15,8 +15,6 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export TERMINAL="alacritty"
 export TERM="xterm-256color"
-# export MANPAGER="nvim +Man!"
-# export DIFFPROG="nvim -d"
 export BROWSER="firefox"
 export READER="zathura"
 export FILE="lf"
@@ -30,9 +28,10 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 # Relocate variables
 #export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/pass"
-export INPUTRC="$ZDOTDIR/inputrc"
+export INPUTRC="$XDG_CONFIG_HOME/shell/inputrc"
 export MBSYNCRC="$HOME/.config/mbsync/mbsyncrc"
 export NOTMUCH_CONFIG="$XDG_CONFIG_HOME/notmuchrc"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
@@ -42,6 +41,7 @@ export ZPLUG="$ZDOTDIR/zplug"
 export WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
 export GOBIN="$XDG_LOCAL_HOME/bin"
 export GOPATH="$XDG_DATA_HOME/go"
+export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
 export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/rgrc"
@@ -119,6 +119,6 @@ export QT_QPA_PLATFORMTHEME="gtk2"
 export MOZ_USE_XINPUT2=1
 
 # Shortcuts
-[ ! -f "$XDG_CONFIG_HOME"/shell/shrc ] && shortcuts >/dev/null 2>&1 &
+[ ! -f "$XDG_CONFIG_HOME"/shell/shrc ] && setsid -f shortcuts >/dev/null 2>&1
 
-# Last Modified: Thu, 09 Jan 2025 11:20:53 AM
+# Last Modified: Sat, 11 Jan 2025 06:19:02 PM
