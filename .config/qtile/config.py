@@ -1,8 +1,6 @@
-# Last Modified: Thu, 12 Dec 2024 11:52:35 AM
-
 import re
 
-from libqtile import bar, layout, qtile, widget
+from libqtile import bar, hook, layout, qtile, widget
 from libqtile.config import (
     Click,
     Drag,
@@ -15,7 +13,6 @@ from libqtile.config import (
     Screen,
 )
 from libqtile.lazy import lazy
-
 from spotify import Spotify
 
 mod = "mod4"
@@ -402,9 +399,9 @@ def core_widget():
             # margin=3,
             # background=color[1],
         ),
-        widget.Clock(format="󰸗 %A %d %B", foreground=color[3]),
+        widget.Clock(format="󰥔 %I:%M %p", foreground=color[6]),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.Clock(format="󰥔 %I:%M%p", foreground=color[6]),
+        widget.Clock(format="󰸗 %a-%d-%b", foreground=color[3]),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.CurrentLayoutIcon(**widget_defaults, scale=0.5),
         widget.Sep(**widget_defaults, size_percent=60),
@@ -493,12 +490,22 @@ reconfigure_screens = True
 auto_minimize = True
 wl_input_rules = None
 wmname = "qtile"
-dgroups_key_binder = None
 
+
+# This will change your pointer cursor to the standard cursor
+# you chose in your .Xresources file on Qtile.
+@hook.subscribe.startup
+def runner():
+    import subprocess
+
+    subprocess.Popen(["xsetroot", "-cursor_name", "left_ptr"])
+
+
+dgroups_key_binder = None
 dgroups_app_rules = [
     Rule(Match(wm_class=re.compile(r"^(firefox)$")), group="1"),
     Rule(Match(wm_class=re.compile(r"^(Steam|steam)$")), group="4"),
     Rule(Match(title=re.compile(r"^(Steam\ setup|Steam|steam)$")), group="4"),
 ]
 
-# Last Modified: Tue, 07 Jan 2025 02:57:16 PM
+# Last Modified: Sat, 11 Jan 2025 06:51:30 PM
