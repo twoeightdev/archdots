@@ -1,7 +1,7 @@
 ! Xorg configuration
-*.font: xft:Iosevka:pixelsize=24
-Xcursor.theme: Adwaita
+*.font: xft:monospace:size=16
 Xcursor.size: 32
+Xcursor.theme: Adwaita
 
 #define bg #1e1e2e
 #define fg #cdd6f4
