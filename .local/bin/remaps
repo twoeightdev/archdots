@@ -7,4 +7,4 @@ setxkbmap -option caps:escape
 # Turn off caps lock if on since there is no longer a key for it.
 xset -q | grep -q "Caps Lock:\s*on" && xdotool key Caps_Lock
 
-# Last Modified: Sat, 11 Jan 2025 07:05:00 PM
+# Last Modified: Sun, 12 Jan 2025 08:40:50 AM
