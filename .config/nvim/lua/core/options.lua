@@ -92,7 +92,7 @@ opt.showcmd = false
 -- Disable text that shows INSERT, VISUAL
 opt.showmode = false
 -- Cmdheight
-opt.cmdheight = 2
+opt.cmdheight = 1
 -- opt.display:append("uhex")
 -- opt.hidden = false
 -- Shortmess
@@ -130,4 +130,4 @@ g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
--- Last Modified: Sun, 15 Dec 2024 12:04:22 AM
+-- Last Modified: Fri, 17 Jan 2025 08:49:51 AM
