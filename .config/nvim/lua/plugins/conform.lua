@@ -18,7 +18,7 @@ return {
         end, { desc = "Toggle autoformat-on-save", bang = true })
 
         require("conform").formatters.ruff_format =
-            { append_args = { "--line-length", "88" } }
+            { append_args = { "--line-length", "79" } }
 
         return {
             format_on_save = function(bufnr)
@@ -54,4 +54,4 @@ return {
     end,
 }
 
--- Last Modified: Mon, 16 Dec 2024 11:06:48 PM
+-- Last Modified: Mon, 20 Jan 2025 01:14:22 PM
