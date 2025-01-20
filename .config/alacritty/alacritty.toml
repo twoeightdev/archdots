@@ -1,13 +1,14 @@
 [general]
-import = ["~/.config/alacritty/themes/catppuccin.toml"]
+# import = ["~/.config/alacritty/themes/catppuccin.toml"]
+import = ["~/.config/alacritty/themes/kanagawa.toml"]
 live_config_reload = true
 
 # [shell]
 # program = "/usr/bin/zsh"
 # args = ["--login", "-c", "tmux a -t main || tmux new -s main"]
 
-[env]
-TERM = "xterm-256color"
+# [env]
+# TERM = "xterm-256color"
 
 [font]
 size = 11
@@ -18,8 +19,8 @@ glyph_offset.y = 0
 
 [font.normal]
 family = "monospace"
-# style = "Regular"
-style = "SemiBold"
+style = "Regular"
+# style = "SemiBold"
 
 [font.bold]
 family = "monospace"
@@ -34,7 +35,7 @@ family = "monospace"
 style = "ExtraBold Italic"
 
 [window]
-opacity = 1
+opacity = 0.90
 dynamic_padding = false
 padding.x = 2
 padding.y = 2
@@ -64,3 +65,5 @@ bindings = [
 { key = "Up", mods = "Control|Shift", action = "ScrollToTop" },
 { key = "Down", mods = "Control|Shift", action = "ScrollToBottom" },
 ]
+
+# Last Modified: Sun, 19 Jan 2025 02:38:29 AM
