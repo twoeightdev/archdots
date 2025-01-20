@@ -11,6 +11,8 @@ __pycache__
 .pki/
 .ssh/githubkey
 .ssh/githubkey.pub
+.ssh/codebergkey
+.ssh/codebergkey.pub
 .ssh/known_hosts
 .ssh/known_hosts.old
 .venv/
