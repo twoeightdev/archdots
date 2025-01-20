@@ -1,3 +1,5 @@
+local ui = require("utils.colors")
+
 local set_hl = function(group, options)
     local bg = options.bg == nil and "" or "guibg=" .. options.bg
     local fg = options.fg == nil and "" or "guifg=" .. options.fg
@@ -7,9 +9,9 @@ local set_hl = function(group, options)
 end
 
 local highlights = {
-    { "WinBarModified", { fg = "#f38ba8", gui = "bold" } },
-    { "ModifiedTextMain", { fg = "#89b4fa", gui = "bold" } },
-    { "BufferColor", { fg = "#a6e3a1", gui = "bold" } },
+    { "WinBarModified", { fg = ui.kd.c02, gui = "bold" } },
+    { "ModifiedTextMain", { fg = ui.kd.c05, gui = "bold" } },
+    { "BufferColor", { fg = ui.kd.c03, gui = "bold" } },
 }
 
 for _, highlight in ipairs(highlights) do
@@ -101,3 +103,5 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
         end
     end,
 })
+
+-- Last Modified: Sun, 19 Jan 2025 01:57:00 AM
