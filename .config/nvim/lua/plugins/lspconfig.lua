@@ -26,8 +26,8 @@ return {
                 "shellcheck",
                 "markdown-toc",
                 "prettier",
+                "python-lsp-server",
                 "ruff",
-                "pyright",
                 "yaml-language-server",
                 "json-lsp",
                 "debugpy",
@@ -96,22 +96,39 @@ return {
                         "bash",
                     },
                 },
-                pyright = {
+                -- pyright = {
+                --     settings = {
+                --         pyright = {
+                --             disableOrganizeImports = true,
+                --         },
+                --         python = {
+                --             analysis = {
+                --                 typeCheckingMode = "standard",
+                --                 diagnosticSeverityOverrides = {
+                --                     reportPrivateImportUsage = false,
+                --                     reportArgumentType = false,
+                --                 },
+                --             },
+                --         },
+                --     },
+                -- },
+                pylsp = {
                     settings = {
-                        pyright = {
-                            disableOrganizeImports = true,
-                        },
-                        python = {
-                            analysis = {
-                                typeCheckingMode = "standard",
-                                diagnosticSeverityOverrides = {
-                                    reportPrivateImportUsage = false,
-                                    reportArgumentType = false,
-                                },
+                        pylsp = {
+                            plugins = {
+                                pyflakes = { enabled = false },
+                                pycodestyle = { enabled = false },
+                                autopep8 = { enabled = false },
+                                yapf = { enabled = false },
+                                mccabe = { enabled = false },
+                                pylsp_mypy = { enabled = false },
+                                pylsp_black = { enabled = false },
+                                pylsp_isort = { enabled = false },
                             },
                         },
                     },
                 },
+                ruff = {},
                 yamlls = {
                     settings = {
                         yaml = {
@@ -156,4 +173,4 @@ return {
     },
 }
 
--- Last Modified: Thu, 19 Dec 2024 01:23:00 AM
+-- Last Modified: Mon, 20 Jan 2025 01:15:26 PM
