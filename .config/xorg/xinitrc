@@ -12,10 +12,10 @@ for program in $autostart; do
     pidof -sx "$program" || "$program" &
 done >/dev/null 2>&1
 
+# Ensure that xrdb has finished running before moving on to start the WM/DE.
 [ -n "$xrdbpid" ] && wait "$xrdbpid"
 
 dbus-update-activation-environment --all
-
 dbus-launch ssh-agent qtile start
 
-# Last Modified: Sat, 11 Jan 2025 07:04:14 PM
+# Last Modified: Sun, 12 Jan 2025 08:40:35 AM
