@@ -1,4 +1,4 @@
--- Last Modified: Thu, 12 Dec 2024 12:11:39 PM
+local ui = require("utils.colors")
 
 local function _Spacer(n)
     local spaces = string.rep(" ", n)
@@ -28,30 +28,30 @@ local set_hl = function(group, options)
 end
 
 local highlights = {
-    { "StatuslineModeCommand", { fg = "#313244", bg = "#89b4fa" } },
-    { "StatuslineModeNormal", { fg = "#313244", bg = "#cba6f7" } },
-    { "StatuslineModeInsert", { fg = "#313244", bg = "#a6e3a1" } },
-    { "StatuslineModeVisual", { fg = "#313244", bg = "#f9e2af" } },
-    { "StatuslineModeReplace", { fg = "#313244", bg = "#f5c2e7" } },
-    { "StatuslineModeSelect", { fg = "#313244", bg = "#fab387" } },
-    { "StatuslineTextMain", { fg = "#b4befe", gui = "bold" } },
-    { "StatuslineFilename", { fg = "#b4befe", gui = "bold" } },
-    { "StatuslineSaved", { fg = "#a6e3a1", gui = "bold" } },
-    { "StatuslineNotSaved", { fg = "#f38ba8", gui = "bold" } },
-    { "StatuslineReadOnly", { fg = "#fab387", gui = "bold" } },
-    { "GsHeadSign", { fg = "#cba6f7", gui = "bold" } },
-    { "GsAddSign", { fg = "#a6e3a1", gui = "bold" } },
-    { "GsChangeSign", { fg = "#f9e2af", gui = "bold" } },
-    { "GsDeleteSign", { fg = "#f38ba8", gui = "bold" } },
-    { "StatuslineLspOn", { fg = "#74c7ec", gui = "bold" } },
-    { "StatuslineLspError", { fg = "#f38ba8", gui = "bold" } },
-    { "StatuslineLspWarning", { fg = "#f9e2af", gui = "bold" } },
-    { "StatuslineLspInfo", { fg = "#89b4fa", gui = "bold" } },
-    { "StatuslineLspHint", { fg = "#94e2d5", gui = "bold" } },
-    { "StatuslineCursorBegin", { fg = "#a6e3a1", gui = "bold" } },
-    { "StatuslineCursorEnd", { fg = "#f38ba8", gui = "bold" } },
-    { "StatuslineFiletype", { fg = "#f5e0dc", gui = "bold" } },
-    { "StatuslineSepRight", { fg = "#a6e3a1", gui = "bold" } },
+    { "StatuslineModeCommand", { fg = ui.kd.c01, bg = ui.kd.c05 } },
+    { "StatuslineModeNormal", { fg = ui.kd.c01, bg = ui.kd.c08 } },
+    { "StatuslineModeInsert", { fg = ui.kd.c01, bg = ui.kd.c03 } },
+    { "StatuslineModeVisual", { fg = ui.kd.c01, bg = ui.kd.c04 } },
+    { "StatuslineModeReplace", { fg = ui.kd.c01, bg = ui.kd.c06 } },
+    { "StatuslineModeSelect", { fg = ui.kd.c01, bg = ui.kd.c09 } },
+    { "StatuslineTextMain", { fg = ui.kd.c10, gui = "bold" } },
+    { "StatuslineFilename", { fg = ui.kd.c10, gui = "bold" } },
+    { "StatuslineSaved", { fg = ui.kd.c03, gui = "bold" } },
+    { "StatuslineNotSaved", { fg = ui.kd.c02, gui = "bold" } },
+    { "StatuslineReadOnly", { fg = ui.kd.c09, gui = "bold" } },
+    { "GsHeadSign", { fg = ui.kd.c08, gui = "bold" } },
+    { "GsAddSign", { fg = ui.kd.c03, gui = "bold" } },
+    { "GsChangeSign", { fg = ui.kd.c04, gui = "bold" } },
+    { "GsDeleteSign", { fg = ui.kd.c02, gui = "bold" } },
+    { "StatuslineLspOn", { fg = ui.kd.c11, gui = "bold" } },
+    { "StatuslineLspError", { fg = ui.kd.c02, gui = "bold" } },
+    { "StatuslineLspWarning", { fg = ui.kd.c04, gui = "bold" } },
+    { "StatuslineLspInfo", { fg = ui.kd.c05, gui = "bold" } },
+    { "StatuslineLspHint", { fg = ui.kd.c07, gui = "bold" } },
+    { "StatuslineCursorBegin", { fg = ui.kd.c03, gui = "bold" } },
+    { "StatuslineCursorEnd", { fg = ui.kd.c02, gui = "bold" } },
+    { "StatuslineFiletype", { fg = ui.kd.c12, gui = "bold" } },
+    { "StatuslineSepRight", { fg = ui.kd.c03, gui = "bold" } },
 }
 
 for _, highlight in ipairs(highlights) do
@@ -314,3 +314,5 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
         vim.o.statusline = "%!v:lua.Statusline()"
     end,
 })
+
+-- Last Modified: Sun, 19 Jan 2025 01:51:08 AM
