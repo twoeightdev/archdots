@@ -33,9 +33,16 @@ class Spotify(base.ThreadPoolText):
     A widget to interact with spotify via dbus.
     """
 
+    # defaults = [
+    #     ("play_icon", "", "icon to display when playing music"),
+    #     ("pause_icon", "󰏤", "icon to display when music paused"),
+    #     ("update_interval", 0.5, "polling rate in seconds"),
+    #     ("format", "{artist}{icon}{track}", "Spotify display format"),
+    # ]
+
     defaults = [
-        ("play_icon", "", "icon to display when playing music"),
-        ("pause_icon", "󰏤", "icon to display when music paused"),
+        ("play_icon", "▶️", "icon to display when playing music"),
+        ("pause_icon", "⏸️", "icon to display when music paused"),
         ("update_interval", 0.5, "polling rate in seconds"),
         ("format", "{artist}{icon}{track}", "Spotify display format"),
     ]
@@ -55,9 +62,9 @@ class Spotify(base.ThreadPoolText):
         pattern = proc_name + "$"
 
         # pgrep will return a string of pids for matching processes
-        proc_out = run(["pgrep", "-fli", pattern], capture_output=True).stdout.decode(
-            "utf-8"
-        )
+        proc_out = run(
+            ["pgrep", "-fli", pattern], capture_output=True
+        ).stdout.decode("utf-8")
 
         # empty string means nothing started
         if proc_out == "":
@@ -162,3 +169,6 @@ class Spotify(base.ThreadPoolText):
         if play == "":
             return False
         return True
+
+
+# Last Modified: Mon, 20 Jan 2025 09:26:06 AM
