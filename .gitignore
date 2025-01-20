@@ -1,3 +1,4 @@
+__pycache__
 .dots
 .Xauthority
 .java/
@@ -47,7 +48,6 @@
 .config/nimble/
 .config/nvim/lazy-lock.json
 .config/pulse/
-.config/qtile/__pycache__/
 .config/qutebrowser/bookmarks/
 .config/qutebrowser/quickmarks
 .config/shell/shrc
