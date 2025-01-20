@@ -1,3 +1,4 @@
+" vim: filetype=vim
 " Delete all settings except what's here
 sanitize tridactyllocal tridactylsync
 
@@ -12,6 +13,10 @@ set hintfiltermode simple
 set hintshift false
 set hintnames uniform
 set tabsort mru
+
+set hintstyles.bg none
+set hintstyles.fg none
+set hintstyles.outline none
 
 " Bindings
 unbind d
