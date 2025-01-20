@@ -28,7 +28,7 @@ require("lazy").setup({
         { import = "plugins" },
     },
     install = {
-        colorscheme = { "catppuccin" },
+        colorscheme = { "kanagawa" },
     },
     ui = {
         icons = {
@@ -88,4 +88,4 @@ require("lazy").setup({
     },
 })
 
--- Last Modified: Sun, 15 Dec 2024 12:04:07 AM
+-- Last Modified: Fri, 17 Jan 2025 08:56:54 AM
