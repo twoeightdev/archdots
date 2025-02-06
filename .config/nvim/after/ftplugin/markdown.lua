@@ -7,6 +7,7 @@ opt.foldmethod = "expr"
 opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 opt.spell = true
 opt.conceallevel = 0
+-- opt.conceallevel = 2
 opt.concealcursor = ""
 opt.list = false
 g.vim_markdown_conceal_code_blocks = 0
@@ -69,4 +70,4 @@ map({ "n", "i" }, "<C-'>", function()
     vim.cmd("normal zt")
 end, { silent = true, buffer = 0, desc = "Previous markdown header" })
 
--- Last Modified: Sun, 15 Dec 2024 01:11:37 AM
+-- Last Modified: Wed, 05 Feb 2025 02:57:23 PM
