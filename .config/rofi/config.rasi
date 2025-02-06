@@ -1,0 +1,19 @@
+// vim: ft=rasi
+configuration {
+    font: "monospace 18";
+    show-icons: true;
+    kb-remove-to-eol: "Control+p";
+    kb-secondary-copy: "Control+c";
+    kb-accept-entry: "Return";
+    kb-mode-complete: "";
+    kb-remove-char-back: "BackSpace";
+    kb-row-up: "Up,Control+k";
+    kb-row-down: "Down,Control+j";
+    terminal: "alacritty";
+}
+
+@import "~/.config/rofi/themes/gruvdark.rasi"
+
+listview {
+    scrollbar: false;
+}

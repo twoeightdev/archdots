@@ -67,10 +67,12 @@ __pycache__
 .config/zsh/.zcompdump
 .local/downloads/
 .local/drafts/
+.local/lib/
 .local/notes/
 .local/orgdata/
 .local/review/
 .local/screenshot/
+.local/share/applications/steam.desktop
 .local/share/calcurse/
 .local/share/cargo/
 .local/share/delta/
