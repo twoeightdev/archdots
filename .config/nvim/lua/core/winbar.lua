@@ -9,9 +9,9 @@ local set_hl = function(group, options)
 end
 
 local highlights = {
-    { "WinBarModified", { fg = ui.kd.c02, gui = "bold" } },
-    { "ModifiedTextMain", { fg = ui.kd.c05, gui = "bold" } },
-    { "BufferColor", { fg = ui.kd.c03, gui = "bold" } },
+    { "WinBarModified", { fg = ui.gd.c02, gui = "bold" } },
+    { "ModifiedTextMain", { fg = ui.gd.c05, gui = "bold" } },
+    { "BufferColor", { fg = ui.gd.c03, gui = "bold" } },
 }
 
 for _, highlight in ipairs(highlights) do
@@ -104,4 +104,4 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
     end,
 })
 
--- Last Modified: Sun, 19 Jan 2025 01:57:00 AM
+-- Last Modified: Mon, 03 Feb 2025 01:07:12 AM
