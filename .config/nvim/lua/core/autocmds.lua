@@ -15,6 +15,7 @@ autocmd({ "BufEnter", "InsertLeave", "CmdlineLeave", "WinEnter" }, {
     end,
 })
 
+-- autocmd({ "InsertEnter", "CmdlineEnter" }, {
 autocmd({ "BufLeave", "InsertEnter", "CmdlineEnter", "WinLeave" }, {
     desc = "Auto toggle off relative number",
     group = augroup("auto_relative_number_off"),
@@ -213,4 +214,4 @@ autocmd("BufWritePre", {
     end,
 })
 
--- Last Modified: Fri, 13 Dec 2024 08:37:44 AM
+-- Last Modified: Sat, 25 Jan 2025 03:10:52 PM
