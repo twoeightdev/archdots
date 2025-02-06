@@ -1,6 +1,6 @@
 from libqtile import hook
 
-from bars.kanagawa import screens  # noqa: F401
+from bars.gruvbox import screens  # noqa: F401
 from modules.groups import groups  # noqa: F401
 from modules.keys import keys, mod  # noqa: F401
 from modules.layouts import layouts  # noqa: F401
@@ -27,4 +27,4 @@ def runner():
     subprocess.Popen(["xsetroot", "-cursor_name", "left_ptr"])
 
 
-# Last Modified: Mon, 20 Jan 2025 03:10:24 AM
+# Last Modified: Sun, 02 Feb 2025 11:47:29 AM

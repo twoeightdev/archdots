@@ -33,19 +33,20 @@ class Spotify(base.ThreadPoolText):
     A widget to interact with spotify via dbus.
     """
 
-    # defaults = [
-    #     ("play_icon", "", "icon to display when playing music"),
-    #     ("pause_icon", "󰏤", "icon to display when music paused"),
-    #     ("update_interval", 0.5, "polling rate in seconds"),
-    #     ("format", "{artist}{icon}{track}", "Spotify display format"),
-    # ]
-
     defaults = [
-        ("play_icon", "▶️", "icon to display when playing music"),
-        ("pause_icon", "⏸️", "icon to display when music paused"),
+        ("play_icon", "", "icon to display when playing music"),
+        ("pause_icon", "󰏤", "icon to display when music paused"),
         ("update_interval", 0.5, "polling rate in seconds"),
         ("format", "{artist}{icon}{track}", "Spotify display format"),
     ]
+
+    # Color icons
+    # defaults = [
+    #     ("play_icon", "▶️", "icon to display when playing music"),
+    #     ("pause_icon", "⏸️", "icon to display when music paused"),
+    #     ("update_interval", 0.5, "polling rate in seconds"),
+    #     ("format", "{artist}{icon}{track}", "Spotify display format"),
+    # ]
 
     def __init__(self, **config):
         base.ThreadPoolText.__init__(self, text="", **config)
@@ -171,4 +172,4 @@ class Spotify(base.ThreadPoolText):
         return True
 
 
-# Last Modified: Mon, 20 Jan 2025 09:26:06 AM
+# Last Modified: Tue, 21 Jan 2025 09:23:15 AM

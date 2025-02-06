@@ -13,12 +13,13 @@ export LS_COLORS
 # Default programs:
 export EDITOR="nvim"
 export VISUAL="nvim"
-export TERMINAL="alacritty"
+# export TERMINAL="alacritty"
+export TERMINAL="st"
 export TERM="xterm-256color"
 export BROWSER="firefox"
 export READER="zathura"
 export FILE="lf"
-export WM="qtile"
+# export WM="qtile"
 
 # XDG Base Directory
 export XDG_LOCAL_HOME="$HOME/.local"
@@ -65,13 +66,13 @@ export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [n
 
 # Fzf
 export FZF_DEFAULT_OPTS="
---color=bg+:#2d4f67
---color=fg:#c5c9c5
---color=current-fg:#dcd7ba
---color=pointer:#e46876
+--color=bg+:#83a598
+--color=fg:#ebdbb2
+--color=current-fg:#282828
+--color=pointer:#cc241d
 --color=gutter:-1
---color=current-hl:#8ba4b0
---color=hl:#8ba4b0
+--color=current-hl:#005577
+--color=hl:#076678
 --no-bold
 --no-separator
 --no-scrollbar
@@ -109,4 +110,4 @@ export MOZ_USE_XINPUT2=1
 # Shortcuts
 [ ! -f "$XDG_CONFIG_HOME"/shell/shrc ] && setsid -f shortcuts >/dev/null 2>&1
 
-# Last Modified: Mon, 20 Jan 2025 01:19:06 PM
+# Last Modified: Mon, 03 Feb 2025 01:14:55 AM

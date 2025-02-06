@@ -26,6 +26,7 @@ return {
             "printf",
             "python",
             "query",
+            "rasi",
             "ssh_config",
             "tmux",
             "toml",
@@ -51,4 +52,4 @@ return {
     end,
 }
 
--- Last Modified: Sat, 14 Dec 2024 11:41:40 PM
+-- Last Modified: Tue, 04 Feb 2025 11:09:34 PM

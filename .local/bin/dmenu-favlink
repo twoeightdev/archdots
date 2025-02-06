@@ -1,6 +1,6 @@
 #!/bin/bash
 # Open web page via dmenu and open on $BROWSER
-TEXT="whatsapp\nchatgpt\nduckduckgo\ngithub\nudemy\ntrinket\ntorrent\n9901\nshopee\nshopee-wish\nfoodpanda\nludeon\nsuckless\narch\nwallhaven\nstackoverflow\nunixporn\nbilibili\nmangafire\nyewtu\nyoutube\ngmail"
+TEXT="whatsapp\nchatgpt\nduckduckgo\ngithub\nudemy\ntrinket\ntorrent\n9901\nshopee\nshopee-wish\nfoodpanda\nludeon\nsuckless\narch\nunsplash\nwallpapercave\nstackoverflow\nunixporn\nbilibili\nmangafire\nyewtu\nyoutube\ngmail"
 
 DMENU="$(echo -e $TEXT | dmenu -l 16 -p web)"
 
@@ -21,7 +21,8 @@ foodpanda) $BROWSER https://www.foodpanda.ph/ ;;
 ludeon) $BROWSER https://ludeon.com/forums/index.php ;;
 suckless) $BROWSER https://suckless.org ;;
 arch) $BROWSER https://bbs.archlinux.org/index.php ;;
-wallhaven) $BROWSER https://wallhaven.cc ;;
+unsplash) $BROWSER https://unsplash.com/ ;;
+wallpapercave) $BROWSER https://wallpapercave.com ;;
 stackoverflow) $BROWSER https://stackoverflow.com/ ;;
 unixporn) $BROWSER https://www.reddit.com/r/unixporn ;;
 bilibili) $BROWSER https://www.bilibili.tv/en/anime ;;
@@ -30,3 +31,5 @@ yewtu) $BROWSER https://yewtu.be/feed/trending ;;
 youtube) $BROWSER https://www.youtube.com ;;
 gmail) $BROWSER https://gmail.com ;;
 esac
+
+# Last Modified: Mon, 03 Feb 2025 08:45:59 AM

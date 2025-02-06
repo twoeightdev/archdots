@@ -1,12 +1,13 @@
 #!/bin/sh
 
+# xrandr --dpi 144
 setbg &
 xrdb "${XDG_CONFIG_HOME:-$HOME/.config}"/xorg/xdefaults &
 xrdbpid=$!
 # /usr/bin/emacs --daemon &
 # emacs --daemon &
 
-autostart="picom dunst unclutter mpd remapd"
+autostart="picom dunst unclutter remapd"
 
 for program in $autostart; do
     pidof -sx "$program" || "$program" &
@@ -18,4 +19,4 @@ done >/dev/null 2>&1
 dbus-update-activation-environment --all
 dbus-launch ssh-agent qtile start
 
-# Last Modified: Sun, 12 Jan 2025 08:40:35 AM
+# Last Modified: Mon, 03 Feb 2025 01:36:42 AM

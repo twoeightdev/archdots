@@ -37,7 +37,6 @@ __pycache__
 .config/fzf/
 .config/GIMP/
 .config/go/
-.config/htop/
 .config/ibus/
 .config/lf/shrc
 .config/mpd/database

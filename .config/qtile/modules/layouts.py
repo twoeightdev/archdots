@@ -1,19 +1,23 @@
 from libqtile import layout
 from libqtile.config import Match
-from utils.colors import dragon
+from utils.colors import gruvdark
 
 # Layouts
 layout_theme = {
     "border_width": 3,
-    "border_focus": dragon["c02"],
-    "border_normal": dragon["c01"],
+    "border_focus": gruvdark["c02"],
+    "border_normal": gruvdark["c01"],
 }
 floating_theme = layout_theme.copy()
 
 layouts = [
-    layout.Columns(**layout_theme, shift_windows=True, margin=5, border_on_single=True),
+    layout.Columns(
+        **layout_theme, shift_windows=True, margin=5, border_on_single=True
+    ),
     layout.Floating(**layout_theme),
-    layout.MonadTall(**layout_theme, ratio=0.25, new_client_position="before_current"),
+    layout.MonadTall(
+        **layout_theme, ratio=0.25, new_client_position="before_current"
+    ),
     layout.MonadWide(**layout_theme),
     # layout.Max(**layout_theme),
     # layout.Tile(**layout_theme),
@@ -38,4 +42,4 @@ floating_layout = layout.Floating(
     **floating_theme,
 )
 
-# Last Modified: Mon, 20 Jan 2025 12:45:36 AM
+# Last Modified: Sun, 02 Feb 2025 12:59:03 PM

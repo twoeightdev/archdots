@@ -9,8 +9,8 @@ mvol = "pulsemixer --toggle-mute"
 # downvol = "pactl set-sink-volume 0 -5%"
 # upvol = "pulsemixer --change-volume +5 --max-volume 150"
 # downvol = "pulsemixer --change-volume -5 --max-volume 150"
-brightup = "brightnessctl s 10%+"
-brightdown = "brightnessctl s 10%-"
+brightup = "brightnessctl set +10%"
+brightdown = "brightnessctl set 10%-"
 powermenu = "power"
 dmenu = "dmenu_run"
 filemanager = "alacritty -e lf"
@@ -28,32 +28,76 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "Tab", lazy.screen.toggle_group(), desc="Switch last view group"),
+    Key(
+        [mod], "Tab", lazy.screen.toggle_group(), desc="Switch last view group"
+    ),
     # Shuffle window
-    Key([mod, "control"], "h", lazy.layout.shuffle_left(), desc="Suffle to left"),
-    Key([mod, "control"], "l", lazy.layout.shuffle_right(), desc="Shuffle to right"),
-    Key([mod, "control"], "j", lazy.layout.shuffle_down(), desc="Shuffle down"),
+    Key(
+        [mod, "control"],
+        "h",
+        lazy.layout.shuffle_left(),
+        desc="Suffle to left",
+    ),
+    Key(
+        [mod, "control"],
+        "l",
+        lazy.layout.shuffle_right(),
+        desc="Shuffle to right",
+    ),
+    Key(
+        [mod, "control"], "j", lazy.layout.shuffle_down(), desc="Shuffle down"
+    ),
     Key([mod, "control"], "k", lazy.layout.shuffle_up(), desc="Shuffle up"),
     # Adjust window
     Key([mod, "shift"], "h", lazy.layout.grow_left(), desc="Grow to left"),
     Key([mod, "shift"], "l", lazy.layout.grow_right(), desc="Grow to right"),
     Key([mod, "shift"], "j", lazy.layout.grow_down(), desc="Grow down"),
     Key([mod, "shift"], "k", lazy.layout.grow_up(), desc="Grow up"),
-    Key([mod, "control"], "space", lazy.layout.normalize(), desc="Reset all window"),
+    Key(
+        [mod, "control"],
+        "space",
+        lazy.layout.normalize(),
+        desc="Reset all window",
+    ),
     Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Fullscreen toggle"),
     # Media keys
     Key([], "XF86AudioMute", lazy.spawn(mvol), desc="Mute volume"),
     # Key([], "XF86AudioRaiseVolume", lazy.spawn(upvol), desc="Volume Up"),
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("audiobar 0 +5"), desc="Volume Up"),
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.spawn("audiobar 0 +5"),
+        desc="Volume Up",
+    ),
     # Key([], "XF86AudioLowerVolume", lazy.spawn(downvol), desc="volume down"),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("audiobar 0 -5"), desc="volume down"),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.spawn("audiobar 0 -5"),
+        desc="volume down",
+    ),
     Key([], "XF86MonBrightnessUp", lazy.spawn(brightup), desc="Brightness up"),
-    Key([], "XF86MonBrightnessDown", lazy.spawn(brightdown), desc="Brightness up"),
-    Key([], "XF86TouchpadToggle", lazy.spawn("padtoggle"), desc="Toggle touchpad"),
+    Key(
+        [],
+        "XF86MonBrightnessDown",
+        lazy.spawn(brightdown),
+        desc="Brightness up",
+    ),
+    Key(
+        [],
+        "XF86TouchpadToggle",
+        lazy.spawn("padtoggle"),
+        desc="Toggle touchpad",
+    ),
     # System
     Key([altmod], "b", lazy.hide_show_bar(), desc="Toggle qtile bar"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focus window"),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload configuration"),
+    Key(
+        [mod, "control"],
+        "r",
+        lazy.reload_config(),
+        desc="Reload configuration",
+    ),
     Key([mod], "escape", lazy.spawn(powermenu), desc="Power menu"),
     Key([mod], "i", lazy.next_layout(), desc="Toggle layouts"),
     Key([mod, "control"], "x", lazy.shutdown(), desc="Shutdown qtile"),
@@ -69,19 +113,61 @@ keys = [
     Key([mod], "grave", lazy.spawn("emojis"), desc="Emojis"),
     Key([], "Print", lazy.spawn("screenshot"), desc="Take screenshot"),
     Key([mod], "Print", lazy.spawn("timeshot"), desc="Timed screenshot"),
-    Key([mod], "p", lazy.spawn("spotify-toggle"), desc="Play toggle for spotify"),
-    Key([mod], "period", lazy.spawn("spotify-next"), desc="Next song in spotify"),
-    Key([mod], "comma", lazy.spawn("spotify-prev"), desc="Previous song in spotify"),
-    Key([mod, "shift"], "s", lazy.spawn("dmenu-playlist"), desc="Search ncmpcpp song"),
-    Key([mod, "shift"], "p", lazy.spawn(mpctoggle), desc="Play toggle for ncmpcpp"),
-    Key([mod, "shift"], "comma", lazy.spawn(mpcprev), desc="Previous song in ncmpcpp"),
-    Key([mod, "shift"], "period", lazy.spawn(mpcnext), desc="Next song in ncmpcpp"),
+    Key(
+        [mod],
+        "p",
+        lazy.spawn("spotify-toggle"),
+        desc="Play toggle for spotify",
+    ),
+    Key(
+        [mod],
+        "period",
+        lazy.spawn("spotify-next"),
+        desc="Next song in spotify",
+    ),
+    Key(
+        [mod],
+        "comma",
+        lazy.spawn("spotify-prev"),
+        desc="Previous song in spotify",
+    ),
+    Key(
+        [mod, "shift"],
+        "s",
+        lazy.spawn("dmenu-playlist"),
+        desc="Search ncmpcpp song",
+    ),
+    Key(
+        [mod, "shift"],
+        "p",
+        lazy.spawn(mpctoggle),
+        desc="Play toggle for ncmpcpp",
+    ),
+    Key(
+        [mod, "shift"],
+        "comma",
+        lazy.spawn(mpcprev),
+        desc="Previous song in ncmpcpp",
+    ),
+    Key(
+        [mod, "shift"],
+        "period",
+        lazy.spawn(mpcnext),
+        desc="Next song in ncmpcpp",
+    ),
     Key([mod], "F9", lazy.spawn("dmenu-mount"), desc="Mount drive"),
-    Key([mod, "shift"], "F9", lazy.spawn("dmenu-unmount"), desc="Unmount drive"),
+    Key(
+        [mod, "shift"], "F9", lazy.spawn("dmenu-unmount"), desc="Unmount drive"
+    ),
     Key([mod], "w", lazy.spawn("dmenu-favlink"), desc="Web search via dmenu"),
     Key([mod], "s", lazy.spawn("dmenu-google"), desc="Web search via dmenu"),
     Key([mod], "F12", lazy.spawn("torrtoggle"), desc="Torrent daemon toggle"),
-    Key([mod, "shift"], "F12", lazy.spawn("torrclear"), desc="Remove finished torrent"),
+    Key(
+        [mod, "shift"],
+        "F12",
+        lazy.spawn("torrclear"),
+        desc="Remove finished torrent",
+    ),
     Key([mod], "c", lazy.spawn("camtoggle"), desc="Webcam"),
     Key([mod, "shift"], "c", lazy.spawn(camkill), desc="Webcam"),
     Key([mod], "F8", lazy.spawn("dmenu-record"), desc="Record screen"),
@@ -146,4 +232,4 @@ keys.extend(
     ]
 )
 
-# Last Modified: Sun, 19 Jan 2025 11:38:28 PM
+# Last Modified: Sun, 02 Feb 2025 11:45:50 AM

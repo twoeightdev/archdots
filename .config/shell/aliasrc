@@ -43,6 +43,7 @@ alias \
 # Make
 alias \
     im="make && sudo make install" \
+    um="sudo make uninstall" \
     cm="make clean && rm -f config.h && git reset --hard origin/main"
 
 # Miscellaneous
@@ -64,4 +65,4 @@ alias \
     xdgf="xdg-mime query filetype" \
     xdgd="xdg-mime query default"
 
-# Last Modified: Fri, 17 Jan 2025 08:29:55 AM
+# Last Modified: Thu, 30 Jan 2025 10:33:53 AM

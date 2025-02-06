@@ -24,4 +24,6 @@ dunstify -a "audiobar" \
     -u low \
     -r "$msgId" \
     -h int:value:"$NEW" \
-    "📢 Volume: ${NEW}%"
+    "󰕾 Volume: ${NEW}%"
+
+# Last Modified: Thu, 30 Jan 2025 06:33:12 PM

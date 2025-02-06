@@ -1,6 +1,7 @@
 from libqtile import bar, qtile, widget
 from libqtile.config import Screen
-from modules.spotify import Spotify
+
+# from modules.spotify import Spotify
 from utils.colors import dragon
 
 # Widgets
@@ -24,11 +25,11 @@ def core_widget():
             filename="~/.config/qtile/assets/python.png",
         ),
         widget.Clock(
-            **widget_defaults, format="🕐 %I:%M %p", foreground=dragon["c07"]
+            **widget_defaults, format="󰥔 %I:%M %p", foreground=dragon["c07"]
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Clock(
-            **widget_defaults, format="📆 %a-%d-%b", foreground=dragon["c03"]
+            **widget_defaults, format="󰸗 %a-%d-%b", foreground=dragon["c03"]
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.CurrentLayoutIcon(**widget_defaults, scale=0.5),
@@ -47,51 +48,56 @@ def core_widget():
         widget.Spacer(
             **widget_defaults,
         ),
-        Spotify(
-            **widget_defaults,
-            format="{artist} {icon}  {track}",
-            foreground=dragon["c06"],
-        ),
-        widget.Sep(**widget_defaults, size_percent=60),
-        widget.Bluetooth(
-            **widget_defaults,
-            default_text="🔗 {connected_devices}",
-            default_show_battery=True,
-            device_battery_format=" 󱐋{battery}%",
-            foreground=dragon["c05"],
-        ),
-        widget.Sep(**widget_defaults, size_percent=60),
+        # Spotify(
+        #     **widget_defaults,
+        #     format="{artist} {icon} {track}",
+        #     foreground=dragon["c06"],
+        # ),
+        # widget.Sep(**widget_defaults, size_percent=60),
+        # widget.Bluetooth(
+        #     **widget_defaults,
+        #     default_text="󰂯 {connected_devices}",
+        #     default_show_battery=True,
+        #     device_battery_format=" 󱐋{battery}%",
+        #     foreground=dragon["c05"],
+        # ),
+        # widget.Sep(**widget_defaults, size_percent=60),
         widget.Backlight(
             **widget_defaults,
             backlight_name="amdgpu_bl2",
-            format="💡 {percent:2.0%}",
+            format=" {percent:2.0%}",
             foreground=dragon["c03"],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Memory(
             **widget_defaults,
-            format="🧠{MemUsed: .0f}{mm}",
+            format="󰍛{MemUsed: .0f}{mm}",
             measure_mem="G",
             foreground=dragon["c07"],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
-        widget.ThermalSensor(
-            **widget_defaults,
-            tag_sensor="Tctl",
-            format="🌡{temp:.0f}{unit}",
-            foreground=dragon["c06"],
-        ),
-        widget.Sep(**widget_defaults, size_percent=60),
+        # widget.ThermalSensor(
+        #     **widget_defaults,
+        #     tag_sensor="Tctl",
+        #     format=" {temp:.0f}{unit}",
+        #     foreground=dragon["c06"],
+        # ),
+        # widget.Sep(**widget_defaults, size_percent=60),
         widget.Wlan(
             **widget_defaults,
-            format="📶",
-            disconnected_message="📡",
+            format="󱚽 ",
+            disconnected_message="󰖪 ",
             interface="wlan0",
             foreground=dragon["c08"],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.PulseVolume(
-            **widget_defaults, fmt="🔊{}", foreground=dragon["c05"]
+            **widget_defaults,
+            fmt="󰕾 {}",
+            mute_format="0%",
+            # emoji=True,
+            # emoji_list=["🔇", "🔈", "🔉", "🔊"],
+            foreground=dragon["c05"],
         ),
         widget.Sep(**widget_defaults, size_percent=60),
         widget.Battery(
@@ -99,10 +105,11 @@ def core_widget():
             # format="{char} {percent:2.0%} {hour:d}:{min:02d} {watt:.2f}W",
             format="{char} {percent:2.0%} {hour:d}:{min:02d}",
             show_short_text=False,
-            charge_char="🔌",
-            full_char="🔋",
-            discharge_char="🪫",
-            update_interval=10,
+            charge_char="",
+            full_char="",
+            discharge_char="",
+            update_interval=60,
+            notify_below=15,
             mouse_callbacks={"Button1": power},
             foreground=dragon["c07"],
         ),
@@ -113,4 +120,4 @@ def core_widget():
 
 screens = [Screen(top=bar.Bar(widgets=core_widget(), size=34))]
 
-# Last Modified: Mon, 20 Jan 2025 09:33:36 AM
+# Last Modified: Sat, 25 Jan 2025 03:17:53 PM
