@@ -9,7 +9,7 @@ g.maplocalleader = " "
 -- Basic
 map("n", "<leader>an", "<cmd>enew<cr>", { desc = "New file" })
 map("n", "<leader>w", vim.cmd.w, { desc = "Write" })
-map("n", "<leader>q", vim.cmd.qa, { desc = "Quit" })
+map("n", "<leader>q", vim.cmd.q, { desc = "Quit" })
 -- map({ "n", "o" }, "<c-'>", "gcc", { remap = true, desc = "Line comment" })
 -- map({ "n", "x" }, "<c-;>", "gc", { remap = true, desc = "Block comment" })
 map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlseach" })
@@ -104,4 +104,4 @@ map("n", "<leader>at", function()
     )
 end, { desc = "Input date and time for due" })
 
--- Last Modified: Sun, 15 Dec 2024 01:58:01 AM
+-- Last Modified: Sat, 25 Jan 2025 03:13:02 PM
