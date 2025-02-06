@@ -28,30 +28,30 @@ local set_hl = function(group, options)
 end
 
 local highlights = {
-    { "StatuslineModeCommand", { fg = ui.kd.c01, bg = ui.kd.c05 } },
-    { "StatuslineModeNormal", { fg = ui.kd.c01, bg = ui.kd.c08 } },
-    { "StatuslineModeInsert", { fg = ui.kd.c01, bg = ui.kd.c03 } },
-    { "StatuslineModeVisual", { fg = ui.kd.c01, bg = ui.kd.c04 } },
-    { "StatuslineModeReplace", { fg = ui.kd.c01, bg = ui.kd.c06 } },
-    { "StatuslineModeSelect", { fg = ui.kd.c01, bg = ui.kd.c09 } },
-    { "StatuslineTextMain", { fg = ui.kd.c10, gui = "bold" } },
-    { "StatuslineFilename", { fg = ui.kd.c10, gui = "bold" } },
-    { "StatuslineSaved", { fg = ui.kd.c03, gui = "bold" } },
-    { "StatuslineNotSaved", { fg = ui.kd.c02, gui = "bold" } },
-    { "StatuslineReadOnly", { fg = ui.kd.c09, gui = "bold" } },
-    { "GsHeadSign", { fg = ui.kd.c08, gui = "bold" } },
-    { "GsAddSign", { fg = ui.kd.c03, gui = "bold" } },
-    { "GsChangeSign", { fg = ui.kd.c04, gui = "bold" } },
-    { "GsDeleteSign", { fg = ui.kd.c02, gui = "bold" } },
-    { "StatuslineLspOn", { fg = ui.kd.c11, gui = "bold" } },
-    { "StatuslineLspError", { fg = ui.kd.c02, gui = "bold" } },
-    { "StatuslineLspWarning", { fg = ui.kd.c04, gui = "bold" } },
-    { "StatuslineLspInfo", { fg = ui.kd.c05, gui = "bold" } },
-    { "StatuslineLspHint", { fg = ui.kd.c07, gui = "bold" } },
-    { "StatuslineCursorBegin", { fg = ui.kd.c03, gui = "bold" } },
-    { "StatuslineCursorEnd", { fg = ui.kd.c02, gui = "bold" } },
-    { "StatuslineFiletype", { fg = ui.kd.c12, gui = "bold" } },
-    { "StatuslineSepRight", { fg = ui.kd.c03, gui = "bold" } },
+    { "StatuslineModeCommand", { fg = ui.gd.c01, bg = ui.gd.c05 } },
+    { "StatuslineModeNormal", { fg = ui.gd.c01, bg = ui.gd.c08 } },
+    { "StatuslineModeInsert", { fg = ui.gd.c01, bg = ui.gd.c03 } },
+    { "StatuslineModeVisual", { fg = ui.gd.c01, bg = ui.gd.c04 } },
+    { "StatuslineModeReplace", { fg = ui.gd.c01, bg = ui.gd.c06 } },
+    { "StatuslineModeSelect", { fg = ui.gd.c01, bg = ui.gd.c09 } },
+    { "StatuslineTextMain", { fg = ui.gd.c10, gui = "bold" } },
+    { "StatuslineFilename", { fg = ui.gd.c10, gui = "bold" } },
+    { "StatuslineSaved", { fg = ui.gd.c03, gui = "bold" } },
+    { "StatuslineNotSaved", { fg = ui.gd.c02, gui = "bold" } },
+    { "StatuslineReadOnly", { fg = ui.gd.c09, gui = "bold" } },
+    { "GsHeadSign", { fg = ui.gd.c08, gui = "bold" } },
+    { "GsAddSign", { fg = ui.gd.c03, gui = "bold" } },
+    { "GsChangeSign", { fg = ui.gd.c04, gui = "bold" } },
+    { "GsDeleteSign", { fg = ui.gd.c02, gui = "bold" } },
+    { "StatuslineLspOn", { fg = ui.gd.c11, gui = "bold" } },
+    { "StatuslineLspError", { fg = ui.gd.c02, gui = "bold" } },
+    { "StatuslineLspWarning", { fg = ui.gd.c04, gui = "bold" } },
+    { "StatuslineLspInfo", { fg = ui.gd.c05, gui = "bold" } },
+    { "StatuslineLspHint", { fg = ui.gd.c07, gui = "bold" } },
+    { "StatuslineCursorBegin", { fg = ui.gd.c03, gui = "bold" } },
+    { "StatuslineCursorEnd", { fg = ui.gd.c02, gui = "bold" } },
+    { "StatuslineFiletype", { fg = ui.gd.c12, gui = "bold" } },
+    { "StatuslineSepRight", { fg = ui.gd.c03, gui = "bold" } },
 }
 
 for _, highlight in ipairs(highlights) do
@@ -152,7 +152,8 @@ local function GitSigns()
     end
 
     local git_status = vim.b.gitsigns_status_dict
-    local branch_name = "%#GsHeadSign#" .. "  " .. git_status.head .. ""
+    local git_head = vim.b.gitsigns_head
+    local branch_name = "%#GsHeadSign#" .. "  " .. git_head .. ""
     local added = (git_status.added and git_status.added ~= 0)
             and ("%#GsAddSign#" .. "  " .. git_status.added)
         or ""
@@ -164,6 +165,7 @@ local function GitSigns()
         or ""
 
     return table.concat({ branch_name, added, changed, removed })
+    -- return branch_name .. added .. changed .. removed
 end
 
 local function LspStatus()
@@ -315,4 +317,4 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
     end,
 })
 
--- Last Modified: Sun, 19 Jan 2025 01:51:08 AM
+-- Last Modified: Mon, 03 Feb 2025 01:06:49 AM
